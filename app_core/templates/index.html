@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+    <div class="jumbotron rounded shadow-lg">
+        <h1>
+            Hello,
+            {#            {% if current_user.is_authenticated %}#}
+            {% if false %}
+                {#                {{ current_user.name }}#}
+            {% else %}
+                Stranger
+            {% endif %}!
+        </h1>
+        <p class="lead">
+            Welcome to the LiXin Content Management System.
+        </p>
+    </div>
+{% endblock %}

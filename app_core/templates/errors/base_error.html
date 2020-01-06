@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Page Not Found{% endblock %}
+
+{% block page_content %}
+    <div class="jumbotron alert-danger rounded shadow-lg">
+        <h1 class="alert-heading">Error: {% block error_code %}{% endblock %}</h1>
+        <hr>
+        <p class="lead">
+            {% block error_message %}
+            {% endblock %}
+        </p>
+        <a class="btn btn-lg btn-primary" href="{{ url_for('main.index') }}" role="button">Return to safety&raquo;</a>
+    </div>
+{% endblock %}

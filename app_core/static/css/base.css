@@ -1,0 +1,35 @@
+body {
+    padding-top: 8rem;
+    padding-bottom: 2rem;
+    background: linear-gradient(15deg, #64bcf4, #c2e59c) no-repeat fixed;
+}
+
+.bg-admin {
+    background: linear-gradient(15deg, #e66465, #9198e5) no-repeat fixed;
+}
+
+.profile {
+    min-height: 270px;
+}
+
+.no-pic-profile {
+    margin-left: 50px;
+}
+
+.user-profile {
+    margin-left: 300px;
+}
+
+.user-thumbnail {
+    padding: 2px;
+}
+
+.nav-logo {
+    height: 32px;
+    margin-top: -16px;
+}
+
+.nav-name {
+    margin-left: 5px;
+    font-family: Futura, serif;
+}

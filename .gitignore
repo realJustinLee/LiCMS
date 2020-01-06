@@ -105,3 +105,4 @@ venv.bak/
 
 # project psecific
 .env-licms
+.dev_env

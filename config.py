@@ -16,8 +16,7 @@ class Config:
     SSL_REDIRECT = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_RECORD_QUERIES = True
-    SQLALCHEMY_POOL_RECYCLE = 499
-    SQLALCHEMY_POOL_TIMEOUT = 20
+    SQLALCHEMY_ENGINE_OPTIONS = {'pool_recycle': 499}
     PREFERRED_URL_SCHEME = os.environ.get('PREFERRED_URL_SCHEME', 'http')
 
     @staticmethod
@@ -51,6 +50,7 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
+    SQLALCHEMY_POOL_TIMEOUT = 20
     credentials = {
         'username': os.environ.get('DB_USERNAME'),
         'password': os.environ.get('DB_PASSWORD'),

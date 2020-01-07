@@ -1,5 +1,3 @@
-import os
-
 from flask import current_app, abort, request
 
 from app_core.dev_ops import dev_ops
@@ -15,8 +13,3 @@ def server_shutdown():
         abort(500)
     shutdown()
     return 'Shutting down...'
-
-
-@dev_ops.route('/sk')
-def sk():
-    return os.getenv('FLASK_CONFIG')

@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -7,6 +8,9 @@ from config import config
 
 bootstrap = Bootstrap()
 db = SQLAlchemy()
+
+login_manager = LoginManager()
+login_manager.login_view = 'auth.login'
 
 
 def create_app(config_name):
@@ -17,6 +21,7 @@ def create_app(config_name):
 
     bootstrap.init_app(app)
     db.init_app(app)
+    login_manager.init_app(app)
 
     # Register Error handlers
     from app_core.errors import access_forbidden, page_not_found, internal_server_error
@@ -29,9 +34,9 @@ def create_app(config_name):
     app.register_blueprint(main_blueprint)
 
     from app_core.auth import auth as auth_blueprint
-    app.register_blueprint(auth_blueprint)
+    app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
     from app_core.dev_ops import dev_ops as dev_ops_blueprint
-    app.register_blueprint(dev_ops_blueprint)
+    app.register_blueprint(dev_ops_blueprint, url_prefix='/dev-ops')
 
     return app

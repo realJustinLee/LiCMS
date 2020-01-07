@@ -1,0 +1,48 @@
+{% extends "bootstrap_base.html" %}
+
+{% block title %}User Login{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block page_content %}
+    <form class="form-login bg-light text-center rounded-lg shadow" method="post">
+        <img class="mb-3" src="{{ url_for('static', filename='img/logo.svg') }}" alt="" width="128" height="128">
+        <h1 class="h3 mb-3 font-weight-normal">Please login</h1>
+        {{ form.csrf_token }}
+        {{ form.email.label(class="sr-only") }}
+        {{ form.email(class="form-control", placeholder="Email address",type="email", autofocus=true) }}
+        {{ form.password.label(class="sr-only") }}
+        {{ form.password(class="form-control", placeholder="Password") }}
+        {% for message in form.email.errors %}
+            <small class="text-danger">{{ message }}</small><br>
+        {% endfor %}
+        {% for message in form.password.errors %}
+            <small class="text-danger">{{ message }}</small><br>
+        {% endfor %}
+        <div class="checkbox mb-3">
+            <label>
+                {{ form.remember_me() }}
+                {{ form.remember_me.label() }}
+            </label>
+        </div>
+        {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
+        <div class="mt-3">
+            <p>
+                <small>
+                    Forgot your password?
+                    {#                    <a href="{{ url_for('auth.password_reset_request') }}">Reset it here</a>.<br>#}
+                    New user?
+                    {#                    <a href="{{ url_for('auth.register') }}">Register here</a>.<br>#}
+                </small>
+            </p>
+        </div>
+        <p class="mt-3 mb-1 text-muted small">&copy; Copyright
+            1997 -
+            <script>document.write(new Date().getFullYear())</script>
+            Li Xin.<br>All rights reserved.
+        </p>
+    </form>
+{% endblock %}

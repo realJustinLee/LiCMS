@@ -39,8 +39,7 @@
                 {% endif %}
             </ul>
             <ul class="navbar-nav mt-2 mt-md-0">
-                {#                {% if current_user.is_authenticated %}#}
-                {% if false %}
+                {% if current_user.is_authenticated %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="true">
@@ -60,7 +59,7 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="btn btn-outline-light my-2 my-sm-0" href="#">Log In</a>
+                        <a class="btn btn-outline-light my-2 my-sm-0" href="{{ url_for('auth.login') }}">Log In</a>
                     </li>
                 {% endif %}
             </ul>

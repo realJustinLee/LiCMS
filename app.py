@@ -2,10 +2,10 @@ import os
 
 import click
 from dotenv import load_dotenv
-from flask_migrate import Migrate
+from flask_migrate import Migrate, upgrade
 
 from app_core import create_app, db
-from app_core.models import User, Role
+from app_core.models import User, Role, Gender
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 if os.path.exists(dotenv_path):
@@ -42,3 +42,16 @@ def profile(length, profile_dir):
     from werkzeug.contrib.profiler import ProfilerMiddleware
     app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[length], profile_dir=profile_dir)
     app.run()
+
+
+@app.cli.command()
+def deploy():
+    """Run deployment tasks."""
+    # migrate database to latest revision
+    upgrade()
+
+    # create or update genders
+    Gender.insert_genders()
+
+    # create or update user roles
+    Role.insert_roles()

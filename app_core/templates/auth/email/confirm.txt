@@ -1,0 +1,16 @@
+Greetings. {{ user.name }},
+
+Welcome to LiCMS!
+
+To confirm your account for our service, please click on the following link:
+{{ url_for('auth.confirm', token=token, _external=True) }}
+
+This email is sent at {{ current_time }}.
+You have 10 Minutes to confirm your account.
+
+If you have not registered for the LiCMS service, just ignore this email.
+
+Best Regards,
+Li Xin
+
+Note: replies to this email address are not monitored.

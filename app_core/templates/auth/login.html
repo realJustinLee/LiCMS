@@ -9,7 +9,8 @@
 
 {% block page_content %}
     <form class="form-login bg-light text-center rounded-lg shadow" method="post">
-        <img class="mb-3" src="{{ url_for('static', filename='img/logo.svg') }}" alt="" width="128" height="128">
+        <img class="mb-3 easter-egg-login" src="{{ url_for('static', filename='img/logo.svg') }}" alt="" width="128"
+             height="128">
         <h1 class="h3 mb-3 font-weight-normal">Please login</h1>
         {{ form.csrf_token }}
         {{ form.email.label(class="sr-only") }}
@@ -22,7 +23,7 @@
         {% for message in form.password.errors %}
             <small class="text-danger">{{ message }}</small><br>
         {% endfor %}
-        <div class="checkbox mb-3">
+        <div class="checkbox mb-0">
             <label>
                 {{ form.remember_me() }}
                 {{ form.remember_me.label() }}
@@ -34,12 +35,13 @@
                 <small>
                     Forgot your password?
                     {#                    <a href="{{ url_for('auth.password_reset_request') }}">Reset it here</a>.<br>#}
+                    <a href="#">Click here</a>.<br>
                     New user?
-                    {#                    <a href="{{ url_for('auth.register') }}">Register here</a>.<br>#}
+                    <a href="{{ url_for('auth.register') }}">Create new account</a>.<br>
                 </small>
             </p>
         </div>
-        <p class="mt-3 mb-1 text-muted small">&copy; Copyright
+        <p class="mt-3 mb-0 text-muted small">&copy; Copyright
             1997 -
             <script>document.write(new Date().getFullYear())</script>
             Li Xin.<br>All rights reserved.

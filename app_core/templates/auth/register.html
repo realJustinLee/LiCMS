@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %}User Register{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='css/form-wtf.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block page_content %}
+    <div class="form-wtf bg-light rounded-lg shadow-lg">
+        <div class="h3 font-weight-normal mb-3">
+            <h1>Register</h1>
+        </div>
+        {{ render_form(form) }}
+    </div>
+{% endblock %}

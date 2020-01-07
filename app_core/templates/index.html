@@ -4,9 +4,8 @@
     <div class="jumbotron rounded shadow-lg">
         <h1>
             Hello,
-            {#            {% if current_user.is_authenticated %}#}
-            {% if false %}
-                {#                {{ current_user.name }}#}
+            {% if current_user.is_authenticated %}
+                {{ current_user.username }}
             {% else %}
                 Stranger
             {% endif %}!

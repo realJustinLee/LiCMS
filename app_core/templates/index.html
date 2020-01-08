@@ -11,7 +11,11 @@
             {% endif %}!
         </h1>
         <p class="lead">
-            Welcome to the LiXin Content Management System.
+            Welcome to the LiXin Content Management System
+            <br>
+            You visited this page at {{ moment(current_time).format('LLL') }}.
+            <br>
+            That was {{ moment(current_time).fromNow(refresh=True) }}.
         </p>
     </div>
 {% endblock %}

@@ -52,8 +52,9 @@
                             {#                                </label>{% endif %}#}
                             <b class="caret"></b></a>
                         <div class="dropdown-menu dropdown-menu-right shadow ">
-                            <a class="dropdown-item" href="#">Profile</a>
-                            <a class="dropdown-item" href="#">SthElse</a>
+                            {#                            <a class="dropdown-item" href="{{ url_for('main.user', username=current_user.username) }}">Profile</a>#}
+                            <a class="dropdown-item" href="{{ url_for('auth.change_password') }}">Change Password</a>
+                            <a class="dropdown-item" href="{{ url_for('auth.change_email_request') }}">Change Email</a>
                             <a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">Log Out</a>
                         </div>
                     </li>
@@ -69,5 +70,5 @@
 
 {% block scripts %}
     {{ super() }}
-    {#    {{ moment.include_moment() }}#}
+    {{ moment.include_moment() }}
 {% endblock %}

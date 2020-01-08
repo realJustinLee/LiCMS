@@ -12,7 +12,7 @@ class Config:
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     MAIL_SUBJECT_PREFIX = '[LiCMS]'
     MAIL_SENDER = 'LiCMS Admin <JustinDellAdam@live.com>'
-    LiCMS_ADMIN = os.environ.get('LiCMS_ADMIN')
+    LICMS_ADMIN = os.environ.get('LICMS_ADMIN')
     SSL_REDIRECT = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_RECORD_QUERIES = True
@@ -82,7 +82,7 @@ class ProductionConfig(Config):
             mailhost=(cls.MAIL_SERVER, cls.MAIL_PORT),
             fromaddr=cls.MAIL_SENDER,
             toaddrs=[
-                cls.LiCMS_ADMIN
+                cls.LICMS_ADMIN
             ],
             subject=cls.MAIL_SUBJECT_PREFIX + ' Application Error',
             credentials=credentials,

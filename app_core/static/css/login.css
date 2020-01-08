@@ -29,13 +29,10 @@ body {
     height: 100%;
 }
 
-.sheet-width {
-    max-width: 400px;
-}
-
 .form-login {
     width: 100%;
     padding: 50px;
+    max-width: 400px;
     margin: auto;
 }
 
@@ -65,4 +62,11 @@ body {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+.notification-area {
+    position: fixed;
+    max-width: 350px;
+    top: 30px;
+    right: 30px;
 }

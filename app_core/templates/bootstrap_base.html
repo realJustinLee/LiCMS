@@ -21,26 +21,25 @@
         <link rel="icon" href="{{ url_for('main.favicon') }}" type="image/x-icon">
     {% endblock %}
 </head>
-{#<body {% if current_user.is_administrator() %} class="bg-admin" {% endif %}>#}
-<body>
+<body {% if current_user.is_administrator() %} class="bg-admin" {% endif %}>
 {% block navbar %}
 {% endblock %}
 
 <!-- Your page content -->
 {% block content %}
-    <main role="main" class="container sheet-width">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="mb-4 mt-n1">
-                        <div class="alert shadow alert-warning {{ category }}">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <main role="main" class="container">
+        <div class="notification-area">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="mb-3 alert shadow alert-warning {{ category }}">
+                            <button type="button" class="close ml-3" data-dismiss="alert">&times;</button>
                             {{ message }}
                         </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
 
         {% block page_content %}
         {% endblock %}

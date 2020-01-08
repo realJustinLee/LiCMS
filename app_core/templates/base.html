@@ -25,8 +25,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
                 </li>
-                {#                {% if current_user.is_administrator() %}#}
-                {% if false %}
+                {% if current_user.is_administrator() %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="true">Administrations</a>
@@ -43,13 +42,12 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="true">
+                            {% if current_user.is_administrator() %}
+                                <label class="btn-sm alert-dark m-0 mr-1">👮Admin</label>
+                            {% endif %}
                             {#                            <img class="img-thumbnail user-thumbnail rounded shadow m-0"#}
                             {#                                 src="{{ current_user.gravatar(size=21) }}" alt="user avatar small">&nbsp;#}
                             {{ current_user.username }}
-                            {#                            {% if current_user.is_administrator() %}#}
-                            {#                                <label class="btn-sm alert-primary m-0">#}
-                            {#                                    👮 Admin Badge#}
-                            {#                                </label>{% endif %}#}
                             <b class="caret"></b></a>
                         <div class="dropdown-menu dropdown-menu-right shadow ">
                             {#                            <a class="dropdown-item" href="{{ url_for('main.user', username=current_user.username) }}">Profile</a>#}

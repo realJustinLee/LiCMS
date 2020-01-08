@@ -33,3 +33,9 @@ body {
     margin-left: 5px;
     font-family: Futura, serif;
 }
+
+.notification-area {
+    position: fixed;
+    max-width: 350px;
+    right: 30px;
+}

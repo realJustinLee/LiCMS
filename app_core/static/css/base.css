@@ -35,17 +35,18 @@ body {
 }
 
 .notification-area {
-    margin-top: -3rem;
 }
 
 @media only screen and (max-width: 600px) {
     .notification-area {
+        margin-top: -3rem;
         margin-bottom: 1rem;
     }
 }
 
 @media only screen and (min-width: 600px) {
     .notification-area {
+        margin-top: -2rem;
         position: fixed;
         max-width: 350px;
         right: 30px;

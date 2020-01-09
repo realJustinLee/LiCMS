@@ -12,7 +12,7 @@ class Config:
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     MAIL_SUBJECT_PREFIX = '[LiCMS]'
     MAIL_SENDER = 'LiCMS Admin <JustinDellAdam@live.com>'
-    LICMS_ADMIN = os.environ.get('LICMS_ADMIN')
+    LICMS_ADMIN = os.environ.get('LICMS_ADMIN', '')
     SSL_REDIRECT = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_RECORD_QUERIES = True

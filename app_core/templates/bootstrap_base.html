@@ -32,7 +32,12 @@
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
-                        <div class="mb-3 alert shadow alert-warning {{ category }}">
+                        <div class="alert shadow
+                            {% if category == "message" %}
+                                alert-warning
+                            {% else %}
+                                {{ category }}
+                            {% endif %}">
                             <button type="button" class="close ml-3" data-dismiss="alert">&times;</button>
                             {{ message }}
                         </div>

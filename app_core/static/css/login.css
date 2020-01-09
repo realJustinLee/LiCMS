@@ -36,6 +36,12 @@ body {
     margin: auto;
 }
 
+@media only screen and (max-height: 600px) {
+    .form-login {
+        padding: 20px;
+    }
+}
+
 .form-login .checkbox {
     font-weight: 400;
 }
@@ -65,8 +71,21 @@ body {
 }
 
 .notification-area {
-    position: fixed;
-    max-width: 350px;
-    top: 30px;
-    right: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+    .notification-area {
+        position: fixed;
+        width: calc(100% - 30px);
+        top: 5%;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .notification-area {
+        position: fixed;
+        max-width: 350px;
+        top: 30px;
+        right: 30px;
+    }
 }

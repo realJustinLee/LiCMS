@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Profile - {{ user.name }}
+{% endblock %}
+
+{% block page_content %}
+    <div class="jumbotron bg-light rounded shadow">
+        {#        <img class="img-thumbnail shadow float-left" src="{{ user.gravatar(size=256) }}" alt="user avatar">#}
+        <div class="profile user-profile">
+            <h1>{{ user.name }}</h1>
+            <div class="mt-3 mb-3">
+                Gender: {{ user.gender.name }}<br>
+                {% if current_user.is_administrator() %}
+                    Email: <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+                {% endif %}
+            </div>
+            <div>
+                {% if user == current_user %}
+{#                    <a class="btn btn-primary shadow" href="{{ url_for('main.edit_profile') }}">Edit Profile</a>#}
+                {% endif %}
+                {% if current_user.is_administrator() %}
+{#                    <a class="btn btn-danger shadow" href="{{ url_for('main.edit_profile_admin', user_id=user.id) }}">#}
+{#                        Edit Profile [Admin]</a>#}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

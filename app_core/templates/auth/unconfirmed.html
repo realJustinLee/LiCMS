@@ -9,9 +9,9 @@
 {% endblock %}
 
 {% block page_content %}
-    <div class="form-wtf bg-light rounded-lg shadow-lg">
-        <img class="m-2 float-right" src="{{ url_for('static', filename='img/logo.svg') }}" alt="" width="72"
-             height="72">
+    <div class="form-wtf p-5 bg-light rounded-lg shadow-lg">
+        <img class="m-2 float-right" src="{{ url_for('static', filename='img/logo.svg') }}" alt="" width="100"
+             height="100">
         <div class="h3 font-weight-normal mt-3 mb-lg-5">
             <h1>Hello, {{ current_user.name }}!</h1>
             <h3>You have <b>NOT</b> confirmed your account yet.</h3>

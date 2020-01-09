@@ -14,12 +14,13 @@ from app_core.models import User, Gender
 
 @auth.before_app_request
 def before_request():
-    if current_user.is_authenticated \
-            and not current_user.confirmed \
-            and request.endpoint \
-            and request.blueprint != 'auth' \
-            and request.endpoint != 'static':
-        return redirect(url_for('auth.unconfirmed'))
+    if current_user.is_authenticated:
+        current_user.ping()
+        if not current_user.confirmed \
+                and request.endpoint \
+                and request.blueprint != 'auth' \
+                and request.endpoint != 'static':
+            return redirect(url_for('auth.unconfirmed'))
 
 
 @auth.route('/unconfirmed')
@@ -66,7 +67,7 @@ def register():
     if form.validate_on_submit():
         user = User(
             email=form.email.data.lower(),
-            username=form.username.data,
+            name=form.name.data,
             password=form.password.data,
             gender=Gender.query.get(form.gender.data)
         )
@@ -76,7 +77,7 @@ def register():
         flash('A confirmation email has been sent to you by email.', 'alert-primary')
         db.session.add(user)
         db.session.commit()
-        return redirect(url_for('main.index'))
+        return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
 
 
@@ -180,3 +181,10 @@ def change_email(token):
     else:
         flash('Invalid Request.')
     return redirect(url_for('main.index'))
+
+
+@auth.route('/test')
+def test():
+    u = User(name='test')
+    return render_template('auth/email/confirm.html', user=u, token="token",
+                           current_time=datetime.now(tz.gettz('CST')).strftime("%B %d, %Y %H:%M CST"))

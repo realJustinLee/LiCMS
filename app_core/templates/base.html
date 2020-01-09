@@ -1,7 +1,5 @@
 {% extends "bootstrap_base.html" %}
 
-{% block title %}LiCMS{% endblock %}
-
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css', _external=True) }}">
@@ -20,7 +18,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
@@ -47,10 +45,11 @@
                             {% endif %}
                             {#                            <img class="img-thumbnail user-thumbnail rounded shadow m-0"#}
                             {#                                 src="{{ current_user.gravatar(size=21) }}" alt="user avatar small">&nbsp;#}
-                            {{ current_user.username }}
+                            {{ current_user.name }}
                             <b class="caret"></b></a>
                         <div class="dropdown-menu dropdown-menu-right shadow ">
-                            {#                            <a class="dropdown-item" href="{{ url_for('main.user', username=current_user.username) }}">Profile</a>#}
+                            <a class="dropdown-item"
+                               href="{{ url_for('main.user', user_id=current_user.id) }}">Profile</a>
                             <a class="dropdown-item" href="{{ url_for('auth.change_password') }}">Change Password</a>
                             <a class="dropdown-item" href="{{ url_for('auth.change_email_request') }}">Change Email</a>
                             <a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">Log Out</a>

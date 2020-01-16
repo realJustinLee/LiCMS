@@ -6,7 +6,7 @@
 
 {% block page_content %}
     <div class="jumbotron bg-light rounded shadow">
-        {#        <img class="img-thumbnail shadow float-left" src="{{ user.gravatar(size=256) }}" alt="user avatar">#}
+        <img class="img-thumbnail shadow float-left" src="{{ user.gravatar(size=256) }}" alt="user avatar">
         <div class="profile user-profile">
             <h1>{{ user.name }}</h1>
             {% if user.about_me %}

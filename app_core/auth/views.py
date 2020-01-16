@@ -186,5 +186,5 @@ def change_email(token):
 @auth.route('/test')
 def test():
     u = User(name='test')
-    return render_template('auth/email/confirm.html', user=u, token="token",
+    return render_template('auth/email/change_email.html', user=u, token="token",
                            current_time=datetime.now(tz.gettz('CST')).strftime("%B %d, %Y %H:%M CST"))

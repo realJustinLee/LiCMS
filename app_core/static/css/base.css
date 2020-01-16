@@ -21,7 +21,8 @@ body {
 }
 
 .user-thumbnail {
-    padding: 2px;
+    max-width: 30px;
+    height: auto;
 }
 
 .nav-logo {

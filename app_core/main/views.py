@@ -6,8 +6,8 @@ from flask_login import login_required, current_user
 from app_core import db
 from app_core.decorators import admin_required
 from app_core.main import main
-from app_core.main.forms import EditProfileForm, EditProfileAdminForm
-from app_core.models import User, Role
+from app_core.main.forms import EditProfileForm, EditProfileAdminForm, PostForm
+from app_core.models import User, Role, Permission, Post
 
 
 @main.route('/favicon.ico')
@@ -17,13 +17,21 @@ def favicon():
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html', current_time=datetime.utcnow())
+    form = PostForm()
+    if current_user.can(Permission.WRITE) and form.validate_on_submit():
+        post = Post(body=form.body.data, author=current_user._get_current_object())
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('.index'))
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
+    return render_template('index.html', form=form, posts=posts)
 
 
 @main.route('/user/<user_id>')
 def user(user_id):
     _user = User.query.filter_by(id=user_id).first_or_404()
-    return render_template('user.html', user=_user)
+    posts = _user.posts.order_by(Post.timestamp.desc()).all()
+    return render_template('user.html', user=_user, posts=posts)
 
 
 @main.route('/edit-profile', methods=['GET', 'POST'])

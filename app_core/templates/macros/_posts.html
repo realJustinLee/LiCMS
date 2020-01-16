@@ -1,0 +1,24 @@
+{% macro list_widget(moment, title, posts, extend=false, link='#' ,link_text ='') %}
+    <div class="my-5 p-5 bg-light rounded shadow-sm">
+        <h1 class="border-bottom pb-2 mb-0">{{ title }}</h1>
+        {% for post in posts %}
+            <div class="media text-muted pt-3">
+                <img class="mr-2 rounded" width="32" height="32" src="{{ post.author.gravatar(size=128) }}"
+                     alt="Author Gravatar"/>
+                <div class="media-body pb-3 mb-0 border-bottom">
+                    <div class="float-right">{{ moment(post.timestamp).fromNow() }}</div>
+                    <div class="d-block">
+                        <a class="font-weight-bold"
+                           href="{{ url_for('.user', user_id=post.author.id) }}">@{{ post.author.name }}</a>
+                    </div>
+                    <div>{{ post.body }}</div>
+                </div>
+            </div>
+        {% endfor %}
+        {% if extend %}
+            <small class="d-block text-right mt-3">
+                <a href="{{ link }}">{{ link_text }}</a>
+            </small>
+        {% endif %}
+    </div>
+{% endmacro %}

@@ -1,7 +1,9 @@
 {% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+{% import 'macros/_posts.html' as m_posts %}
 
 {% block page_content %}
-    <div class="jumbotron rounded shadow-lg">
+    <div class="jumbotron rounded shadow-lg bg-light">
         <h1>
             Hello,
             {% if current_user.is_authenticated %}
@@ -10,12 +12,34 @@
                 Stranger
             {% endif %}!
         </h1>
-        <p class="lead">
-            Welcome to the <b>LiXin Content Management System.</b>
-            <br>
-            You visited this page at {{ moment(current_time).format('LLL') }}.
-            <br>
-            That was {{ moment(current_time).fromNow(refresh=True) }}.
-        </p>
+        <div class="lead">
+            {% if current_user.can(Permission.WRITE) %}
+                {{ render_form(form) }}
+            {% endif %}
+        </div>
+    </div>
+
+    {{ m_posts.list_widget(moment, "Latest Posts", posts, extend=true, link='#', link_text='All Posts' ) }}
+
+    <div class="my-5 p-5 bg-light rounded shadow-sm">
+        <h1 class="border-bottom border-gray pb-2 mb-0">Trending Authors</h1>
+        <div class="media text-muted pt-3">
+            <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg"
+                 preserveAspectRatio="xMidYMid slice" focusable="false">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#007bff"></rect>
+                <text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text>
+            </svg>
+            <div class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <strong class="text-gray-dark">Full Name</strong>
+                    <a href="https://getbootstrap.com/docs/4.4/examples/offcanvas/#">Follow</a>
+                </div>
+                <span class="d-block">@username</span>
+            </div>
+        </div>
+        <small class="d-block text-right mt-3">
+            <a href="https://getbootstrap.com/docs/4.4/examples/offcanvas/#">All authors</a>
+        </small>
     </div>
 {% endblock %}

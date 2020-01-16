@@ -43,8 +43,8 @@
                             {% if current_user.is_administrator() %}
                                 <label class="btn-sm alert-dark m-0 mr-1">👮Admin</label>
                             {% endif %}
-                            <img class="img-thumbnail user-thumbnail rounded shadow m-0 mr-1"
-                                 src="{{ current_user.gravatar(size=21) }}" alt="user avatar small">
+                            <img class="user-thumbnail rounded shadow m-0 mr-1 mt-n1"
+                                 src="{{ current_user.gravatar(size=128) }}" alt="user avatar small">
                             {{ current_user.name }}
                             <b class="caret"></b></a>
                         <div class="dropdown-menu dropdown-menu-right shadow ">

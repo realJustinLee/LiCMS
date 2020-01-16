@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import 'macros/_posts.html' as m_posts %}
 
 {% block title %}
     Profile - {{ user.name }}
@@ -50,4 +51,6 @@
             </div>
         </div>
     </div>
+
+    {{ m_posts.list_widget(moment, "Posts by " + user.name, posts) }}
 {% endblock %}

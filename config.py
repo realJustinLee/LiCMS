@@ -6,13 +6,14 @@ from sqlalchemy.engine.url import URL
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY', 'Hard_To_Guess_String')
     MAIL_SERVER = os.environ.get('MAIL_SERVER', 'smtp.googlemail.com')
-    MAIL_PORT = int(os.environ.get('MAIL_PORT', '587'))
+    MAIL_PORT = int(os.environ.get('MAIL_PORT', 587))
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS', 'true').lower() in ['true', 'on', '1']
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     MAIL_SUBJECT_PREFIX = '[LiCMS]'
     MAIL_SENDER = 'LiCMS Admin <JustinDellAdam@live.com>'
     LICMS_ADMIN = os.environ.get('LICMS_ADMIN', '')
+    LICMS_POSTS_PER_PAGE = int(os.environ.get('LICMS_POSTS_PER_PAGE', 20))
     SSL_REDIRECT = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_RECORD_QUERIES = True

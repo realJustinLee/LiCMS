@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% from 'bootstrap/form.html' import render_form %}
 {% import 'macros/_posts.html' as m_posts %}
+{% import 'macros/_paginition.html' as m_paginition %}
 
 {% block title %}
     {{ super() }} - Posts
@@ -24,4 +25,6 @@
     </div>
 
     {{ m_posts.list_widget(moment, "All Posts", posts) }}
+
+    {{ m_paginition.pagination_widget(pagination, 'main.posts') }}
 {% endblock %}

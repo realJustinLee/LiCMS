@@ -7,10 +7,10 @@
         <h1>
             Hello,
             {% if current_user.is_authenticated %}
-                {{ current_user.name }}
+                {{ current_user.name }}.
             {% else %}
-                Stranger
-            {% endif %}!
+                Stranger!
+            {% endif %}
         </h1>
         <div class="lead">
             <p class="lead">

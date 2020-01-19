@@ -71,6 +71,19 @@
     </nav>
 {% endblock %}
 
+{% block footer %}
+    <footer class="w-100 mt-auto py-3 bg-white">
+        <div class="container">
+            <span class="text-muted">&copy; Copyright
+            <script>
+                document.write(new Date().getFullYear())
+            </script>
+            Li Xin. All rights reserved.
+            </span>
+        </div>
+    </footer>
+{% endblock %}
+
 {% block scripts %}
     {{ super() }}
     {{ moment.include_moment() }}

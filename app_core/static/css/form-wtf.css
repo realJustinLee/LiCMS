@@ -1,4 +1,9 @@
-.bg-white, .form-wtf {
+body {
+    -ms-flex-align: center !important;
+    align-items: center !important;
+}
+
+.form-wtf {
     width: 100%;
     max-width: 800px;
     margin: auto;

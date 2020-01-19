@@ -1,7 +1,18 @@
 body {
     padding-top: 8rem;
-    padding-bottom: 2rem;
+    -ms-flex-direction: column !important;
+    flex-direction: column !important;
     background: linear-gradient(15deg, #64bcf4, #c2e59c) no-repeat fixed;
+}
+
+@media only screen and (max-width: 576px) {
+    body {
+        padding-top: 6rem;
+    }
+}
+
+footer {
+    opacity: 75%;
 }
 
 .bg-admin {
@@ -14,10 +25,6 @@ body {
 
 .no-pic-profile {
     margin-left: 50px;
-}
-
-.user-profile {
-    margin-left: 300px;
 }
 
 .user-thumbnail {
@@ -38,14 +45,14 @@ body {
 .notification-area {
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 576px) {
     .notification-area {
         margin-top: -3rem;
         margin-bottom: 1rem;
     }
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 576px) {
     .notification-area {
         margin-top: -2rem;
         position: fixed;

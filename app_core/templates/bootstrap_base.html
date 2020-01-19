@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-100">
 <head>
     {% block head %}
         <!-- Required meta tags -->
@@ -22,16 +22,16 @@
         <link rel="icon" href="{{ url_for('main.favicon') }}" type="image/x-icon">
     {% endblock %}
 </head>
-<body {% if current_user.is_administrator() %} class="bg-admin" {% endif %}>
+<body class="d-flex h-100 {% if current_user.is_administrator() %}bg-admin{% endif %}">
 {% block navbar %}
 {% endblock %}
 
 <!-- Your page content -->
 {% block content %}
     <main role="main" class="container">
-        <div class="notification-area">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="notification-area">
                     {% for category, message in messages %}
                         <div class="alert shadow-lg
                             {% if category == "message" %}
@@ -43,9 +43,9 @@
                             {{ message }}
                         </div>
                     {% endfor %}
-                {% endif %}
-            {% endwith %}
-        </div>
+                </div>
+            {% endif %}
+        {% endwith %}
 
         {% block page_content %}
         {% endblock %}

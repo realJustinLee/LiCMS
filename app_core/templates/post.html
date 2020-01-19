@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+{% import 'macros/_posts.html' as m_posts %}
+
+{% block title %}
+    {{ super() }} - Post
+{% endblock %}
+
+{% block page_content %}
+    {{ m_posts.list_widget(moment, "Post Detail", posts, permalink=false) }}
+{% endblock %}

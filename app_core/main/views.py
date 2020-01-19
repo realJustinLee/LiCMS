@@ -7,7 +7,7 @@ from app_core import db
 from app_core.decorators import admin_required
 from app_core.main import main
 from app_core.main.forms import EditProfileForm, EditProfileAdminForm, PostForm
-from app_core.models import User, Role, Permission, Post
+from app_core.models import User, Role, Permission, Post, Gender
 
 
 @main.route('/favicon.ico')
@@ -46,13 +46,13 @@ def edit_profile():
     form = EditProfileForm()
     if form.validate_on_submit():
         current_user.name = form.name.data
-        current_user.gender = form.gender.data
+        current_user.gender = Gender.query.get(form.gender.data)
         current_user.location = form.location.data
         current_user.about_me = form.about_me.data
         db.session.add(current_user._get_current_object())
         db.session.commit()
         flash('Your profile has been updated.')
-        return redirect(url_for('.user', username=current_user.username))
+        return redirect(url_for('main.user', user_id=current_user.id))
     form.name.data = current_user.name
     form.gender.data = current_user.gender_id
     form.location.data = current_user.location
@@ -71,13 +71,13 @@ def edit_profile_admin(user_id):
         _user.confirmed = form.confirmed.data
         _user.role = Role.query.get(form.role.data)
         _user.name = form.name.data
-        _user.gender = form.gender.data
+        _user.gender = Gender.query.get(form.gender.data)
         _user.location = form.location.data
         _user.about_me = form.about_me.data
         db.session.add(_user)
         db.session.commit()
         flash('The profile has been updated.')
-        return redirect(url_for('.user', username=_user.username))
+        return redirect(url_for('main.user', user_id=_user.id))
     form.email.data = _user.email
     form.confirmed.data = _user.confirmed
     form.role.data = _user.role_id
@@ -93,8 +93,8 @@ def edit_profile_admin(user_id):
 def posts():
     form = PostForm()
     if current_user.can(Permission.WRITE) and form.validate_on_submit():
-        post = Post(body=form.body.data, author=current_user._get_current_object())
-        db.session.add(post)
+        _post = Post(body=form.body.data, author=current_user._get_current_object())
+        db.session.add(_post)
         db.session.commit()
         return redirect(url_for('main.posts'))
     page = request.args.get('page', 1, type=int)
@@ -102,3 +102,9 @@ def posts():
         'LICMS_POSTS_PER_PAGE'], error_out=False)
     _posts = pagination.items
     return render_template('posts.html', form=form, posts=_posts, pagination=pagination)
+
+
+@main.route('/post/<int:post_id>')
+def post(post_id):
+    _post = Post.query.get_or_404(post_id)
+    return render_template('post.html', posts=[_post])

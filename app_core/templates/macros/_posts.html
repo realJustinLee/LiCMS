@@ -1,4 +1,4 @@
-{% macro list_widget(moment, title, posts, extend=false, link='#' ,link_text ='') %}
+{% macro list_widget(moment, title, posts, extend=false, link='#' ,link_text ='', permalink=true) %}
     {% if posts %}
         <div class="jumbotron my-5 p-5 rounded-lg shadow-lg bg-white">
             <h1 class="border-bottom pb-2 mb-0">{{ title }}</h1>
@@ -20,6 +20,13 @@
                                 {{ post.body }}
                             {% endif %}
                         </div>
+                        {% if permalink %}
+                            <div class="text-right">
+                                <a href="{{ url_for('main.post', post_id=post.id) }}">
+                                    <span class="btn-sm btn-primary">Permalink</span>
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% from 'bootstrap/form.html' import render_form %}
 
-{% block title %}{{ super() }} - User Register{% endblock %}
+{% block title %}{{ super() }} - Edit Post{% endblock %}
 
 {% block head %}
     {{ super() }}
@@ -11,10 +11,15 @@
 {% block page_content %}
     <div class="form-wtf p-5 bg-white rounded-lg shadow-lg">
         <div class="h3 font-weight-normal mb-3">
-            <h1>Register</h1>
+            <h1>Edit Your Profile</h1>
         </div>
         <div>
             {{ render_form(form) }}
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ pagedown.include_pagedown() }}
 {% endblock %}

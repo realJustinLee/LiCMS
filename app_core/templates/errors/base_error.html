@@ -1,11 +1,7 @@
 {% extends "base.html" %}
 
-{% block head %}
-    {{ super() }}
-    <link href="{{ url_for('static', filename='css/error.css', _external=True) }}" rel="stylesheet">
+{% block title %}
 {% endblock %}
-
-{% block title %}Page Not Found{% endblock %}
 
 {% block page_content %}
     <div class="jumbotron px-5 alert-danger rounded shadow-lg">

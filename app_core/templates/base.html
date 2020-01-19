@@ -21,6 +21,12 @@
                     <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.posts') }}">Posts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.users') }}">Users</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
                 </li>
                 {% if current_user.is_administrator() %}

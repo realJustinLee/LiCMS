@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+{% import 'macros/_posts.html' as m_posts %}
+
+{% block title %}
+    {{ super() }} - Posts
+{% endblock %}
+
+{% block page_content %}
+    <div class="jumbotron bg-white px-5 rounded-lg shadow-lg">
+        <h1>
+            Hello,
+            {% if current_user.is_authenticated %}
+                {{ current_user.name }}
+            {% else %}
+                Stranger
+            {% endif %}!
+        </h1>
+        <div class="lead">
+            {% if current_user.can(Permission.WRITE) %}
+                {{ render_form(form) }}
+            {% endif %}
+        </div>
+    </div>
+
+    {{ m_posts.list_widget(moment, "All Posts", posts) }}
+{% endblock %}

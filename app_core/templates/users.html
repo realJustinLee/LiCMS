@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% import 'macros/_users.html' as m_users %}
+
+{% block title %}
+    {{ super() }} - Users
+{% endblock %}
+
+{% block page_content %}
+    <div class="jumbotron bg-white px-5 rounded-lg shadow-lg">
+        <h1>
+            Hello,
+            {% if current_user.is_authenticated %}
+                {{ current_user.name }}
+            {% else %}
+                Stranger
+            {% endif %}!
+        </h1>
+    </div>
+
+    {{ m_users.list_widget(moment, "All Authors", users) }}
+{% endblock %}

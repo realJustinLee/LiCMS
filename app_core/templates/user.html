@@ -6,12 +6,12 @@
 {% endblock %}
 
 {% block page_content %}
-    <div class="jumbotron bg-light rounded shadow">
+    <div class="jumbotron bg-white rounded-lg shadow-lg">
         <img class="img-thumbnail shadow float-left" src="{{ user.gravatar(size=256) }}" alt="user avatar">
         <div class="profile user-profile">
-            <h1>{{ user.name }}</h1>
+            <h1 class="mt-2">{{ user.name }}</h1>
             {% if user.about_me %}
-                <div class="text-muted">
+                <div class="text-muted col-10 alert alert-info">
                     {{ user.about_me }}
                 </div>
             {% endif %}

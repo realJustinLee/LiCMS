@@ -181,10 +181,3 @@ def change_email(token):
     else:
         flash('Invalid Request.')
     return redirect(url_for('main.index'))
-
-
-@auth.route('/test')
-def test():
-    u = User(name='test')
-    return render_template('auth/email/change_email.html', user=u, token="token",
-                           current_time=datetime.now(tz.gettz('CST')).strftime("%B %d, %Y %H:%M CST"))

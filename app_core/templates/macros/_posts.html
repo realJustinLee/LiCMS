@@ -13,7 +13,13 @@
                                 @{{ post.author.name }}
                             </a>
                         </div>
-                        <div class="mt-1 ml-2">{{ post.body }}</div>
+                        <div class="mt-1 ml-2">
+                            {% if post.body_html %}
+                                {{ post.body_html | safe }}
+                            {% else %}
+                                {{ post.body }}
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             {% endfor %}

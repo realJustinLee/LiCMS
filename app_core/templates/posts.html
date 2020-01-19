@@ -28,3 +28,8 @@
 
     {{ m_paginition.pagination_widget(pagination, 'main.posts') }}
 {% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ pagedown.include_pagedown() }}
+{% endblock %}

@@ -7,5 +7,5 @@
 {% endblock %}
 
 {% block page_content %}
-    {{ m_posts.list_widget(moment, "Post Detail", posts, permalink=false) }}
+    {{ m_posts.list_widget(current_user, moment, "Post Detail", posts, permalink=false) }}
 {% endblock %}

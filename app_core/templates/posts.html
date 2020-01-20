@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    {{ m_posts.list_widget(moment, "All Posts", posts) }}
+    {{ m_posts.list_widget(current_user, moment, "All Posts", posts) }}
 
     {{ m_paginition.pagination_widget(pagination, 'main.posts') }}
 {% endblock %}

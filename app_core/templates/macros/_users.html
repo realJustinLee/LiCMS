@@ -11,7 +11,9 @@
                             <a class="font-weight-bold" href="{{ url_for('main.user', user_id=user.id) }}">
                                 @{{ user.name }}
                             </a>
-                            <a class="small" href="#">Follow</a>
+                            <a href="#">
+                                <span class="btn-sm btn-primary">Follow</span>
+                            </a>
                         </div>
                         <span class="d-block">{{ user.gender.name }}</span>
                     </div>

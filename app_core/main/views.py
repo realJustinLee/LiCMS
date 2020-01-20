@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import render_template, redirect, url_for, flash, request, current_app
+from flask import render_template, redirect, url_for, flash, request, current_app, abort
 from flask_login import login_required, current_user
 
 from app_core import db
@@ -105,6 +105,24 @@ def posts():
 
 
 @main.route('/post/<int:post_id>')
+@login_required
 def post(post_id):
     _post = Post.query.get_or_404(post_id)
     return render_template('post.html', posts=[_post])
+
+
+@main.route('/edit/<int:post_id>', methods=['GET', 'POST'])
+@login_required
+def edit(post_id):
+    _post = Post.query.get_or_404(post_id)
+    if current_user != _post.author and not current_user.is_administrator():
+        abort(403)
+    form = PostForm()
+    if form.validate_on_submit():
+        _post.body = form.body.data
+        db.session.add(_post)
+        db.session.commit()
+        flash('The post has been updated.')
+        return redirect(url_for('main.post', post_id=_post.id))
+    form.body.data = _post.body
+    return render_template('edit_post.html', form=form)

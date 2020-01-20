@@ -47,7 +47,7 @@
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="true">
                             {% if current_user.is_administrator() %}
-                                <label class="btn-sm alert-dark m-0 mr-1">👮Admin</label>
+                                <label class="btn-sm alert-primary m-0 mr-1">👮Admin</label>
                             {% endif %}
                             <img class="user-thumbnail rounded shadow m-0 mr-1 mt-n1"
                                  src="{{ current_user.gravatar(size=128) }}" alt="user avatar small">

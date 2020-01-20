@@ -62,5 +62,5 @@
         </div>
     </div>
 
-    {{ m_posts.list_widget(moment, "Posts by " + user.name, posts) }}
+    {{ m_posts.list_widget(current_user, moment, "Posts by " + user.name, posts) }}
 {% endblock %}

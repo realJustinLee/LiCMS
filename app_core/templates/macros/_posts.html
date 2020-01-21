@@ -1,6 +1,6 @@
-{% macro list_widget(current_user, moment, title, posts, extend=false, link='#' ,link_text ='', permalink=true) %}
+{% macro list_widget(title, posts, extend=false, link='#' ,link_text ='', permalink=true) %}
     {% if posts %}
-        <div class="jumbotron my-5 p-5 rounded-lg shadow-lg bg-white">
+        <div class="jumbotron p-5 rounded-lg shadow-lg bg-white">
             <h1 class="border-bottom pb-2 mb-0">{{ title }}</h1>
             {% for post in posts %}
                 <div class="media text-muted pt-3">
@@ -29,7 +29,7 @@
                                 {% elif current_user.is_administrator() %}
                                     <a href="{{ url_for('main.edit', post_id=post.id) }}">
                                         <span class="btn-sm btn-danger">Edit
-                                            <span class="alert-danger rounded px-1 ml-1">Admin</span>
+                                            <span class="badge badge-pill alert-danger">Admin</span>
                                         </span>
                                     </a>
                                 {% endif %}

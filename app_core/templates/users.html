@@ -1,24 +1,17 @@
 {% extends "base.html" %}
-{% import 'macros/_users.html' as m_users %}
+{% import 'macros/_users.html' as m_users with context %}
 {% import 'macros/_paginition.html' as m_paginition %}
 
 {% block title %}
-    {{ super() }} - Users
+    {{ super() }} - {{ title }}
 {% endblock %}
 
 {% block page_content %}
-    <div class="jumbotron bg-white px-5 rounded-lg shadow-lg">
-        <h1>
-            Hello,
-            {% if current_user.is_authenticated %}
-                {{ current_user.name }}
-            {% else %}
-                Stranger
-            {% endif %}!
-        </h1>
-    </div>
+    {{ m_users.list_widget(title, users) }}
 
-    {{ m_users.list_widget(moment, "All Authors", users) }}
-
-    {{ m_paginition.pagination_widget(pagination, 'main.users') }}
+    {% if user_id %}
+        {{ m_paginition.pagination_widget(pagination, endpoint, user_id=user_id) }}
+    {% else %}
+        {{ m_paginition.pagination_widget(pagination, endpoint) }}
+    {% endif %}
 {% endblock %}

@@ -4,10 +4,10 @@ from flask import render_template, redirect, url_for, flash, request, current_ap
 from flask_login import login_required, current_user
 
 from app_core import db
-from app_core.decorators import admin_required
+from app_core.decorators import admin_required, permission_required
 from app_core.main import main
 from app_core.main.forms import EditProfileForm, EditProfileAdminForm, PostForm
-from app_core.models import User, Role, Permission, Post, Gender
+from app_core.models import User, Role, Permission, Post, Gender, Follow
 
 
 @main.route('/favicon.ico')
@@ -23,17 +23,16 @@ def index():
 
 
 @main.route('/user', methods=['GET', 'POST'])
-@login_required
 def users():
     page = request.args.get('page', 1, type=int)
     pagination = User.query.order_by(User.member_since.desc()).paginate(page, per_page=current_app.config[
-        'LICMS_POSTS_PER_PAGE'], error_out=False)
+        'LICMS_USERS_PER_PAGE'], error_out=False)
     _users = pagination.items
-    return render_template('users.html', users=_users, pagination=pagination)
+    return render_template('users.html', title='All authors', users=_users, pagination=pagination,
+                           endpoint='main.users')
 
 
 @main.route('/user/<user_id>')
-@login_required
 def user(user_id):
     _user = User.query.filter_by(id=user_id).first_or_404()
     _posts = _user.posts.order_by(Post.timestamp.desc()).all()
@@ -89,7 +88,6 @@ def edit_profile_admin(user_id):
 
 
 @main.route('/post', methods=['GET', 'POST'])
-@login_required
 def posts():
     form = PostForm()
     if current_user.can(Permission.WRITE) and form.validate_on_submit():
@@ -101,11 +99,11 @@ def posts():
     pagination = Post.query.order_by(Post.timestamp.desc()).paginate(page, per_page=current_app.config[
         'LICMS_POSTS_PER_PAGE'], error_out=False)
     _posts = pagination.items
-    return render_template('posts.html', form=form, posts=_posts, pagination=pagination)
+    return render_template('posts.html', title='All Posts', form=form, posts=_posts, pagination=pagination,
+                           endpoint='main.posts')
 
 
 @main.route('/post/<int:post_id>')
-@login_required
 def post(post_id):
     _post = Post.query.get_or_404(post_id)
     return render_template('post.html', posts=[_post])
@@ -126,3 +124,63 @@ def edit(post_id):
         return redirect(url_for('main.post', post_id=_post.id))
     form.body.data = _post.body
     return render_template('edit_post.html', form=form)
+
+
+@main.route('/follow/<user_id>')
+@login_required
+@permission_required(Permission.FOLLOW)
+def follow(user_id):
+    _user = User.query.filter_by(id=user_id).first()
+    if _user is None:
+        flash('Invalid user.')
+        return redirect(url_for('main.index'))
+    if current_user.is_following(_user):
+        flash('You are already following this user.')
+        return redirect(url_for('main.user', user_id=user_id))
+    current_user.follow(_user)
+    flash('You are now following %s.' % _user.name)
+    return redirect(url_for('main.user', user_id=user_id))
+
+
+@main.route('/unfollow/<user_id>')
+@login_required
+@permission_required(Permission.FOLLOW)
+def unfollow(user_id):
+    _user = User.query.filter_by(id=user_id).first()
+    if _user is None:
+        flash('Invalid user.')
+        return redirect(url_for('main.index'))
+    if not current_user.is_following(_user):
+        flash('You are not following this user.')
+        return redirect(url_for('main.user', user_id=user_id))
+    current_user.unfollow(_user)
+    flash('You are not following %s anymore.' % _user.name)
+    return redirect(url_for('main.user', user_id=user_id))
+
+
+@main.route('/followers/<user_id>')
+def followers(user_id):
+    _user = User.query.filter_by(id=user_id).first()
+    if _user is None:
+        flash('Invalid user.')
+        return redirect(url_for('main.index'))
+    page = request.args.get('page', 1, type=int)
+    pagination = _user.followers.order_by(Follow.timestamp.desc()).paginate(page, per_page=current_app.config[
+        'LICMS_USERS_PER_PAGE'], error_out=False)
+    _followers = [item.follower for item in pagination.items]
+    return render_template('users.html', title="Followers of " + _user.name, users=_followers, pagination=pagination,
+                           endpoint='main.followers', user_id=user_id)
+
+
+@main.route('/followed_by/<user_id>')
+def followed_by(user_id):
+    _user = User.query.filter_by(id=user_id).first()
+    if _user is None:
+        flash('Invalid user.')
+        return redirect(url_for('main.index'))
+    page = request.args.get('page', 1, type=int)
+    pagination = _user.followed.order_by(Follow.timestamp.desc()).paginate(page, per_page=current_app.config[
+        'LICMS_USERS_PER_PAGE'], error_out=False)
+    _followed = [item.followed for item in pagination.items]
+    return render_template('users.html', title="Users followed by " + _user.name, users=_followed,
+                           pagination=pagination, endpoint='main.followers', user_id=user_id)

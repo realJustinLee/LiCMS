@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% import 'macros/_posts.html' as m_posts %}
+{% import 'macros/_posts.html' as m_posts with context %}
 
 {% block title %}
     Profile - {{ user.name }}
@@ -35,26 +35,49 @@
                     </div>
                     <div>
                         Member since {{ moment(user.member_since).format('L') }}.
-                        <label class="btn-sm alert-success mb-0 ml-1 mt-n1">
+                        <span class="badge badge-pill badge-success mb-0 ml-1 mt-n1">
                             {{ moment(user.member_since).fromNow() }}
-                        </label>
+                        </span>
                     </div>
                     <div>
                         Last seen {{ moment(user.last_seen).fromNow() }}.
                     </div>
+                    <div class="mt-2">
+                        <a class="mr-2 btn-sm alert-info" href="{{ url_for('main.followers', user_id=user.id) }}">Followers:
+                            <span class="badge badge-pill badge-info">{{ user.followers.count() }}</span></a>
+                        <a class="btn-sm alert-info" href="{{ url_for('main.followed_by', user_id=user.id) }}">Following:
+                            <span class="badge badge-pill badge-info">{{ user.followed.count() }}</span></a>
+                        {% if current_user.is_authenticated and user != current_user and user.is_following(current_user) %}
+                            <span class="px-1">|</span>
+                            {% if not current_user.is_following(user) %}
+                                <span class="badge badge-pill badge-info">Follows you</span>
+                            {% else %}
+                                <span class="badge badge-pill badge-primary">Follows each other</span>
+                            {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="row px-3">
+                    {% if current_user.can(Permission.FOLLOW) and user != current_user %}
+                        {% if not current_user.is_following(user) %}
+                            <a href="{{ url_for('main.follow', user_id=user.id) }}"
+                               class="btn btn-primary mr-0 mr-sm-2 col-12 col-sm-auto mb-2 mb-sm-0">Follow</a>
+                        {% else %}
+                            <a href="{{ url_for('main.unfollow', user_id=user.id) }}"
+                               class="btn btn-warning mr-0 mr-sm-2 col-12 col-sm-auto mb-2 mb-sm-0">Unfollow</a>
+                        {% endif %}
+                    {% endif %}
                     {% if user == current_user %}
-                        <a class="btn btn-primary shadow mr-0 mr-sm-2 col-12 col-sm-auto mb-2 mb-sm-0"
+                        <a class="btn btn-outline-primary mr-0 mr-sm-2 col-12 col-sm-auto mb-2 mb-sm-0"
                            href="{{ url_for('main.edit_profile') }}">
                             Edit Profile
                         </a>
                     {% endif %}
                     {% if current_user.is_administrator() %}
-                        <a class="btn btn-danger shadow col-12 col-sm-auto"
+                        <a class="btn btn-outline-danger col-12 col-sm-auto"
                            href="{{ url_for('main.edit_profile_admin', user_id=user.id) }}">
                             Edit Profile
-                            <span class="btn-sm alert-danger disabled ml-1">Admin</span>
+                            <span class="badge badge-pill alert-danger">Admin</span>
                         </a>
                     {% endif %}
                 </div>
@@ -62,5 +85,5 @@
         </div>
     </div>
 
-    {{ m_posts.list_widget(current_user, moment, "Posts by " + user.name, posts) }}
+    {{ m_posts.list_widget("Posts by " + user.name, posts) }}
 {% endblock %}

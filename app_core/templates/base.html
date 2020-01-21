@@ -46,12 +46,12 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="true">
-                            {% if current_user.is_administrator() %}
-                                <label class="btn-sm alert-primary m-0 mr-1">👮Admin</label>
-                            {% endif %}
                             <img class="user-thumbnail rounded shadow m-0 mr-1 mt-n1"
                                  src="{{ current_user.gravatar(size=128) }}" alt="user avatar small">
-                            {{ current_user.name }}
+                            <span>{{ current_user.name }}</span>
+                            {% if current_user.is_administrator() %}
+                                <span class="badge badge-pill badge-warning ml-1">Admin</span>
+                            {% endif %}
                             <b class="caret"></b></a>
                         <div class="dropdown-menu dropdown-menu-right shadow ">
                             <a class="dropdown-item"

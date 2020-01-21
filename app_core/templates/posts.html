@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% from 'bootstrap/form.html' import render_form %}
-{% import 'macros/_posts.html' as m_posts %}
+{% import 'macros/_posts.html' as m_posts with context %}
 {% import 'macros/_paginition.html' as m_paginition %}
 
 {% block title %}
-    {{ super() }} - Posts
+    {{ super() }} - {{ title }}
 {% endblock %}
 
 {% block page_content %}
@@ -24,9 +24,9 @@
         </div>
     </div>
 
-    {{ m_posts.list_widget(current_user, moment, "All Posts", posts) }}
+    {{ m_posts.list_widget(title, posts) }}
 
-    {{ m_paginition.pagination_widget(pagination, 'main.posts') }}
+    {{ m_paginition.pagination_widget(pagination, endpoint) }}
 {% endblock %}
 
 {% block scripts %}

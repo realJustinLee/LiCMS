@@ -1,6 +1,6 @@
-{% macro list_widget(moment, title, users, extend=false, link='#' ,link_text ='') %}
+{% macro list_widget(title, users, extend=false, link='#' ,link_text ='') %}
     {% if users %}
-        <div class="jumbotron my-5 p-5 rounded-lg shadow-lg bg-white">
+        <div class="jumbotron p-5 rounded-lg shadow-lg bg-white">
             <h1 class="border-bottom pb-2 mb-0">{{ title }}</h1>
             {% for user in users %}
                 <div class="media text-muted pt-3">
@@ -11,11 +11,33 @@
                             <a class="font-weight-bold" href="{{ url_for('main.user', user_id=user.id) }}">
                                 @{{ user.name }}
                             </a>
-                            <a href="#">
-                                <span class="btn-sm btn-primary">Follow</span>
-                            </a>
+                            {% if current_user.is_authenticated and current_user.can(Permission.FOLLOW) and user != current_user %}
+                                {% if not current_user.is_following(user) %}
+                                    <a href="{{ url_for('main.follow', user_id=user.id) }}"
+                                       class="btn-sm btn-primary">Follow</a>
+                                {% else %}
+                                    <a href="{{ url_for('main.unfollow', user_id=user.id) }}"
+                                       class="btn-sm btn-warning">Unfollow</a>
+                                {% endif %}
+                            {% endif %}
                         </div>
-                        <span class="d-block">{{ user.gender.name }}</span>
+                        <div>
+                            <span class="badge badge-pill alert-warning">{{ user.gender.name }}</span>
+                            <span class="badge badge-pill alert-primary">posts: {{ user.posts.count() }}</span>
+                            <span class="badge badge-pill alert-info">followers: {{ user.followers.count() }}</span>
+                            <span class="badge badge-pill alert-info">followed: {{ user.followed.count() }}</span>
+                            <span class="badge badge-pill alert-success">member since: {{ moment(user.member_since).fromNow() }}</span>
+                        </div>
+                        {% if current_user.is_authenticated %}
+                            <div>
+                                {% if current_user.is_followed_by(user) %}
+                                    <span class="badge badge-pill alert-info">follows you since: {{ moment(user.member_since).fromNow() }}</span>
+                                {% endif %}
+                                {% if current_user.is_following(user) %}
+                                    <span class="badge badge-pill alert-primary">followed by you since: {{ moment(user.member_since).fromNow() }}</span>
+                                {% endif %}
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}

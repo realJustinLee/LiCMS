@@ -14,6 +14,7 @@ class Config:
     MAIL_SENDER = 'LiCMS Admin <JustinDellAdam@live.com>'
     LICMS_ADMIN = os.environ.get('LICMS_ADMIN', '')
     LICMS_POSTS_PER_PAGE = int(os.environ.get('LICMS_POSTS_PER_PAGE', 20))
+    LICMS_USERS_PER_PAGE = int(os.environ.get('LICMS_USERS_PER_PAGE', 20))
     SSL_REDIRECT = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_RECORD_QUERIES = True

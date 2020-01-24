@@ -24,8 +24,8 @@
                         <div>
                             <span class="badge badge-pill alert-warning">{{ user.gender.name }}</span>
                             <span class="badge badge-pill alert-primary">posts: {{ user.posts.count() }}</span>
-                            <span class="badge badge-pill alert-info">followers: {{ user.followers.count() }}</span>
-                            <span class="badge badge-pill alert-info">followed: {{ user.followed.count() }}</span>
+                            <span class="badge badge-pill alert-info">followers: {{ user.followers.count() - 1 }}</span>
+                            <span class="badge badge-pill alert-info">followed: {{ user.followed.count() - 1 }}</span>
                             <span class="badge badge-pill alert-success">member since: {{ moment(user.member_since).fromNow() }}</span>
                         </div>
                         {% if current_user.is_authenticated %}

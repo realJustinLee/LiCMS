@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    {{ m_posts.list_widget(title, posts) }}
+    {{ m_posts.list_widget(title, posts, show_tab=true) }}
 
     {{ m_paginition.pagination_widget(pagination, endpoint) }}
 {% endblock %}

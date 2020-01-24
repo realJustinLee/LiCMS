@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    {{ m_posts.list_widget("Latest Posts", posts, extend=true, link=url_for('main.posts'), link_text='Show All Posts') }}
+    {{ m_posts.list_widget(post_title, posts, show_tab=true, extend=true, link=url_for('main.posts'), link_text=post_link) }}
 
-    {{ m_users.list_widget("Newbie Authors", users, extend=true, link=url_for('main.users'), link_text='Show All Users') }}
+    {{ m_users.list_widget("Trending Authors", users, extend=true, link=url_for('main.users'), link_text='Show All Users') }}
 {% endblock %}

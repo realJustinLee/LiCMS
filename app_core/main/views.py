@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from flask import render_template, redirect, url_for, flash, request, current_app, abort
+import sqlalchemy
+from flask import render_template, redirect, url_for, flash, request, current_app, abort, make_response
 from flask_login import login_required, current_user
 
 from app_core import db
@@ -17,9 +18,25 @@ def favicon():
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
-    _posts = Post.query.order_by(Post.timestamp.desc()).limit(8).all()
-    _users = User.query.order_by(User.member_since.desc()).limit(8).all()
-    return render_template('index.html', current_time=datetime.utcnow(), posts=_posts, users=_users)
+    _show_followed = False
+    if current_user.is_authenticated:
+        _show_followed = bool(request.cookies.get('show_followed', ''))
+    if _show_followed:
+        post_title = 'Latest Followed Posts'
+        post_link = 'Show All Followed Posts'
+        query = current_user.followed_posts
+    else:
+        post_title = 'Latest Posts'
+        post_link = 'Show All Posts'
+        query = Post.query
+    _posts = query.order_by(Post.timestamp.desc()).limit(8).all()
+    post_count_sub = Post.query.group_by(Post.author_id).with_entities(Post.author_id, sqlalchemy.func.count(
+        Post.author_id).label('post_count')).subquery()
+    _users = db.session.query(User).join(
+        post_count_sub, User.id == post_count_sub.c.author_id).order_by(
+        post_count_sub.c.post_count.desc()).limit(8).all()
+    return render_template('index.html', current_time=datetime.utcnow(), show_followed=_show_followed, posts=_posts,
+                           post_title=post_title, post_link=post_link, users=_users, endpoint='main.index')
 
 
 @main.route('/user', methods=['GET', 'POST'])
@@ -32,7 +49,7 @@ def users():
                            endpoint='main.users')
 
 
-@main.route('/user/<user_id>')
+@main.route('/user/<int:user_id>')
 def user(user_id):
     _user = User.query.filter_by(id=user_id).first_or_404()
     _posts = _user.posts.order_by(Post.timestamp.desc()).all()
@@ -96,11 +113,37 @@ def posts():
         db.session.commit()
         return redirect(url_for('main.posts'))
     page = request.args.get('page', 1, type=int)
-    pagination = Post.query.order_by(Post.timestamp.desc()).paginate(page, per_page=current_app.config[
+    _show_followed = False
+    if current_user.is_authenticated:
+        _show_followed = bool(request.cookies.get('show_followed', ''))
+    if _show_followed:
+        title = 'Followed Posts'
+        query = current_user.followed_posts
+    else:
+        title = 'All Posts'
+        query = Post.query
+    pagination = query.order_by(
+        Post.timestamp.desc()).paginate(page, per_page=current_app.config[
         'LICMS_POSTS_PER_PAGE'], error_out=False)
     _posts = pagination.items
-    return render_template('posts.html', title='All Posts', form=form, posts=_posts, pagination=pagination,
-                           endpoint='main.posts')
+    return render_template('posts.html', title=title, form=form, show_followed=_show_followed, posts=_posts,
+                           pagination=pagination, endpoint='main.posts')
+
+
+@main.route('/all/<_next>')
+@login_required
+def show_all(_next):
+    resp = make_response(redirect(url_for(_next)))
+    resp.set_cookie('show_followed', '', max_age=30 * 24 * 60 * 60)
+    return resp
+
+
+@main.route('/followed/<_next>')
+@login_required
+def show_followed(_next):
+    resp = make_response(redirect(url_for(_next)))
+    resp.set_cookie('show_followed', 'True', max_age=30 * 24 * 60 * 60)
+    return resp
 
 
 @main.route('/post/<int:post_id>')
@@ -126,7 +169,7 @@ def edit(post_id):
     return render_template('edit_post.html', form=form)
 
 
-@main.route('/follow/<user_id>')
+@main.route('/follow/<int:user_id>')
 @login_required
 @permission_required(Permission.FOLLOW)
 def follow(user_id):
@@ -142,7 +185,7 @@ def follow(user_id):
     return redirect(url_for('main.user', user_id=user_id))
 
 
-@main.route('/unfollow/<user_id>')
+@main.route('/unfollow/<int:user_id>')
 @login_required
 @permission_required(Permission.FOLLOW)
 def unfollow(user_id):
@@ -158,29 +201,29 @@ def unfollow(user_id):
     return redirect(url_for('main.user', user_id=user_id))
 
 
-@main.route('/followers/<user_id>')
+@main.route('/followers/<int:user_id>')
 def followers(user_id):
-    _user = User.query.filter_by(id=user_id).first()
+    _user = User.query.get(user_id)
     if _user is None:
         flash('Invalid user.')
         return redirect(url_for('main.index'))
     page = request.args.get('page', 1, type=int)
     pagination = _user.followers.order_by(Follow.timestamp.desc()).paginate(page, per_page=current_app.config[
         'LICMS_USERS_PER_PAGE'], error_out=False)
-    _followers = [item.follower for item in pagination.items]
+    _followers = [item.follower for item in pagination.items if item.follower != _user]
     return render_template('users.html', title="Followers of " + _user.name, users=_followers, pagination=pagination,
                            endpoint='main.followers', user_id=user_id)
 
 
-@main.route('/followed_by/<user_id>')
+@main.route('/followed_by/<int:user_id>')
 def followed_by(user_id):
-    _user = User.query.filter_by(id=user_id).first()
+    _user = User.query.get(user_id)
     if _user is None:
         flash('Invalid user.')
         return redirect(url_for('main.index'))
     page = request.args.get('page', 1, type=int)
     pagination = _user.followed.order_by(Follow.timestamp.desc()).paginate(page, per_page=current_app.config[
         'LICMS_USERS_PER_PAGE'], error_out=False)
-    _followed = [item.followed for item in pagination.items]
+    _followed = [item.followed for item in pagination.items if item.followed != _user]
     return render_template('users.html', title="Users followed by " + _user.name, users=_followed,
                            pagination=pagination, endpoint='main.followers', user_id=user_id)

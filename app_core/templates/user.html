@@ -44,9 +44,9 @@
                     </div>
                     <div class="mt-2">
                         <a class="mr-2 btn-sm alert-info" href="{{ url_for('main.followers', user_id=user.id) }}">Followers:
-                            <span class="badge badge-pill badge-info">{{ user.followers.count() }}</span></a>
+                            <span class="badge badge-pill badge-info">{{ user.followers.count() - 1 }}</span></a>
                         <a class="btn-sm alert-info" href="{{ url_for('main.followed_by', user_id=user.id) }}">Following:
-                            <span class="badge badge-pill badge-info">{{ user.followed.count() }}</span></a>
+                            <span class="badge badge-pill badge-info">{{ user.followed.count() - 1 }}</span></a>
                         {% if current_user.is_authenticated and user != current_user and user.is_following(current_user) %}
                             <span class="px-1">|</span>
                             {% if not current_user.is_following(user) %}

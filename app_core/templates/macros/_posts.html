@@ -1,7 +1,10 @@
-{% macro list_widget(title, posts, extend=false, link='#' ,link_text ='', permalink=true) %}
+{% macro list_widget(title, posts, show_tab=false ,extend=false, link='#' ,link_text ='', permalink=true) %}
     {% if posts %}
         <div class="jumbotron p-5 rounded-lg shadow-lg bg-white">
-            <h1 class="border-bottom pb-2 mb-0">{{ title }}</h1>
+            <h1 class="pb-2 mb-0 {% if not current_user.is_authenticated %}border-bottom{% endif %}">{{ title }}</h1>
+            {% if show_tab %}
+                {% include 'fragments/post_tab.html' %}
+            {% endif %}
             {% for post in posts %}
                 <div class="media text-muted pt-3">
                     <img class="mr-3 rounded" width="48" height="48" src="{{ post.author.gravatar(size=128) }}"

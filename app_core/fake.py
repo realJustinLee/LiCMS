@@ -2,11 +2,11 @@ from random import randint
 from sqlalchemy.exc import IntegrityError
 from faker import Faker
 from app_core import db
-from app_core.models import Gender, User, Post
+from app_core.models import Gender, User, Post, Comment
 
 
 def users(count=100):
-    fake = Faker()
+    fake = Faker(['fr_FR', 'en_US', 'zh_CN'])
     gender_count = Gender.query.count()
     for _ in range(count):
         g = Gender.query.offset(randint(0, gender_count - 1)).first()
@@ -26,18 +26,19 @@ def users(count=100):
 
 
 def posts(count=100):
-    fake = Faker()
+    fake = Faker(['fr_FR', 'en_US', 'zh_CN'])
     user_count = User.query.count()
     for _ in range(count):
         u = User.query.offset(randint(0, user_count - 1)).first()
-        p = Post(body=fake.text(),
+        p = Post(title=fake.text(100),
+                 body=fake.text(1000),
                  timestamp=fake.past_date(),
                  author=u)
         db.session.add(p)
     db.session.commit()
 
 
-def follow(count=100):
+def follows(count=100):
     user_count = User.query.count()
     for _ in range(count):
         u1 = User.query.offset(randint(0, user_count - 1)).first()
@@ -46,3 +47,18 @@ def follow(count=100):
             u2 = User.query.offset(randint(0, user_count - 1)).first()
         u1.follow(u2)
         db.session.commit()
+
+
+def comments(count=100):
+    fake = Faker(['fr_FR', 'en_US', 'zh_CN'])
+    user_count = User.query.count()
+    post_count = Post.query.count()
+    for _ in range(count):
+        u = User.query.offset(randint(0, user_count - 1)).first()
+        p = Post.query.offset(randint(0, post_count - 1)).first()
+        c = Comment(body=fake.text(200),
+                    timestamp=fake.past_date(),
+                    author=u,
+                    post=p)
+        db.session.add(c)
+    db.session.commit()

@@ -17,15 +17,19 @@
                 Stranger
             {% endif %}!
         </h1>
-        <div class="lead">
-            {% if current_user.can(Permission.WRITE) %}
-                {{ render_form(form) }}
-            {% endif %}
-        </div>
+        {% if current_user.can(Permission.WRITE) %}
+            <div class="lead card mt-4">
+                <div class="card-header h3 font-weight-normal">
+                    What's on your mind?
+                </div>
+                <div class="card-body">
+                    {{ render_form(form) }}
+                </div>
+            </div>
+        {% endif %}
     </div>
 
     {{ m_posts.list_widget(title, posts, show_tab=true) }}
-
     {{ m_paginition.pagination_widget(pagination, endpoint) }}
 {% endblock %}
 

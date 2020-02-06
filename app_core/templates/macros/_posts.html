@@ -3,44 +3,44 @@
         <div class="jumbotron p-5 rounded-lg shadow-lg bg-white">
             <h1 class="pb-2 mb-0 {% if not current_user.is_authenticated %}border-bottom{% endif %}">{{ title }}</h1>
             {% if show_tab %}
-                {% include 'fragments/post_tab.html' %}
+                {% include 'fragments/_post_tab.html' %}
             {% endif %}
             {% for post in posts %}
-                <div class="media text-muted pt-3">
+                <div class="media pt-3">
                     <img class="mr-3 rounded" width="48" height="48" src="{{ post.author.gravatar(size=128) }}"
                          alt="Author Gravatar"/>
                     <div class="media-body pb-3 mb-0 border-bottom">
-                        <div class="float-right small">{{ moment(post.timestamp).fromNow() }}</div>
+                        <div class="float-right small text-muted">{{ moment(post.timestamp).fromNow() }}</div>
                         <div class="d-block">
                             <a class="font-weight-bold" href="{{ url_for('main.user', user_id=post.author.id) }}">
                                 @{{ post.author.name }}
                             </a>
                         </div>
-                        <div class="mt-1 ml-2">
-                            {% if post.body_html %}
-                                {{ post.body_html | safe }}
-                            {% else %}
-                                {{ post.body }}
+                        <div class="mt-1 mb-2 ml-2">
+                            {% if post.title %}
+                                <div class="lead">
+                                    {{ post.title }}
+                                </div>
                             {% endif %}
                         </div>
-                        {% if permalink %}
-                            <div class="text-right">
-                                {% if current_user == post.author %}
-                                    <a href="{{ url_for('main.edit', post_id=post.id) }}">
-                                        <span class="btn-sm btn-primary">Edit</span>
-                                    </a>
-                                {% elif current_user.is_administrator() %}
-                                    <a href="{{ url_for('main.edit', post_id=post.id) }}">
-                                        <span class="btn-sm btn-danger">Edit
-                                            <span class="badge badge-pill alert-danger">Admin</span>
-                                        </span>
-                                    </a>
-                                {% endif %}
+                        <div class="text-right">
+                            {% if current_user == post.author %}
+                                <a href="{{ url_for('main.edit', post_id=post.id) }}">
+                                    <span class="btn-sm btn-primary">Edit</span>
+                                </a>
+                            {% elif current_user.is_administrator() %}
+                                <a href="{{ url_for('main.edit', post_id=post.id) }}">
+                                    <span class="btn-sm btn-danger">Edit
+                                        <span class="badge badge-pill alert-danger">Admin</span>
+                                    </span>
+                                </a>
+                            {% endif %}
+                            {% if permalink %}
                                 <a href="{{ url_for('main.post', post_id=post.id) }}">
                                     <span class="ml-2 btn-sm alert-primary">Permalink</span>
                                 </a>
-                            </div>
-                        {% endif %}
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             {% endfor %}

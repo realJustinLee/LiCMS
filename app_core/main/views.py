@@ -7,8 +7,8 @@ from flask_login import login_required, current_user
 from app_core import db
 from app_core.decorators import admin_required, permission_required
 from app_core.main import main
-from app_core.main.forms import EditProfileForm, EditProfileAdminForm, PostForm
-from app_core.models import User, Role, Permission, Post, Gender, Follow
+from app_core.main.forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm
+from app_core.models import User, Role, Permission, Post, Gender, Follow, Comment
 
 
 @main.route('/favicon.ico')
@@ -104,11 +104,27 @@ def edit_profile_admin(user_id):
     return render_template('edit_profile.html', form=form, user=_user)
 
 
+@main.route('/all/<_next>')
+@login_required
+def show_all(_next):
+    resp = make_response(redirect(url_for(_next)))
+    resp.set_cookie('show_followed', '', max_age=30 * 24 * 60 * 60)
+    return resp
+
+
+@main.route('/followed/<_next>')
+@login_required
+def show_followed(_next):
+    resp = make_response(redirect(url_for(_next)))
+    resp.set_cookie('show_followed', 'True', max_age=30 * 24 * 60 * 60)
+    return resp
+
+
 @main.route('/post', methods=['GET', 'POST'])
 def posts():
     form = PostForm()
     if current_user.can(Permission.WRITE) and form.validate_on_submit():
-        _post = Post(body=form.body.data, author=current_user._get_current_object())
+        _post = Post(title=form.title.data, body=form.body.data, author=current_user._get_current_object())
         db.session.add(_post)
         db.session.commit()
         return redirect(url_for('main.posts'))
@@ -130,26 +146,25 @@ def posts():
                            pagination=pagination, endpoint='main.posts')
 
 
-@main.route('/all/<_next>')
-@login_required
-def show_all(_next):
-    resp = make_response(redirect(url_for(_next)))
-    resp.set_cookie('show_followed', '', max_age=30 * 24 * 60 * 60)
-    return resp
-
-
-@main.route('/followed/<_next>')
-@login_required
-def show_followed(_next):
-    resp = make_response(redirect(url_for(_next)))
-    resp.set_cookie('show_followed', 'True', max_age=30 * 24 * 60 * 60)
-    return resp
-
-
-@main.route('/post/<int:post_id>')
+@main.route('/post/<int:post_id>', methods=['GET', 'POST'])
 def post(post_id):
     _post = Post.query.get_or_404(post_id)
-    return render_template('post.html', posts=[_post])
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Comment(body=form.body.data, post=_post, author=current_user._get_current_object())
+        db.session.add(comment)
+        db.session.commit()
+        flash("Your comment has been published!")
+        # page=-1 takes you to the last page that contains your comment
+        return redirect(url_for('main.post', post_id=post_id, page=-1))
+    page = request.args.get('page', 1, type=int)
+    if page == -1:
+        page = ((_post.comments.count() - 1) // current_app.config['LICMS_COMMENTS_PER_PAGE']) + 1
+    pagination = _post.comments.order_by(Comment.timestamp.asc()).paginate(
+        page, per_page=current_app.config['LICMS_COMMENTS_PER_PAGE'], error_out=False)
+    _comments = pagination.items
+    return render_template('post.html', post=_post, form=form, comments=_comments, pagination=pagination,
+                           endpoint='main.post')
 
 
 @main.route('/edit/<int:post_id>', methods=['GET', 'POST'])
@@ -160,11 +175,13 @@ def edit(post_id):
         abort(403)
     form = PostForm()
     if form.validate_on_submit():
+        _post.title = form.title.data
         _post.body = form.body.data
         db.session.add(_post)
         db.session.commit()
         flash('The post has been updated.')
         return redirect(url_for('main.post', post_id=_post.id))
+    form.title.data = _post.title
     form.body.data = _post.body
     return render_template('edit_post.html', form=form)
 

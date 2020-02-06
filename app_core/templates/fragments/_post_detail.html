@@ -1,0 +1,48 @@
+<!-- Title -->
+<h1 class="mt-4">{{ post.title }}</h1>
+
+<hr>
+
+<div class="small d-flex justify-content-between align-items-center w-100">
+    <!-- Author -->
+    <div>
+        <img class="rounded" width="24" height="24" src="{{ post.author.gravatar(size=128) }}"
+             alt="Author Gravatar"/>
+        <a href="{{ url_for('main.user', user_id=post.author.id) }}">
+            @{{ post.author.name }}
+        </a>
+    </div>
+    <!-- Date/Time -->
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="text-muted">Posted on {{ moment(post.timestamp).format("MMMM Do, YYYY") }} </div>
+        <div class="ml-2">
+            {% if current_user == post.author %}
+                <a href="{{ url_for('main.edit', post_id=post.id) }}">
+                    <span class="btn-sm btn-primary">Edit</span>
+                </a>
+            {% elif current_user.is_administrator() %}
+                <a href="{{ url_for('main.edit', post_id=post.id) }}">
+            <span class="btn-sm btn-danger">Edit
+                <span class="badge badge-pill alert-danger">Admin</span>
+            </span>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+<hr>
+
+<!-- Post Content -->
+{% if post.body_html %}
+    <div>
+        {{ post.body_html | safe }}
+    </div>
+{% else %}
+    <div class="lead">
+        {{ post.body }}
+    </div>
+{% endif %}
+
+<hr>

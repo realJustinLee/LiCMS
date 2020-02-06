@@ -1,0 +1,23 @@
+{% if comments %}
+    <div>
+        <h1 id="comments">Comments</h1>
+        {% for comment in comments %}
+            <div class="media mb-4 small">
+                <img class="d-flex mr-3 rounded" src="{{ comment.author.gravatar(size=36) }}" alt="Comment Gravatar">
+                <div class="media-body">
+                    <h5 class="mt-0">{{ comment.author.name }}</h5>
+                    {% if comment.body_html %}
+                        <div>
+                            {{ comment.body_html | safe }}
+                        </div>
+                    {% else %}
+                        <div class="lead">
+                            {{ comment.body }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+

@@ -1,11 +1,25 @@
 {% extends "base.html" %}
 {% from 'bootstrap/form.html' import render_form %}
 {% import 'macros/_posts.html' as m_posts with context %}
+{% import 'macros/_paginition.html' as m_paginition %}
 
 {% block title %}
     {{ super() }} - Post
 {% endblock %}
 
 {% block page_content %}
-    {{ m_posts.list_widget("Post Detail", posts, permalink=false) }}
+    <div class="jumbotron p-5 rounded-lg shadow-lg bg-white">
+        {% include 'fragments/_post_detail.html' %}
+        <!-- Comments Form -->
+        {% if current_user.can(Permission.COMMENT) %}
+            <div class="card my-4">
+                <h5 class="card-header">Leave a Comment:</h5>
+                <div class="card-body">
+                    {{ render_form(form) }}
+                </div>
+            </div>
+        {% endif %}
+        {% include 'fragments/_comments.html' %}
+        {{ m_paginition.pagination_widget(pagination, endpoint, fragment='#comments', post_id=post.id) }}
+    </div>
 {% endblock %}

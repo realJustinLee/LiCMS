@@ -2,7 +2,7 @@
 {% import 'macros/_posts.html' as m_posts with context %}
 
 {% block title %}
-    Profile - {{ user.name }}
+    {{ super() }} - Profile - {{ user.name }}
 {% endblock %}
 
 {% block page_content %}

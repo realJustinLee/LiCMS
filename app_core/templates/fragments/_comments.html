@@ -1,6 +1,6 @@
 {% if comments %}
     <div>
-        <h1 id="comments">Comments</h1>
+        <h1 id="comments" class="mb-3">Comments</h1>
         {% for comment in comments %}
             <div class="media mb-4 small">
                 <img class="d-flex mr-3 rounded" src="{{ comment.author.gravatar(size=36) }}" alt="Comment Gravatar">

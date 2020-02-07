@@ -1,6 +1,8 @@
 from random import randint
-from sqlalchemy.exc import IntegrityError
+
 from faker import Faker
+from sqlalchemy.exc import IntegrityError
+
 from app_core import db
 from app_core.models import Gender, User, Post, Comment
 

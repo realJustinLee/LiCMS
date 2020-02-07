@@ -46,6 +46,9 @@ def create_app(config_name):
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
     from app_core.dev_ops import dev_ops as dev_ops_blueprint
-    app.register_blueprint(dev_ops_blueprint, url_prefix='/dev-ops')
+    app.register_blueprint(dev_ops_blueprint, url_prefix='/do')
+
+    from app_core.api import api as api_blueprint
+    app.register_blueprint(api_blueprint, url_prefix='/api/v1')
 
     return app

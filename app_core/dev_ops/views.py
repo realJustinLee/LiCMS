@@ -1,10 +1,11 @@
 from flask import current_app, abort, request
 
+from app_core.decorators import admin_required
 from app_core.dev_ops import dev_ops
 
 
 @dev_ops.route('/shutdown')
-# TODO: @admin_required
+@admin_required
 def server_shutdown():
     if not current_app.testing:
         abort(403)

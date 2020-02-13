@@ -13,8 +13,8 @@ class APITestCase(unittest.TestCase):
         self.app_context = self.app.app_context()
         self.app_context.push()
         db.create_all()
-        Gender.insert_genders()
         Role.insert_roles()
+        Gender.insert_genders()
         self.client = self.app.test_client()
 
     def tearDown(self):
@@ -173,8 +173,6 @@ class APITestCase(unittest.TestCase):
         json_response = json.loads(response.get_data(as_text=True))
         self.assertEqual(json_response['name'], 'susan')
         self.assertEqual(json_response['gender'], 'Female')
-
-    # TODO: more edit
 
     def test_comments(self):
         # add two users

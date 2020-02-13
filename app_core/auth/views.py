@@ -64,7 +64,10 @@ def two_factor():
     if form.validate_on_submit():
         if user.verify_totp(form.token.data):
             del session['email']
-            login_user(user, remember=request.args.get('remember'))
+            remember = request.args.get('remember')
+            if remember is None:
+                remember = False
+            login_user(user, remember=remember)
             _next = request.args.get('next')
             if _next is None or not _next.startswith('/'):
                 _next = url_for('main.index')

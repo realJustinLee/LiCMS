@@ -12,8 +12,8 @@ class UserModelTestCase(unittest.TestCase):
         self.app_context = self.app.app_context()
         self.app_context.push()
         db.create_all()
-        Gender.insert_genders()
         Role.insert_roles()
+        Gender.insert_genders()
 
     def tearDown(self):
         db.session.remove()
@@ -27,7 +27,7 @@ class UserModelTestCase(unittest.TestCase):
     def test_no_password_getter(self):
         u = User(password='cat')
         with self.assertRaises(AttributeError):
-            u.password
+            _ = u.password
 
     def test_password_verification(self):
         u = User(password='cat')

@@ -2,7 +2,7 @@ Greetings. {{ user.name }},
 
 This is LiCMS.
 
-To confirm your new email address for our service, please click on the following link:
+To confirm your new email address, please click on the following link:
 {{ url_for('auth.change_email', token=token, _external=True) }}
 
 This email is sent at {{ current_time }}.

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %}{{ super() }} - Reset 2FA{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='css/form-wtf.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block page_content %}
+    <div class="form-wtf mb-5 card rounded-lg shadow-lg">
+        <div class="card-header p-5 h1">
+            Reset Two Factor
+        </div>
+        <div class="card-body p-5 lead">
+            {{ render_form(form) }}
+        </div>
+    </div>
+{% endblock %}

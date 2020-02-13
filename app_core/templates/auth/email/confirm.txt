@@ -2,13 +2,13 @@ Greetings. {{ user.name }},
 
 Welcome to LiCMS!
 
-To confirm your account for our service, please click on the following link:
+To confirm your account for our service, please click on the link below:
 {{ url_for('auth.confirm', token=token, _external=True) }}
 
 This email is sent at {{ current_time }}.
 You have 10 Minutes to confirm your account.
 
-If you have not registered for the LiCMS service, just ignore this email.
+If you have not registered for the LiCMS service, simply ignore this message.
 
 Best Regards,
 Li Xin

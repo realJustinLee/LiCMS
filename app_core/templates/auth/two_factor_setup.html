@@ -1,0 +1,76 @@
+{% extends "auth/base_display.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css', _external=True) }}">
+{% endblock %}
+
+{% block title %}{{ super() }} - 2FA Setup{% endblock %}
+
+{% block display_title %}
+    <h1>Initial Setup For 2FA</h1>
+    <div class="text-danger">
+        <b>DO NOT</b> quit before you've finished setting up 2FA, or you will mess your account up.
+    </div>
+{% endblock %}
+
+{% block display_content %}
+    <div class="alert border-secondary">
+        <div class="font-weight-normal">
+            <div class="h4">Scan the QR Code with your app</div>
+            <div class="small text-muted">
+                Scan the following image with the two factor authenticator app on your smartphone.
+            </div>
+        </div>
+        <div class="text-center">
+            <img class="m-1 rounded-lg border border-secondary" id="qrcode" alt="2FA QR Code"
+                 width="150" height="150" src="{{ url_for('auth.two_factor_qr_code') }}">
+        </div>
+        <div class="font-weight-normal">
+            <div class="h4">Enter the six digit code from the application</div>
+            <div class="small text-muted">
+                After scanning the QR Code above, the app will display a six-digit code that you can enter below.
+            </div>
+            {{ render_form(form) }}
+        </div>
+    </div>
+
+    <div class="mb-3 alert alert-info">
+        <h4 class="alert-heading">
+            Authenticator App Recommendation
+        </h4>
+        <p>
+            We recommend <b>Google Authenticator</b> and <b>Microsoft Authenticator</b> to serve as your two factor
+            authenticator app candidate on your smartphone.
+        </p>
+        <div class="px-3 my-2 border border-info">
+            <div class="lead pl-2">
+                Google Authenticator:
+            </div>
+            <div class="text-center">
+                <a class="app-store" target="_blank"
+                   href="https://apps.apple.com/us/app/google-authenticator/id388497605?mt=8"></a>
+                <a class="google-play" target="_blank"
+                   href='https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+                    <img alt='Get it on Google Play'
+                         src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/>
+                </a>
+            </div>
+        </div>
+        <div class="px-3 my-2 border border-info">
+            <div class="lead pl-2">
+                Microsoft Authenticator:
+            </div>
+            <div class="text-center">
+                <a class="app-store" target="_blank"
+                   href="https://apps.apple.com/us/app/microsoft-authenticator/id983156458?mt=8"></a>
+                <a class="google-play" target="_blank"
+                   href='https://play.google.com/store/apps/details?id=com.azure.authenticator&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+                    <img alt='Get it on Google Play'
+                         src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

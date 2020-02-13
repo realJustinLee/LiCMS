@@ -1,12 +1,7 @@
-body {
-    -ms-flex-align: center !important;
-    align-items: center !important;
-}
-
 .form-wtf {
     width: 100%;
     max-width: 800px;
-    margin: auto;
+    margin: 1rem auto;
 }
 
 .form-wtf .checkbox {
@@ -26,4 +21,22 @@ body {
 
 .my-block-link {
     word-break: break-all;
+}
+
+.google-play {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.google-play img {
+    height: 60px;
+}
+
+.app-store {
+    margin: 10px 10px;
+    display: inline-block;
+    overflow: hidden;
+    background: url(https://linkmaker.itunes.apple.com/en-us/badge-lrg.svg?releaseDate=2015-05-30&kind=iossoftware&bubble=apple_music) no-repeat;
+    width: 135px;
+    height: 40px;
 }

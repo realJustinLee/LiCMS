@@ -13,8 +13,7 @@
     <p>
         To confirm your account for our service, please
         <a class="btn-sm btn-primary" href="{{ url_for('auth.confirm', token=token, _external=True) }}">
-            click here</a>
-        .<br>
+            click here</a>.<br>
         Alternatively, you can paste the following link in your browser's address bar:<br>
     </p>
     <div class="alert alert-primary shadow-sm my-block-link">
@@ -25,6 +24,6 @@
         You have <b>10 Minutes</b> to confirm your account.
     </p>
     <div class="alert alert-warning shadow-sm">
-        If you have not registered for the LiCMS service, just ignore this email.
+        If you have not registered for the LiCMS service, simply ignore this message.
     </div>
 {% endblock %}

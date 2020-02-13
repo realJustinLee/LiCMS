@@ -27,11 +27,18 @@ class RegistrationForm(FlaskForm):
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data.lower()).first():
-            raise ValidationError('Email already registered.')
+            raise ValidationError('Email already in use.')
 
-    def validate_username(self, field):
-        if User.query.filter_by(username=field.data).first():
-            raise ValidationError('Username already in use.')
+
+class TwoFactorForm(FlaskForm):
+    token = StringField('Authentication Code', validators=[DataRequired(), Length(6, 6)])
+    submit = SubmitField('Verify')
+
+
+class TwoFactorResetForm(FlaskForm):
+    email = StringField('Your Email address', validators=[DataRequired(), Length(1, 128), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Request 2FA Reset')
 
 
 class ChangePasswordFrom(FlaskForm):
@@ -65,4 +72,4 @@ class ChangeEmailForm(FlaskForm):
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data.lower()).first():
-            raise ValidationError('Email already registered.')
+            raise ValidationError('Email already in use.')

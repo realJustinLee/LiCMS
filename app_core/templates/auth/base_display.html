@@ -1,0 +1,25 @@
+{% extends "bootstrap_base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='css/form-wtf.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block page_content %}
+    <div class="form-wtf px-5 py-3 bg-white rounded-lg shadow-lg">
+        <img class="m-2 float-right" src="{{ url_for('static', filename='img/logo.svg') }}" alt="" width="80"
+             height="80">
+        <div class="font-weight-normal my-3">
+            {% block display_title %}
+            {% endblock %}
+        </div>
+        {% block display_content %}
+        {% endblock %}
+        <div class="my-3 text-muted text-center">&copy; Copyright
+            <script>
+                document.write(new Date().getFullYear())
+            </script>
+            Li Xin. All rights reserved.
+        </div>
+    </div>
+{% endblock %}

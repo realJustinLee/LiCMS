@@ -1,7 +1,7 @@
 {% extends "auth/email/base_email.html" %}
 
 {% block title %}
-    Confirm Your New Email Address
+    {{ super() }} - Confirm Your New Email Address
 {% endblock %}
 
 {% block email_header %}
@@ -13,8 +13,7 @@
     <p>
         To confirm your new email address, please
         <a class="btn-sm btn-primary" href="{{ url_for('auth.change_email', token=token, _external=True) }}">
-            click here</a>
-        .<br>
+            click here</a>.<br>
         Alternatively, you can paste the following link in your browser's address bar:<br>
     </p>
     <div class="alert alert-primary shadow-sm my-block-link">

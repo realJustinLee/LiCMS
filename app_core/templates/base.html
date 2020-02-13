@@ -56,6 +56,7 @@
                                href="{{ url_for('main.user', user_id=current_user.id) }}">Profile</a>
                             <a class="dropdown-item" href="{{ url_for('auth.change_password') }}">Change Password</a>
                             <a class="dropdown-item" href="{{ url_for('auth.change_email_request') }}">Change Email</a>
+                            <a class="dropdown-item" href="{{ url_for('auth.change_two_factor') }}">Change 2FA</a>
                             <a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">Log Out</a>
                         </div>
                     </li>

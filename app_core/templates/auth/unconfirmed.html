@@ -1,45 +1,35 @@
-{% extends "bootstrap_base.html" %}
-
-{% block title %}{{ super() }} - Account NOT Confirmed{% endblock %}
+{% extends "auth/base_display.html" %}
 
 {% block head %}
     {{ super() }}
     <link href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/form-wtf.css') }}" rel="stylesheet">
 {% endblock %}
 
-{% block page_content %}
-    <div class="form-wtf p-5 bg-white rounded-lg shadow-lg">
-        <img class="m-2 float-right" src="{{ url_for('static', filename='img/logo.svg') }}" alt="" width="100"
-             height="100">
-        <div class="h3 font-weight-normal mt-3 mb-lg-5">
-            <h1>Hello, {{ current_user.name }}!</h1>
-            <h3>You have <b>NOT</b> confirmed your account yet.</h3>
-        </div>
-        <div class="mb-3 alert alert-primary">
-            <h4 class="alert-heading">
-                One more step to LiCMS!
-            </h4>
-            <p>
-                Before you can access this site, you need to confirm your account.<br>
-                Check your inbox, you should have received an email with a confirmation link.
-            </p>
-            <hr>
-            <p class="mb-0">
-                Need another confirmation email?
-                <a class="btn-sm btn-primary" href="{{ url_for('auth.resend_confirmation') }}">Click here</a>.
-            </p>
-        </div>
-        <p class="text-muted text-right">
-            <small>
-                Or you can just <a href="{{ url_for('auth.logout') }}">logout</a>.
-            </small>
+{% block title %}{{ super() }} - Account NOT Confirmed{% endblock %}
+
+{% block display_title %}
+    <h1>Hello, {{ current_user.name }}!</h1>
+    <h3>You have <b>NOT</b> confirmed your account yet.</h3>
+{% endblock %}
+
+{% block display_content %}
+    <div class="mt-5 mb-3 alert alert-primary">
+        <h4 class="alert-heading">
+            One more step to LiCMS!
+        </h4>
+        <p>
+            Before you can access this site, you need to confirm your account.<br>
+            Check your inbox, you should have received an email with a confirmation link.
         </p>
-        <p class="mt-5 mb-3 text-muted text-center">&copy; Copyright
-            <script>
-                document.write(new Date().getFullYear())
-            </script>
-            Li Xin. All rights reserved.
+        <hr>
+        <p class="mb-0">
+            Need another confirmation email?
+            <a class="btn-sm btn-primary" href="{{ url_for('auth.resend_confirmation') }}">Click here</a>.
         </p>
+    </div>
+    <div class="text-muted text-right">
+        <small>
+            Or you can just <a href="{{ url_for('auth.logout') }}">logout</a>.
+        </small>
     </div>
 {% endblock %}

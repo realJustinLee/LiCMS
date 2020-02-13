@@ -1,7 +1,10 @@
+import base64
 import hashlib
+import os
 from datetime import datetime
 
 import bleach
+import onetimepass
 from flask import current_app, url_for
 from flask_login import UserMixin, AnonymousUserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -113,6 +116,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(128), unique=True, index=True)
     avatar_hash = db.Column(db.String(32))
     password_hash = db.Column(db.String(128))
+    otp_secret = db.Column(db.String(16))
     confirmed = db.Column(db.Boolean, default=False)
     location = db.Column(db.String(128))
     about_me = db.Column(db.Text)
@@ -135,6 +139,9 @@ class User(UserMixin, db.Model):
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
+        if self.otp_secret is None:
+            # generate a random secret
+            self.generate_otp_secret()
         if self.role is None:
             if self.email == current_app.config['LICMS_ADMIN'].lower():
                 self.role = Role.query.filter_by(name='Administrator').first()
@@ -151,6 +158,15 @@ class User(UserMixin, db.Model):
                 user.follow(user)
                 db.session.add(user)
                 db.session.commit()
+
+    def generate_otp_secret(self):
+        self.otp_secret = base64.b32encode(os.urandom(10)).decode('utf-8')
+
+    def get_totp_uri(self):
+        return 'otpauth://totp/LiCMS:{0}?secret={1}&issuer=LiCMS'.format(self.email, self.otp_secret)
+
+    def verify_totp(self, token):
+        return onetimepass.valid_totp(token, self.otp_secret)
 
     @property
     def password(self):
@@ -216,6 +232,22 @@ class User(UserMixin, db.Model):
             return False
         self.email = new_email
         self.avatar_hash = self.gravatar_hash()
+        db.session.add(self)
+        return True
+
+    def generate_two_factor_reset_token(self, expiration=600):
+        s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
+        return s.dumps({'reset_2FA': self.id}).decode('utf-8')
+
+    def reset_two_factor(self, token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token.encode('utf-8'))
+        except:
+            return False
+        if data.get('reset_2FA') != self.id:
+            return False
+        self.generate_otp_secret()
         db.session.add(self)
         return True
 

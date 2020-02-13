@@ -2,13 +2,13 @@ Greetings. {{ user.name }},
 
 This is LiCMS.
 
-To reset your password, please click on the link below:
-{{ url_for('auth.password_reset', token=token, _external=True) }}
+To reset your Tow Factor Authentication, please click on the link below:
+{{ url_for('auth.tow_factor_reset', token=token, _external=True) }}
 
 This email is sent at {{ current_time }}.
 You have 10 Minutes to confirm this password reset.
 
-If you have not requested a password reset, simply ignore this message.
+If you have not requested a 2FA reset, simply ignore this message.
 
 Best Regards,
 Li Xin

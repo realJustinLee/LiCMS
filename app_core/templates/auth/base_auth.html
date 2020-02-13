@@ -1,0 +1,18 @@
+{% extends "bootstrap_base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block page_content %}
+    <div class="form-login sheet-width bg-white text-center rounded-lg shadow">
+        {% block auth_content %}
+        {% endblock %}
+        <p class="mt-3 mb-0 text-muted small">&copy; Copyright
+            1997 -
+            <script>document.write(new Date().getFullYear())</script>
+            Li Xin.<br>All rights reserved.
+        </p>
+    </div>
+{% endblock %}

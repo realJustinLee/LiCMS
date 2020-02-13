@@ -47,16 +47,15 @@ footer {
 
 @media only screen and (max-width: 576px) {
     .notification-area {
-        margin-top: -3rem;
-        margin-bottom: 1rem;
+        top: 7rem;
     }
 }
 
 @media only screen and (min-width: 576px) {
     .notification-area {
-        margin-top: -2rem;
+        top: 5rem;
+        right: 1rem;
         position: fixed;
         max-width: 350px;
-        right: 30px;
     }
 }

@@ -1,9 +1,8 @@
-import re
 import unittest
 
 import onetimepass
 
-from app import create_app, db
+from app_core import create_app, db
 from app_core.models import User, Role, Gender
 
 
@@ -50,7 +49,7 @@ class FlaskClientTestCase(unittest.TestCase):
 
         # redirect to 2FA
         response = self.client.get(url)
-        self.assertTrue(re.search('Authentication Code', response.get_data(as_text=True)))
+        self.assertTrue('Authentication Code' in response.get_data(as_text=True))
 
         # submit Authentication Code
         user = User.query.filter_by(email='john@example.com').first()

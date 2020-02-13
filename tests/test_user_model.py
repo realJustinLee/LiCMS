@@ -2,7 +2,7 @@ import time
 import unittest
 from datetime import datetime
 
-from app import create_app, db
+from app_core import create_app, db
 from app_core.models import User, AnonymousUser, Role, Permission, Follow, Gender
 
 

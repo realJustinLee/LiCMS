@@ -3,7 +3,7 @@ import re
 import unittest
 from base64 import b64encode
 
-from app import create_app, db
+from app_core import create_app, db
 from app_core.models import User, Role, Post, Comment, Gender
 
 

@@ -32,12 +32,6 @@ def create_app(config_name):
     login_manager.init_app(app)
     pagedown.init_app(app)
 
-    # Register Error handlers
-    from app_core.errors import access_forbidden, page_not_found, internal_server_error
-    app.register_error_handler(403, access_forbidden)
-    app.register_error_handler(404, page_not_found)
-    app.register_error_handler(500, internal_server_error)
-
     # Register Blueprints
     from app_core.main import main as main_blueprint
     app.register_blueprint(main_blueprint)

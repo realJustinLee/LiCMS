@@ -107,3 +107,4 @@ venv.bak/
 .env-licms
 .dev_env
 migrations
+tmp

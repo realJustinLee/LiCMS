@@ -6,5 +6,10 @@
       <secret-storage>forget</secret-storage>
       <schema-mapping />
     </data-source>
+    <data-source name="" uuid="a25805fc-522a-4074-8af0-58b673a5f2a9">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="SQLITE" exact-version="0" />
+      <auth-required>false</auth-required>
+      <schema-mapping />
+    </data-source>
   </component>
 </project>

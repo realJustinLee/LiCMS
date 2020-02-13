@@ -302,6 +302,7 @@ class User(UserMixin, db.Model):
             'name': self.name,
             'member_since': self.member_since,
             'last_seen': self.last_seen,
+            'gender': self.gender.name,
             'posts_url': url_for('api.get_user_posts', user_id=self.id),
             'followed_posts_url': url_for('api.get_user_followed_posts', user_id=self.id),
             'post_count': self.posts.count()

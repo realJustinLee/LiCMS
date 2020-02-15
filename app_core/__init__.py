@@ -5,7 +5,6 @@ from flask_mail import Mail
 from flask_moment import Moment
 from flask_pagedown import PageDown
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.middleware.proxy_fix import ProxyFix
 
 from config import config
 
@@ -21,7 +20,6 @@ login_manager.login_view = 'auth.login'
 
 def create_app(config_name):
     app = Flask(__name__)
-    app.wsgi_app = ProxyFix(app.wsgi_app)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
@@ -31,6 +29,10 @@ def create_app(config_name):
     db.init_app(app)
     login_manager.init_app(app)
     pagedown.init_app(app)
+
+    if app.config['SSL_REDIRECT']:
+        from flask_sslify import SSLify
+        sslify = SSLify(app)
 
     # Register Blueprints
     from app_core.main import main as main_blueprint

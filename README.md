@@ -20,8 +20,9 @@ LiCMS (Lixin Content Management System) is a content management system used for 
 - For database management, I used SQLAlchemy to simplify the complex SQL queries into object operations, which provided me with an object-oriented interface for all of the CRUD operations.
 - For continuous integration, I integrated this project with Travis-CI and Jenkins.
 - For auto-deploying and self-sustaining, thanks to docker. I achieved these with docker-compose and a self-implemented flask CLI extension.
-- For Tow Step Verification or 2FA implemented via `TOTP` (Time-based One-time Password) algorithm.
+- For Tow Step Verification or 2FA, it's implemented via `TOTP` (Time-based One-time Password) algorithm.
 - For unexpected errors, LiCMS will email the `LICMS_ADMIN` configured in `.env-licms`.
+- For enhanced performance, we enabled `gunicorn` multi-threading, it takes (`2 * physical_cpus + 1`) CPUs by default, (`hyper-therad` is assumed to be enabled).
 
 ## Platform Compatibility (Front-end)
 - [x] iOS
@@ -79,8 +80,7 @@ If you would like to deploy LiCMS via other methods, you could refer to this gui
     > MYSQL_USER=<db_username>
     > MYSQL_PASSWORD=<db_password>
     > ```
-1. After words, replace all the `licms.example.com` with your own host like `some-host.someone.com`.
-    In the Following file:
+1. After words, replace all the `licms.example.com` with your own host like `some-host.someone.com`. In the Following file:
     - `.conf/nginx/app.conf`
     - `init_letsencrypt.sh`
       > please replace `<your@email.com>` in this file with the email you replaced `<your@email.com>` in `.env-licms` with.
@@ -92,6 +92,26 @@ If you would like to deploy LiCMS via other methods, you could refer to this gui
     cd /path/to/LiCMS
     ./init_letsencrypt.sh
     ./post_reboot.sh
+    ```
+
+## RESTfil API auth flow
+1. POST `https://your.host/api/v1/tokens/` with HTTP Basic Auth:
+    ```text
+    Username:<email>    
+    Password:<password>
+    ```
+1. It will return a JSON body with `token` and `expiration` like this:
+    ```json
+    {
+        'token': '<token>', 
+        'expiration': 600
+    }
+    ```
+1. Before the token expires, you could visit other apis with HTTP Basic Auth via the token you requested.
+    > The token takes the place of `Username` and leave `Password` empty.
+    ```text
+    Username:<token>    
+    Password:
     ```
 
 ## Dev Hacks
@@ -127,6 +147,7 @@ The Component Selector
 
 ## TODO
 - [ ] Add an about page
+- [ ] Add OAuth Sign In (Sign In with twitter/facebook/google)
 
 # Made with ❤ by [Li Xin](https://github.com/Great-Li-Xin)!
 ™ and © 1997-2019 Li Xin. All Rights Reserved. [License Agreement](./LICENSE)

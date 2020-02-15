@@ -21,6 +21,7 @@ LiCMS (Lixin Content Management System) is a content management system used for 
 - For continuous integration, I integrated this project with Travis-CI and Jenkins.
 - For auto-deploying and self-sustaining, thanks to docker. I achieved these with docker-compose and a self-implemented flask CLI extension.
 - For Tow Step Verification or 2FA implemented via `TOTP` (Time-based One-time Password) algorithm.
+- For unexpected errors, LiCMS will email the `LICMS_ADMIN` configured in `.env-licms`.
 
 ## Platform Compatibility (Front-end)
 - [x] iOS

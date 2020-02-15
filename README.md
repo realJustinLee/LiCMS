@@ -57,7 +57,7 @@ If you would like to deploy LiCMS via other methods, you could refer to this gui
     > DB_HOST=<db_host>
     > DB_PORT=<db_port>
     > DB_DATABASE=<db_database>
-    > SECRET_KEY=<20_char_secret_key>
+    > SECRET_KEY=<a_super_strong_key>
     > LICMS_ADMIN=<your@email.com>
     > LICMS_POSTS_PER_PAGE=20
     > LICMS_USERS_PER_PAGE=50

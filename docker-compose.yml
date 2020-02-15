@@ -1,0 +1,58 @@
+version: "3"
+
+services:
+  licms:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    depends_on:
+      - mysql_db
+    env_file:
+      - .env-licms
+    links:
+      - mysql_db:mysql_db
+    ports:
+      - "5000:5000"
+    restart: always
+
+  nginx:
+    depends_on:
+      - licms
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: unless-stopped
+    volumes:
+      - .conf/nginx:/etc/nginx/conf.d
+      - ~/data/certbot/conf:/etc/letsencrypt
+      - ~/data/certbot/www:/var/www/certbot
+      - ~/static_www/:/var/www
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - ~/data/certbot/conf:/etc/letsencrypt
+      - ~/data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+  mysql_db:
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    env_file:
+      - .env-mysql
+    image: mariadb
+    ports:
+      - "3306:3306"
+    restart: always
+    volumes:
+      - ~/data/mysql:/var/lib/mysql
+
+  phpmyadmin:
+    depends_on:
+      - mysql_db
+    environment:
+      PMA_HOST: mysql_db
+    image: phpmyadmin/phpmyadmin
+    restart: always

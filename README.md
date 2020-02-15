@@ -1,9 +1,5 @@
 # LiCMS
-LiCMS (Lixin Content Management System) 
-
-is an open source 3D avatar modelling software implemented in React.js and WebGL,
-which provides web side 3D avatar modeling and rendering service,
-and users can export the avatars into STL files which can be used for 3D printing.
+LiCMS (Lixin Content Management System) is a content management system used for blogging, implemented with Flask.
 
 ## Requirements
 > - Python `3.7.6`
@@ -16,12 +12,11 @@ and users can export the avatars into STL files which can be used for 3D printin
 
 ## Tech Reviews
 - LiCMS is developed in the MVC design pattern. 
-- Lixin Content Management System is an all in one asset management solution.
+- Lixin Content Management System is an all in one content management solution.
 - For the front-end, we provide both RESTful-api solution and website solution (based on Bootstrap).
 - For the back-end, we provide a Flask and Docker-based, automatic deployed and self-sustained solution with continuous-integration provided by Jenkins or Travis-CI.
 - For database management, I used SQLAlchemy to simplify the complex SQL queries into object operations, which provided me with an object-oriented interface for all of the CRUD operations.
-- For code implementation, I finished the entire backend logic all by myself (debugging and unit test included).
-- For continuous integration, I integrated this project with Travis-CI and Jenkins all by my self.
+- For continuous integration, I integrated this project with Travis-CI and Jenkins.
 - For auto-deploying and self-sustaining, thanks to docker. I achieved these with docker-compose and a self-implemented flask CLI extension.
 - For Tow Step Verification or 2FA implemented via TOTP (Time-based One-time Password) algorithm.
 

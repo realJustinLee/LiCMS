@@ -1,3 +1,5 @@
+<p align="center"><a href="app_core/static/img/logo.svg" target="_blank" rel="noopener noreferrer"><img width="100" src="app_core/static/img/logo.svg" alt="Vue logo"></a></p>
+
 # LiCMS
 LiCMS (Lixin Content Management System) is a content management system used for blogging, implemented with Flask.
 

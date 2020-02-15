@@ -42,7 +42,7 @@ services:
       - .env-mysql
     image: mariadb
     ports:
-      - "3306:3306"
+      - "6033:3306"
     restart: always
     volumes:
       - ~/data/mysql:/var/lib/mysql

@@ -14,13 +14,13 @@ LiCMS (Lixin Content Management System) is a content management system used for 
 
 ## Tech Reviews
 - LiCMS is developed in the MVC design pattern. 
-- Lixin Content Management System is an all in one content management solution.
-- For the front-end, we provide both RESTful-api solution and website solution (based on Bootstrap).
+- LiCMS is an all in one content management solution providing usage and management for posts, comments and users.
+- For the front-end, we provide both `RESTful-API` solution and website solution (based on Bootstrap).
 - For the back-end, we provide a Flask and Docker-based, automatic deployed and self-sustained solution with continuous-integration provided by Jenkins or Travis-CI.
 - For database management, I used SQLAlchemy to simplify the complex SQL queries into object operations, which provided me with an object-oriented interface for all of the CRUD operations.
 - For continuous integration, I integrated this project with Travis-CI and Jenkins.
 - For auto-deploying and self-sustaining, thanks to docker. I achieved these with docker-compose and a self-implemented flask CLI extension.
-- For Tow Step Verification or 2FA implemented via TOTP (Time-based One-time Password) algorithm.
+- For Tow Step Verification or 2FA implemented via `TOTP` (Time-based One-time Password) algorithm.
 
 ## Platform Compatibility (Front-end)
 - [x] iOS
@@ -91,6 +91,33 @@ LiCMS (Lixin Content Management System) is a content management system used for 
     cd /path/to/LiCMS
     ./init_letsencrypt.sh
     ./post_reboot.sh
+    ```
+
+## Dev Hacks
+If you run LiCMS in `development` mode, and you would like to fake some users, posts, comments, etc. Do the following.
+1. First enter `Flask Shell`:
+    ```shell script
+    flask shell
+    ```
+1. Import `fake` form `app_core`:
+    ```python
+    from app_core import fake
+    ```
+1. Fake 100 random Users:
+    ```python
+    fake.users(100)
+    ```
+1. Fake 100 random Posts for random Users:
+    ```python
+    fake.posts(100)
+    ```
+1. Fake 100 random Comments for random Posts by random Users:
+    ```python
+    fake.comments(100)
+    ```
+1. Fake 100 random Follows for random Users followed by random Users:
+    ```python
+    fake.follows(100)
     ```
 
 ## Screen Shots

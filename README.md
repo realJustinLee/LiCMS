@@ -38,7 +38,7 @@ LiCMS (Lixin Content Management System) is a content management system used for 
 - [x] Docker
 
 ## Deployment Guide (Docker-Ubuntu)
-> If you would like to deploy LiCMS via other methods, you could refer to this guide
+If you would like to deploy LiCMS via other methods, you could refer to this guide
 
 > *All Contents in the `<>` should math in each file*
 > > Example:  

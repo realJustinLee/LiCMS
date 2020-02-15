@@ -103,8 +103,8 @@ If you would like to deploy LiCMS via other methods, you could refer to this gui
 1. It will return a JSON body with `token` and `expiration` like this:
     ```json
     {
-        'token': '<token>', 
-        'expiration': 600
+        "expiration": 600,
+        "token": "<token>"
     }
     ```
 1. Before the token expires, you could visit other apis with HTTP Basic Auth via the token you requested.

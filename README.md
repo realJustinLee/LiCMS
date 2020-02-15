@@ -142,8 +142,8 @@ If you run LiCMS in `development` mode, and you would like to fake some users, p
     ```
 
 ## Screen Shots
-The Component Selector
-![screenshot](screenshot/screenshot.png)
+The Screenshot
+![Index](screenshot/index.png)
 
 ## TODO
 - [ ] Add an about page

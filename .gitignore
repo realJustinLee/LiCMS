@@ -105,5 +105,6 @@ venv.bak/
 
 # project psecific
 .env-licms
+.env-mysql
 .dev_env
 tmp

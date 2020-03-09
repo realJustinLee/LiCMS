@@ -8,9 +8,9 @@ from flask_migrate import Migrate, upgrade
 from app_core import create_app, db
 from app_core.models import User, Role, Gender, Permission, Follow, Comment, Post
 
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
-if os.path.exists(dotenv_path):
-    load_dotenv(dotenv_path)
+dot_env_path = os.path.join(os.path.dirname(__file__), '.env')
+if os.path.exists(dot_env_path):
+    load_dotenv(dot_env_path)
 
 COV = None
 if os.environ.get('FLASK_COVERAGE'):

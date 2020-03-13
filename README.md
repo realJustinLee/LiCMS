@@ -13,16 +13,15 @@ LiCMS (Lixin Content Management System) is a content management system used for 
 >   - Test Env: `sqlite`
 
 ## Tech Reviews
-- LiCMS is developed in the MVC design pattern. 
-- LiCMS is an all in one content management solution providing usage and management for posts, comments and users.
-- For the front-end, we provide both `RESTful-API` solution and website solution (based on Bootstrap).
+- LiCMS is an all in one content management solution developed with the MVC design pattern, providing usage and management for posts, comments, and users.
+- For the front-end, we provide both the `RESTful-API` solution and website solution (based on Bootstrap).
 - For the back-end, we provide a Flask and Docker-based, automatic deployed and self-sustained solution with continuous-integration provided by Jenkins or Travis-CI.
 - For database management, I used SQLAlchemy to simplify the complex SQL queries into object operations, which provided me with an object-oriented interface for all of the CRUD operations.
 - For continuous integration, I integrated this project with Travis-CI and Jenkins.
 - For auto-deploying and self-sustaining, thanks to docker. I achieved these with docker-compose and a self-implemented flask CLI extension.
-- For Tow Step Verification or 2FA, it's implemented via `TOTP` (Time-based One-time Password) algorithm.
+- For Tow Step Verification or 2FA, it's implemented via the `TOTP` (Time-based One-time Password) algorithm.
 - For unexpected errors, LiCMS will email the `LICMS_ADMIN` configured in `.env-licms`.
-- For enhanced performance, we enabled `gunicorn` multi-threading, it takes (`2 * physical_cpus + 1`) CPUs by default, (`hyper-therad` is assumed to be enabled).
+- For enhanced performance, we enabled `gunicorn` multi-threading, it takes (`2 * physical_cpus + 1`) CPUs by default, (`hyper-thread` is assumed to be enabled).
 
 ## Platform Compatibility (Front-end)
 - [x] iOS
@@ -146,8 +145,9 @@ The Screenshot
 ![Index](screenshot/index.png)
 
 ## TODO
-- [ ] Add an about page
-- [ ] Add OAuth Sign In (Sign In with twitter/facebook/google)
+- [x] About page.
+- [ ] Paste bin for Academic use.
+- [ ] OAuth Sign In (Sign In with twitter/facebook/google).
 
 # Made with ❤ by [Li Xin](https://github.com/Great-Li-Xin)!
 ™ and © 1997-2020 Li Xin. All Rights Reserved. [License Agreement](./LICENSE)

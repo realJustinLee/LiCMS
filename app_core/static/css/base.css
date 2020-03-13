@@ -39,6 +39,9 @@ footer {
 
 .nav-name {
     margin-left: 5px;
+}
+
+.font-futura {
     font-family: Futura, serif;
 }
 
@@ -58,4 +61,8 @@ footer {
         position: fixed;
         max-width: 350px;
     }
+}
+
+.text-shadow {
+    text-shadow: 2px 2px #AAAAAA;
 }

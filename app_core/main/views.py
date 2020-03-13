@@ -260,7 +260,7 @@ def followed_by(user_id):
 
 @main.route('/about')
 def about():
-    return 'about'
+    return render_template('about.html')
 
 
 @main.route('/moderate')

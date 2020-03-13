@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css"/>
+{% endblock %}
+
+{% block title %}
+    {{ super() }} - About
+{% endblock %}
+
+{% block page_content %}
+    <div class="jumbotron p-5 rounded-lg shadow-lg bg-white text-center">
+        <img width="128" src="../static/img/logo.svg" alt="LiCMS logo">
+        <div class="text-center text-shadow h1 font-futura">
+            LiCMS
+        </div>
+        <div>
+            Made with ❤ by <a href="https://github.com/Great-Li-Xin">Li Xin</a>!
+        </div>
+        <div class="text-muted small">
+            ™ and © 1997 -
+            <script>
+                document.write(new Date().getFullYear())
+            </script>
+            Li Xin. All Rights Reserved.
+            <a href="https://github.com/Great-Li-Xin/LiCMS/blob/master/LICENSE">License Agreement</a>
+        </div>
+    </div>
+    <a class="github-fork-ribbon left-bottom fixed bg-theme" href="https://github.com/Great-Li-Xin/LiCMS"
+       target="_blank" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+{% endblock %}

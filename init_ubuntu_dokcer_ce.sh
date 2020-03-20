@@ -15,13 +15,6 @@ apt-get install \
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 apt-key fingerprint 0EBFCD88
 
-# Fix the docker feed bug for Unintu 19.10(eoan)
-if [ "$(lsb_release -cs)" = "eoan" ]; then
-  codename="disco"
-else
-  codename="$(lsb_release -cs)"
-fi
-
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $codename stable"
 
 # Update the `apt` package index:

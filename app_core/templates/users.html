@@ -7,11 +7,16 @@
 {% endblock %}
 
 {% block page_content %}
-    {{ m_users.list_widget(title, users) }}
-
-    {% if user_id %}
-        {{ m_paginition.pagination_widget(pagination, endpoint, user_id=user_id) }}
+    {% if users %}
+        {{ m_users.list_widget(title, users) }}
+        {% if user_id %}
+            {{ m_paginition.pagination_widget(pagination, endpoint, user_id=user_id) }}
+        {% else %}
+            {{ m_paginition.pagination_widget(pagination, endpoint) }}
+        {% endif %}
     {% else %}
-        {{ m_paginition.pagination_widget(pagination, endpoint) }}
+        <div class="jumbotron p-5 rounded-lg shadow-lg bg-white">
+            <h1 class="text-muted text-center">No Users Yet.</h1>
+        </div>
     {% endif %}
 {% endblock %}

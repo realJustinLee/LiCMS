@@ -14,13 +14,20 @@
                 What's on your mind?
             </div>
             <div class="card-body p-5 lead">
-                {{ render_form(form) }}
+                {{ render_form(form, button_map={'submit': 'primary'}) }}
             </div>
         </div>
     {% endif %}
 
-    {{ m_posts.list_widget(title, posts, show_tab=true) }}
-    {{ m_paginition.pagination_widget(pagination, endpoint) }}
+    {% if posts %}
+        {{ m_posts.list_widget(title, posts, show_tab=true) }}
+        {{ m_paginition.pagination_widget(pagination, endpoint) }}
+    {% else %}
+        <div class="jumbotron p-5 rounded-lg shadow-lg bg-white">
+            <h1 class="text-muted text-center">No Posts Yet.</h1>
+        </div>
+    {% endif %}
+
 {% endblock %}
 
 {% block scripts %}

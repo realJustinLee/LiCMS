@@ -46,9 +46,9 @@
                            aria-haspopup="true" aria-expanded="true">
                             <img class="user-thumbnail rounded shadow m-0 mr-1 mt-n1"
                                  src="{{ current_user.gravatar(size=128) }}" alt="user avatar small">
-                            <span>{{ current_user.name }}</span>
+                            <span class="mr-1">{{ current_user.name }}</span>
                             {% if current_user.is_administrator() %}
-                                <span class="badge badge-pill badge-warning ml-1">Admin</span>
+                                <span class="badge badge-pill badge-warning">Admin</span>
                             {% endif %}
                             <b class="caret"></b></a>
                         <div class="dropdown-menu dropdown-menu-right shadow ">

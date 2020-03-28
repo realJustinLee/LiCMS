@@ -14,7 +14,11 @@
             Edit Profile
         </div>
         <div class="card-body p-5 lead">
-            {{ render_form(form) }}
+            {% if is_adm %}
+                {{ render_form(form, button_map={'submit': 'warning'}) }}
+            {% else %}
+                {{ render_form(form, button_map={'submit': 'primary'}) }}
+            {% endif %}
         </div>
     </div>
 {% endblock %}

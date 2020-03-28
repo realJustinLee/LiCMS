@@ -15,7 +15,7 @@
             <div class="card my-4">
                 <h5 class="card-header">Leave a Comment:</h5>
                 <div class="card-body">
-                    {{ render_form(form) }}
+                    {{ render_form(form, button_map={'submit': 'primary'}) }}
                 </div>
             </div>
         {% endif %}

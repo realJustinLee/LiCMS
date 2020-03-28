@@ -79,7 +79,7 @@ def edit_profile():
         current_user.about_me = form.about_me.data
         db.session.add(current_user._get_current_object())
         db.session.commit()
-        flash('Your profile has been updated.')
+        flash('Your profile has been updated.', 'alert-success')
         return redirect(url_for('main.user', user_id=current_user.id))
     form.name.data = current_user.name
     form.gender.data = current_user.gender_id
@@ -104,7 +104,7 @@ def edit_profile_admin(user_id):
         _user.about_me = form.about_me.data
         db.session.add(_user)
         db.session.commit()
-        flash('The profile has been updated.')
+        flash('The profile has been updated.', 'alert-success')
         return redirect(url_for('main.user', user_id=_user.id))
     form.email.data = _user.email
     form.confirmed.data = _user.confirmed
@@ -113,7 +113,7 @@ def edit_profile_admin(user_id):
     form.gender.data = _user.gender_id
     form.location.data = _user.location
     form.about_me.data = _user.about_me
-    return render_template('edit_profile.html', form=form, user=_user)
+    return render_template('edit_profile.html', form=form, user=_user, is_adm=True)
 
 
 @main.route('/all/<_next>')
@@ -166,7 +166,7 @@ def post(post_id):
         comment = Comment(body=form.body.data, post=_post, author=current_user._get_current_object())
         db.session.add(comment)
         db.session.commit()
-        flash("Your comment has been published!")
+        flash("Your comment has been published!", 'alert-success')
         # page=-1 takes you to the last page that contains your comment
         return redirect(url_for('main.post', post_id=post_id, page=-1))
     page = request.args.get('page', 1, type=int)
@@ -191,7 +191,7 @@ def edit(post_id):
         _post.body = form.body.data
         db.session.add(_post)
         db.session.commit()
-        flash('The post has been updated.')
+        flash('The post has been updated.', 'alert-success')
         return redirect(url_for('main.post', post_id=_post.id))
     form.title.data = _post.title
     form.body.data = _post.body
@@ -204,13 +204,13 @@ def edit(post_id):
 def follow(user_id):
     _user = User.query.filter_by(id=user_id).first()
     if _user is None:
-        flash('Invalid user.')
+        flash('Invalid user.', 'alert-danger')
         return redirect(url_for('main.index'))
     if current_user.is_following(_user):
         flash('You are already following this user.')
         return redirect(url_for('main.user', user_id=user_id))
     current_user.follow(_user)
-    flash('You are now following %s.' % _user.name)
+    flash('You are now following %s.' % _user.name, 'alert-success')
     return redirect(url_for('main.user', user_id=user_id))
 
 
@@ -220,13 +220,13 @@ def follow(user_id):
 def unfollow(user_id):
     _user = User.query.filter_by(id=user_id).first()
     if _user is None:
-        flash('Invalid user.')
+        flash('Invalid user.', 'alert-danger')
         return redirect(url_for('main.index'))
     if not current_user.is_following(_user):
         flash('You are not following this user.')
         return redirect(url_for('main.user', user_id=user_id))
     current_user.unfollow(_user)
-    flash('You are not following %s anymore.' % _user.name)
+    flash('You are not following %s anymore.' % _user.name, 'alert-success')
     return redirect(url_for('main.user', user_id=user_id))
 
 
@@ -234,7 +234,7 @@ def unfollow(user_id):
 def followers(user_id):
     _user = User.query.get(user_id)
     if _user is None:
-        flash('Invalid user.')
+        flash('Invalid user.', 'alert-danger')
         return redirect(url_for('main.index'))
     page = request.args.get('page', 1, type=int)
     pagination = _user.followers.order_by(Follow.timestamp.desc()).paginate(page, per_page=current_app.config[
@@ -248,7 +248,7 @@ def followers(user_id):
 def followed_by(user_id):
     _user = User.query.get(user_id)
     if _user is None:
-        flash('Invalid user.')
+        flash('Invalid user.', 'alert-danger')
         return redirect(url_for('main.index'))
     page = request.args.get('page', 1, type=int)
     pagination = _user.followed.order_by(Follow.timestamp.desc()).paginate(page, per_page=current_app.config[

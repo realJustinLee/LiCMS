@@ -32,7 +32,7 @@
             <div class="small text-muted">
                 After scanning the QR Code above, the app will display a six-digit code that you can enter below.
             </div>
-            {{ render_form(form) }}
+            {{ render_form(form, button_map={'submit': 'primary'}) }}
         </div>
     </div>
 

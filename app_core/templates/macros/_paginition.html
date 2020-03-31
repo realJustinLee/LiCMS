@@ -1,6 +1,6 @@
 {% macro pagination_widget(pagination, endpoint, fragment='') %}
     {% if pagination.pages %}
-        <div>
+        <div class="my-5">
             <ul class="pagination justify-content-center">
                 <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
                     <a class="page-link"

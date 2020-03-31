@@ -8,11 +8,11 @@ body {
     background: linear-gradient(15deg, #64bcf4, #c2e59c) no-repeat fixed;
 }
 
-.easter-egg-login {
+.easter-egg-logo {
     transition: .3s;
 }
 
-.easter-egg-login:hover {
+.easter-egg-logo:hover {
     color: #856404;
     background-color: #fff3cd;
     border-color: #ffeeba;

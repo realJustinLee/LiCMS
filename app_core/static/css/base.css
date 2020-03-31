@@ -66,3 +66,19 @@ footer {
 .text-shadow {
     text-shadow: 2px 2px #AAAAAA;
 }
+
+.easter-egg-logo {
+    transition: .3s;
+}
+
+.easter-egg-logo:hover {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+    border-radius: 1rem !important;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    padding: 25px;
+    margin-bottom: 25px;
+    width: 50%;
+    height: 50%;
+}

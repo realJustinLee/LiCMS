@@ -9,8 +9,9 @@ USER licms
 WORKDIR /home/licms
 
 COPY requirements requirements
+COPY pkg_upd3.py ./
 RUN python -m venv venv
-RUN venv/bin/pip install -U pip
+RUN python pkg_upd3.py
 RUN venv/bin/pip install -r requirements/docker.txt
 
 COPY app_core app_core

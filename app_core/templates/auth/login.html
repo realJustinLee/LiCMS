@@ -4,7 +4,7 @@
 
 {% block auth_content %}
     <form method="post">
-        <img class="mb-3 easter-egg-login" src="{{ url_for('static', filename='img/logo.svg') }}" alt="" width="128"
+        <img class="mb-3 easter-egg-logo" src="{{ url_for('static', filename='img/logo.svg') }}" alt="" width="128"
              height="128">
         <h1 class="h3 mb-3 font-weight-normal">Please login</h1>
         {{ form.csrf_token }}

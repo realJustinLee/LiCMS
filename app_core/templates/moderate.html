@@ -9,12 +9,14 @@
 
 {% block page_content %}
     {% set moderate = True %}
-    <div class="jumbotron p-5 rounded-lg shadow-lg bg-white">
-        {% if comments %}
+    {% if comments %}
+        <div class="jumbotron p-5 rounded-lg shadow-lg bg-white">
             {% include 'fragments/_comments.html' %}
-            {{ m_paginition.pagination_widget(pagination, endpoint) }}
-        {% else %}
+        </div>
+        {{ m_paginition.pagination_widget(pagination, endpoint) }}
+    {% else %}
+        <div class="jumbotron p-5 rounded-lg shadow-lg bg-white">
             <h1 class="text-muted text-center">No Comments Yet.</h1>
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
 {% endblock %}

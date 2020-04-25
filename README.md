@@ -28,7 +28,7 @@ LiCMS (Lixin Content Management System) is a content management system used for 
 - [x] iPadOS
 - [x] macOS
 - [x] Linux
-- [x] Windows 10
+- [x] Windows
 
 ## Platform Compatibility (Back-end)
 - [x] macOS
@@ -36,6 +36,7 @@ LiCMS (Lixin Content Management System) is a content management system used for 
 - [x] Unix
 - [x] Heroku
 - [x] Docker
+- [x] Windows (Supported via Docker)
 
 ## Deployment Guide (Docker-Ubuntu)
 If you would like to deploy LiCMS via other methods, you could refer to this guide

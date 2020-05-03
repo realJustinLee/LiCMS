@@ -151,8 +151,7 @@ def posts():
         title = 'All Posts'
         query = Post.query
     pagination = query.order_by(
-        Post.timestamp.desc()).paginate(page, per_page=current_app.config[
-        'LICMS_POSTS_PER_PAGE'], error_out=False)
+        Post.timestamp.desc()).paginate(page, per_page=current_app.config['LICMS_POSTS_PER_PAGE'], error_out=False)
     _posts = pagination.items
     return render_template('posts.html', title=title, form=form, show_followed=_show_followed, posts=_posts,
                            pagination=pagination, endpoint='main.posts')

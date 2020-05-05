@@ -15,7 +15,14 @@ apt-get install \
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 apt-key fingerprint 0EBFCD88
 
-add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+# Fix the docker feed bug for Ubuntu 20.04(focal)
+if [ "$(lsb_release -cs)" = "focal" ]; then
+  codename="eoan"
+else
+  codename="$(lsb_release -cs)"
+fi
+
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $codename stable"
 
 # Update the `apt` package index:
 apt-get update -y && apt-get upgrade -y && apt-get dist-upgrade -y

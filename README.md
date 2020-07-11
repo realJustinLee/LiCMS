@@ -4,7 +4,7 @@
 LiCMS (Lixin Content Management System) is a content management system used for blogging, implemented with Flask.
 
 ## Requirements
-> - Python `3.7.7`
+> - Python `3.8.3`
 > - Docker `19.03.8`
 > - DataBase depending on deployment method (default in `config.py`, cen be edited as you wish)
 >   - Heroku: `mysql`

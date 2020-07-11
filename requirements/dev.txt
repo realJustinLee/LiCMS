@@ -1,5 +1,5 @@
 -r common.txt
-coverage==5.1
+coverage==5.2
 Faker==4.1.1
 selenium==3.141.0
 text-unidecode==1.3

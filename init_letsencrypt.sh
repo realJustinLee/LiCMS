@@ -94,7 +94,7 @@ echo "### Creating dummy certificate for $domains ..."
 path="/etc/letsencrypt/live/all"
 mkdir -p "$data_path/conf/live/all"
 docker-compose ${compose_file_arg} run --rm --entrypoint "\
-  openssl req -x509 -nodes -newkey rsa:1024 -days 1 \
+  openssl req -x509 -nodes -newkey rsa -days 1 \
     -keyout '$path/privkey.pem' \
     -out '$path/fullchain.pem' \
     -subj '/CN=localhost'" certbot

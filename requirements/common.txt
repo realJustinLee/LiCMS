@@ -1,5 +1,5 @@
 alembic==1.4.3
-bleach==3.2.1
+bleach==3.3.0
 blinker==1.4
 Bootstrap-Flask==1.5.1
 click==7.1.2

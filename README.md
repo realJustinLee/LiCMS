@@ -47,7 +47,7 @@ If you would like to deploy LiCMS via other methods, you could refer to this gui
 
 1. First thing first, clone this project.
     ```shell script
-    git clone https://github.com/Great-Li-Xin/LiCMS.git
+    git clone https://github.com/realJustinLee/LiCMS.git
     ```
 1. First thing first, you should compose a dot-env file named `.env-licms`.
     > The template is in the following code block:
@@ -150,5 +150,5 @@ The Screenshot
 - [ ] Paste bin for Academic use.
 - [ ] OAuth Sign In (Sign In with twitter/facebook/google).
 
-# Made with ❤ by [Li Xin](https://github.com/Great-Li-Xin)!
-™ and © 1997-2020 Li Xin. All Rights Reserved. [License Agreement](./LICENSE)
+# Made with ❤ by [Justin Lee](https://github.com/realJustinLee)!
+™ and © 1997-2021 Justin Lee. All Rights Reserved. [License Agreement](./LICENSE)

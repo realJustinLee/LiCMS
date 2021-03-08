@@ -1,7 +1,7 @@
 <p align="center"><img width="100" src="app_core/static/img/logo.svg" alt="LiCMS logo"></p>
 
 # LiCMS
-LiCMS (Lixin Content Management System) is a content management system used for blogging, implemented with Flask.
+LiCMS (Lixin (Justin Lee) Content Management System) is a content management system used for blogging, implemented with Flask.
 
 ## Requirements
 > - Python `3.8.3`

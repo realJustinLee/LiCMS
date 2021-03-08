@@ -94,7 +94,7 @@ If you would like to deploy LiCMS via other methods, you could refer to this gui
     ./post_reboot.sh
     ```
 
-## RESTfil API auth flow
+## RESTful API auth flow
 1. POST `https://your.host/api/v1/tokens/` with HTTP Basic Auth:
     ```text
     Username:<email>    

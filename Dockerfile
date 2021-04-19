@@ -1,7 +1,10 @@
-FROM python:3.9-alpine
+FROM python:3.9.4-alpine
 
 ENV FLASK_APP app.py
 ENV FLASK_CONFIG production
+
+USER root
+RUN apk add build-base
 
 RUN adduser -D licms
 USER licms
@@ -12,7 +15,6 @@ COPY requirements requirements
 RUN python -m venv venv
 RUN venv/bin/pip install -U pip
 RUN venv/bin/pip install -r requirements/docker.txt
-RUN apk add --no-cache --virtual .build-deps gcc musl-dev && pip install cython && apk del .build-deps gcc musl-dev
 
 COPY app_core app_core
 COPY migrations migrations

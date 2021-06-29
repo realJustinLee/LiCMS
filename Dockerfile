@@ -4,7 +4,7 @@ ENV FLASK_APP app.py
 ENV FLASK_CONFIG production
 
 USER root
-RUN apk add build-base
+RUN apk add build-base libffi-dev
 
 RUN adduser -D licms
 USER licms

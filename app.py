@@ -62,7 +62,7 @@ def test(coverage, test_names):
 @click.option('--profile-dir', default=None, help='Directory where profiler data files are saved.')
 def profile(length, profile_dir):
     """Start the application under the code profiler."""
-    from werkzeug.contrib.profiler import ProfilerMiddleware
+    from werkzeug.middleware.profiler import ProfilerMiddleware
     app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[length], profile_dir=profile_dir)
     app.run()
 

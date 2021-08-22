@@ -1,4 +1,6 @@
 -r common.txt
 Flask-SSLify==0.1.5
-gevent==21.1.2
+gevent==21.8.0
+zope.event==4.5.0
+zope.interface==5.4.0
 gunicorn==20.1.0

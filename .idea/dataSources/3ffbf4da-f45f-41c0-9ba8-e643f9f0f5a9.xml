@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="MySQL - licms@localhost">
-  <database-model serializer="dbm" dbms="MARIADB" family-id="MARIADB" format-version="4.17">
-    <root id="1">
-      <ServerVersion>10.4.11</ServerVersion>
-      <DefaultEngine>InnoDB</DefaultEngine>
-      <DefaultCasing>exact</DefaultCasing>
-    </root>
+  <database-model serializer="dbm" dbms="MARIADB" family-id="MARIADB" format-version="4.23">
+    <root id="1"/>
     <schema id="2" parent="1" name="information_schema">
       <Collation>utf8_general_ci</Collation>
     </schema>

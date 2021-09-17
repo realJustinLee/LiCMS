@@ -13,7 +13,7 @@ LiCMS (Li Xin (Justin Lee) Content Management System) is a content management sy
 >   - Test Env: `sqlite`
 
 ## Tech Reviews
-- LiCMS is an all in one content management solution developed with the MVC design pattern, providing usage and management for posts, comments, and users.
+- LiCMS is an all-in-one content management solution developed with the MVC design pattern, providing usage and management for posts, comments, and users.
 - For the front-end, we provide both the `RESTful-API` solution and website solution (based on Bootstrap).
 - For the back-end, we provide a Flask and Docker-based, automatic deployed and self-sustained solution with continuous-integration provided by Jenkins or Travis-CI.
 - For database management, I used SQLAlchemy to simplify the complex SQL queries into object operations, which provided me with an object-oriented interface for all of the CRUD operations.

@@ -4,7 +4,7 @@
 LiCMS (Li Xin (Justin Lee) Content Management System) is a content management system used for blogging, implemented with Flask.
 
 ## Requirements
-> - Python `3.9.6`
+> - Python `3.9.7`
 > - Docker `20.10.8`
 > - DataBase depending on deployment method (default in `config.py`, cen be edited as you wish)
 >   - Heroku: `mysql`
@@ -149,6 +149,7 @@ The Screenshot
 - [x] About page.
 - [ ] Paste bin for Academic use.
 - [ ] OAuth Sign In (Sign In with twitter/facebook/google/apple).
+- [ ] Migrate to Bootstrap5
 
 # Made with ❤ by [Justin Lee](https://github.com/realJustinLee)!
 ™ and © 1997-2021 Justin Lee. All Rights Reserved. [License Agreement](./LICENSE)

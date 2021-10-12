@@ -15,6 +15,8 @@ COPY requirements requirements
 RUN python -m venv venv
 RUN venv/bin/pip install -U pip
 RUN venv/bin/pip install -r requirements/docker.txt
+# This may cause uncertainty
+# RUN python dep_updater.py
 
 COPY app_core app_core
 COPY migrations migrations

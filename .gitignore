@@ -103,6 +103,9 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+.idea
+.DS_Store
+
 # project psecific
 .env-licms
 .env-mysql

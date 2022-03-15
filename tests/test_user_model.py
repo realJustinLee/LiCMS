@@ -61,7 +61,15 @@ class UserModelTestCase(unittest.TestCase):
         db.session.commit()
         token = u.generate_confirmation_token(1)
         time.sleep(2)
-        self.assertFalse(u.confirm(token))
+        self.assertFalse(u.confirm(token, leeway=0))
+
+    def test_leeway_confirmation_token(self):
+        u = User(password='cat')
+        db.session.add(u)
+        db.session.commit()
+        token = u.generate_confirmation_token(1)
+        time.sleep(2)
+        self.assertTrue(u.confirm(token))
 
     def test_valid_reset_token(self):
         u = User(password='cat')
@@ -106,6 +114,30 @@ class UserModelTestCase(unittest.TestCase):
         token = u2.generate_email_change_token('john@example.com')
         self.assertFalse(u2.change_email(token))
         self.assertTrue(u2.email == 'susan@example.org')
+
+    def test_valid_tow_factor_token(self):
+        u = User(password='cat')
+        db.session.add(u)
+        db.session.commit()
+        token = u.generate_two_factor_reset_token()
+        self.assertTrue(u.reset_two_factor(token))
+
+    def test_invalid_tow_factor_token(self):
+        u1 = User(password='cat')
+        u2 = User(password='dog')
+        db.session.add(u1)
+        db.session.add(u2)
+        db.session.commit()
+        token = u1.generate_two_factor_reset_token()
+        self.assertFalse(u2.reset_two_factor(token))
+
+    def test_expired_tow_factor_token(self):
+        u = User(password='cat')
+        db.session.add(u)
+        db.session.commit()
+        token = u.generate_two_factor_reset_token(1)
+        time.sleep(2)
+        self.assertFalse(u.reset_two_factor(token, leeway=0))
 
     def test_user_role(self):
         u = User(email='john@example.com', password='cat')

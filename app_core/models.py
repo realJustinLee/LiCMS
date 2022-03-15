@@ -1,13 +1,13 @@
 import base64
 import hashlib
 import os
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 import bleach
+import jwt
 import onetimepass
 from flask import current_app, url_for
 from flask_login import UserMixin, AnonymousUserMixin
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from markdown import markdown
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -180,13 +180,12 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def generate_confirmation_token(self, expiration=600):
-        s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
-        return s.dumps({'confirm': self.id}).decode('utf-8')
+        payload = {'confirm': self.id, 'exp': datetime.now(timezone.utc) + timedelta(seconds=expiration)}
+        return jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm="HS256")
 
-    def confirm(self, token):
-        s = Serializer(current_app.config['SECRET_KEY'])
+    def confirm(self, token, leeway=10):
         try:
-            data = s.loads(token.encode('utf-8'))
+            data = jwt.decode(token, current_app.config['SECRET_KEY'], leeway=leeway, algorithms=["HS256"])
         except:
             return False
         if data.get('confirm') != self.id:
@@ -196,14 +195,13 @@ class User(UserMixin, db.Model):
         return True
 
     def generate_reset_token(self, expiration=600):
-        s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
-        return s.dumps({'reset': self.id}).decode('utf-8')
+        payload = {'reset': self.id, 'exp': datetime.now(timezone.utc) + timedelta(seconds=expiration)}
+        return jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm="HS256")
 
     @staticmethod
-    def reset_password(token, new_password):
-        s = Serializer(current_app.config['SECRET_KEY'])
+    def reset_password(token, new_password, leeway=10):
         try:
-            data = s.loads(token.encode('utf-8'))
+            data = jwt.decode(token, current_app.config['SECRET_KEY'], leeway=leeway, algorithms=["HS256"])
         except:
             return False
         user = User.query.get(data.get('reset'))
@@ -214,13 +212,13 @@ class User(UserMixin, db.Model):
         return True
 
     def generate_email_change_token(self, new_email, expiration=600):
-        s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
-        return s.dumps({'change_email': self.id, 'new_email': new_email}).decode('utf-8')
+        payload = {'change_email': self.id, 'new_email': new_email,
+                   'exp': datetime.now(timezone.utc) + timedelta(seconds=expiration)}
+        return jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm="HS256")
 
-    def change_email(self, token):
-        s = Serializer(current_app.config['SECRET_KEY'])
+    def change_email(self, token, leeway=10):
         try:
-            data = s.loads(token.encode('utf-8'))
+            data = jwt.decode(token, current_app.config['SECRET_KEY'], leeway=leeway, algorithms=["HS256"])
         except:
             return False
         if data.get('change_email') != self.id:
@@ -236,13 +234,12 @@ class User(UserMixin, db.Model):
         return True
 
     def generate_two_factor_reset_token(self, expiration=600):
-        s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
-        return s.dumps({'reset_2FA': self.id}).decode('utf-8')
+        payload = {'reset_2FA': self.id, 'exp': datetime.now(timezone.utc) + timedelta(seconds=expiration)}
+        return jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm="HS256")
 
-    def reset_two_factor(self, token):
-        s = Serializer(current_app.config['SECRET_KEY'])
+    def reset_two_factor(self, token, leeway=10):
         try:
-            data = s.loads(token.encode('utf-8'))
+            data = jwt.decode(token, current_app.config['SECRET_KEY'], leeway=leeway, algorithms=["HS256"])
         except:
             return False
         if data.get('reset_2FA') != self.id:
@@ -310,14 +307,13 @@ class User(UserMixin, db.Model):
         return json_user
 
     def generate_auth_token(self, expiration=600):
-        s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
-        return s.dumps({'user_id': self.id}).decode('utf-8')
+        payload = {'user_id': self.id, 'exp': datetime.now(timezone.utc) + timedelta(seconds=expiration)}
+        return jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm="HS256")
 
     @staticmethod
-    def verify_auth_token(token):
-        s = Serializer(current_app.config['SECRET_KEY'])
+    def verify_auth_token(token, leeway=10):
         try:
-            data = s.loads(token)
+            data = jwt.decode(token, current_app.config['SECRET_KEY'], leeway=leeway, algorithms=["HS256"])
         except:
             return None
         return User.query.get(data['user_id'])

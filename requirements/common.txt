@@ -22,7 +22,7 @@ Flask-WTF==1.0.0
 h11==0.13.0
 idna==3.3
 importlib-metadata==4.11.3
-itsdangerous==2.0.1
+itsdangerous==2.1.1
 Jinja2==3.0.3
 Mako==1.2.0
 Markdown==3.3.6
@@ -31,6 +31,7 @@ onetimepass==1.0.1
 outcome==1.1.0
 packaging==21.3
 pycparser==2.21
+PyJWT==2.3.0
 PyMySQL==1.0.2
 pyOpenSSL==22.0.0
 pyparsing==3.0.7

@@ -4,6 +4,7 @@ import unittest
 
 import onetimepass
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 from app_core import create_app, db, fake
 from app_core.models import Role, User, Gender
@@ -62,7 +63,7 @@ class SeleniumTestCase(unittest.TestCase):
     def tearDownClass(cls):
         if cls.client:
             # stop the flask server and the browser
-            cls.client.get('http://localhost:5000/do/shutdown')
+            cls.client.get('http://localhost:5001/do/shutdown')
             cls.client.quit()
             cls.server_thread.join()
 
@@ -82,7 +83,7 @@ class SeleniumTestCase(unittest.TestCase):
 
     def test_admin_home_page(self):
         # navigate to home page
-        self.client.get('http://localhost:5000/')
+        self.client.get('http://localhost:5001/')
         self.assertTrue('Stranger!' in self.client.page_source)
 
         # navigate to login page
@@ -90,15 +91,15 @@ class SeleniumTestCase(unittest.TestCase):
         self.assertIn('Please login', self.client.page_source)
 
         # login
-        self.client.find_element_by_name('email'). \
+        self.client.find_element(by=By.NAME, value='email'). \
             send_keys('john@example.com')
-        self.client.find_element_by_name('password').send_keys('cat')
-        self.client.find_element_by_name('submit').click()
+        self.client.find_element(by=By.NAME, value='password').send_keys('cat')
+        self.client.find_element(by=By.NAME, value='submit').click()
         self.assertTrue('Two Factor' in self.client.page_source)
 
         # 2FA
         user = User.query.filter_by(email='john@example.com').first()
         totp = onetimepass.get_totp(user.otp_secret)
-        self.client.find_element_by_name('token').send_keys(totp)
-        self.client.find_element_by_name('submit').click()
+        self.client.find_element(by=By.NAME, value='token').send_keys(totp)
+        self.client.find_element(by=By.NAME, value='submit').click()
         self.assertTrue('john' in self.client.page_source)

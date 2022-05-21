@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from 'bootstrap/form.html' import render_form %}
+{% from 'bootstrap5/form.html' import render_form %}
 {% import 'macros/_posts.html' as m_posts with context %}
 {% import 'macros/_paginition.html' as m_paginition %}
 
@@ -9,11 +9,11 @@
 
 {% block page_content %}
     {% if current_user.can(Permission.WRITE) %}
-        <div class="mb-5 card rounded-lg shadow-lg">
-            <div class="card-header p-5 h1">
+        <div class="mb-5 card rounded-3 shadow-lg">
+            <div class="card-header p-4 p-md-5 h1">
                 What's on your mind?
             </div>
-            <div class="card-body p-5 lead">
+            <div class="card-body p-4 p-md-5 lead">
                 {{ render_form(form, button_map={'submit': 'primary'}) }}
             </div>
         </div>
@@ -23,7 +23,7 @@
         {{ m_posts.list_widget(title, posts, show_tab=true) }}
         {{ m_paginition.pagination_widget(pagination, endpoint) }}
     {% else %}
-        <div class="jumbotron p-5 rounded-lg shadow-lg bg-white">
+        <div class="p-5 mb-4 bg-light rounded-3">
             <h1 class="text-muted text-center">No Posts Yet.</h1>
         </div>
     {% endif %}

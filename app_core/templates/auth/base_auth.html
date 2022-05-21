@@ -6,13 +6,11 @@
 {% endblock %}
 
 {% block page_content %}
-    <div class="form-login sheet-width bg-white text-center rounded-lg shadow">
+    <div class="form-signin w-100 m-auto bg-light rounded-3 shadow-lg text-center p-4 p-md-5">
         {% block auth_content %}
         {% endblock %}
-        <p class="mt-3 mb-0 text-muted small">&copy; Copyright
-            1997 -
-            <script>document.write(new Date().getFullYear())</script>
-            Justin Lee.<br>All rights reserved.
+        <p class="mt-3 mb-0 text-muted small">
+            {% include 'fragments/_copyright.html' %}
         </p>
     </div>
 {% endblock %}

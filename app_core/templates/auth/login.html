@@ -6,25 +6,30 @@
     <form method="post">
         <img class="mb-3 easter-egg-logo" src="{{ url_for('static', filename='img/logo.svg') }}" alt="" width="128"
              height="128">
-        <h1 class="h3 mb-3 font-weight-normal">Please login</h1>
+        <h1 class="h3 mb-3 fw-normal">Please login</h1>
         {{ form.csrf_token }}
-        {{ form.email.label(class="sr-only") }}
-        {{ form.email(class="form-control", placeholder="Email address",type="email", autofocus=true) }}
-        {{ form.password.label(class="sr-only") }}
-        {{ form.password(class="form-control", placeholder="Password") }}
+        <div class="form-floating">
+            {{ form.email(type="email", class="form-control", id="floatingInput", placeholder="name@example.com", autofocus=true) }}
+            {{ form.email.label(for="floatingInput") }}
+        </div>
+        <div class="form-floating">
+            {{ form.password(ctype="password", class="form-control", id="floatingPassword", placeholder="Password") }}
+            {{ form.password.label(for="floatingPassword") }}
+        </div>
+
         {% for message in form.email.errors %}
             <small class="text-danger">{{ message }}</small><br>
         {% endfor %}
         {% for message in form.password.errors %}
             <small class="text-danger">{{ message }}</small><br>
         {% endfor %}
-        <div class="checkbox mb-0">
+        <div class="checkbox mb-3">
             <label>
                 {{ form.remember_me() }}
                 {{ form.remember_me.label() }}
             </label>
         </div>
-        {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
+        {{ form.submit(class="w-100 btn btn-lg btn-primary") }}
     </form>
     <div class="mt-3 text-muted">
         <div class="small">

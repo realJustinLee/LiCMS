@@ -17,8 +17,7 @@
             {% endblock %}
         </title>
 
-        <link rel="shortcut icon" href="{{ url_for('main.favicon') }}"
-              type="image/x-icon">
+        <link rel="shortcut icon" href="{{ url_for('main.favicon') }}" type="image/x-icon">
         <link rel="icon" href="{{ url_for('main.favicon') }}" type="image/x-icon">
     {% endblock %}
 </head>
@@ -33,13 +32,13 @@
             {% if messages %}
                 <div class="notification-area">
                     {% for category, message in messages %}
-                        <div class="alert alert-dismissible shadow-lg
+                        <div class="alert alert-dismissible fade show shadow-lg
                             {% if category == "message" %}
                                 alert-warning
                             {% else %}
                                 {{ category }}
-                            {% endif %}">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            {% endif %}" role="alert">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             {{ message }}
                         </div>
                     {% endfor %}

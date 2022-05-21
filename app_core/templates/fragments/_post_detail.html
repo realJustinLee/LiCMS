@@ -3,10 +3,10 @@
 
 <hr>
 
-<div class="small d-flex justify-content-between align-items-center w-100">
+<div class="small d-flex justify-content-between align-items-center">
     <!-- Author -->
     <div>
-        <img class="rounded" width="24" height="24" src="{{ post.author.gravatar(size=128) }}"
+        <img class="rounded" width="32" height="32" src="{{ post.author.gravatar(size=32) }}"
              alt="Author Gravatar"/>
         <a href="{{ url_for('main.user', user_id=post.author.id) }}">
             @{{ post.author.name }}
@@ -15,21 +15,18 @@
     <!-- Date/Time -->
     <div class="d-flex justify-content-between align-items-center">
         <div class="text-muted">Posted on {{ moment(post.timestamp).format("MMMM Do, YYYY") }} </div>
-        <div class="ml-2">
+        <div class="ms-2">
             {% if current_user == post.author %}
                 <a href="{{ url_for('main.edit', post_id=post.id) }}">
                     <span class="btn-sm btn-primary">Edit</span>
                 </a>
             {% elif current_user.is_administrator() %}
                 <a href="{{ url_for('main.edit', post_id=post.id) }}">
-            <span class="btn-sm btn-danger">Edit
-                <span class="badge badge-pill alert-danger">Admin</span>
-            </span>
+                    <span class="btn-sm btn-danger">Admin Edit</span>
                 </a>
             {% endif %}
         </div>
     </div>
-
 </div>
 
 <hr>

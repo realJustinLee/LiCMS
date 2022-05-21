@@ -4,15 +4,15 @@
 {% endblock %}
 
 {% block page_content %}
-    <div class="jumbotron px-5 alert-danger rounded shadow-lg">
-        <h1 class="alert-heading">Error: {% block error_code %}{% endblock %}</h1>
-        <hr>
-        <p class="lead">
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Error: {% block error_code %}{% endblock %}</h4>
+        <p>
             {% block error_message %}
             {% endblock %}
         </p>
-        <a class="btn btn-lg btn-primary" href="{{ url_for('main.index') }}" role="button">
-            Return to safety&raquo;
-        </a>
+        <hr>
+        <p class="mb-0">
+            Please: <a class="alert-link" href="{{ url_for('main.index') }}">Return to safety</a>
+        </p>
     </div>
 {% endblock %}

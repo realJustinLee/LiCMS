@@ -1,54 +1,59 @@
 {% macro list_widget(title, posts, show_tab=false ,extend=false, link='#' ,link_text ='', permalink=true) %}
-    {% if posts %}
-        <div class="jumbotron p-5 rounded-lg shadow-lg bg-white">
-            <h1 class="pb-2 mb-0 {% if not current_user.is_authenticated %}border-bottom{% endif %}">{{ title }}</h1>
+    <div class="p-md-5 p-4 mb-4 bg-light rounded-3 shadow-lg">
+        <div class="d-flex flex-column flex-md-row border-bottom">
+            <h1 class="pb-2 mb-0 col-md-9">{{ title }}</h1>
             {% if show_tab %}
                 {% include 'fragments/_post_tab.html' %}
             {% endif %}
+        </div>
+
+        {% if posts %}
             {% for post in posts %}
-                <div class="media pt-3">
-                    <img class="mr-3 rounded" width="48" height="48" src="{{ post.author.gravatar(size=128) }}"
-                         alt="Author Gravatar"/>
-                    <div class="media-body pb-3 mb-0 border-bottom">
-                        <div class="float-right small text-muted">{{ moment(post.timestamp).fromNow() }}</div>
-                        <div class="d-block">
-                            <a class="font-weight-bold" href="{{ url_for('main.user', user_id=post.author.id) }}">
-                                @{{ post.author.name }}
+                <div class="d-lg-flex text-muted border-bottom py-2 pb-lg-1">
+                    <div class="d-flex col-lg-9">
+                        <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
+                             src="{{ post.author.gravatar(size=32) }}" alt="Author Gravatar"/>
+                        <p class="pb-3 mb-0 small lh-sm">
+                            <a class="d-block text-gray-dark"
+                               href="{{ url_for('main.user', user_id=post.author.id) }}">
+                                <strong>@{{ post.author.name }}</strong>
                             </a>
-                        </div>
-                        <div class="mt-1 mb-2 ml-2">
                             {% if post.title %}
-                                <div class="lead">
-                                    {{ post.title }}
-                                </div>
+                                {{ post.title }}
                             {% endif %}
-                        </div>
-                        <div class="text-right">
+                        </p>
+                    </div>
+                    <div class="col-lg-3 d-flex flex-lg-column text-lg-end align-content-end">
+                        <small class="d-block text-gray-dark col-4 col-lg-auto">
+                            {{ moment(post.timestamp).fromNow() }}
+                        </small>
+                        <div class="text-end col-8 col-lg-auto">
                             {% if current_user == post.author %}
-                                <a href="{{ url_for('main.edit', post_id=post.id) }}">
-                                    <span class="btn-sm btn-primary">Edit</span>
-                                </a>
+                                <a href="{{ url_for('main.edit', post_id=post.id) }}"
+                                   class="btn-sm btn-warning">Edit</a>
                             {% elif current_user.is_administrator() %}
-                                <a href="{{ url_for('main.edit', post_id=post.id) }}">
-                                    <span class="btn-sm btn-danger">Edit
-                                        <span class="badge badge-pill badge-warning">Admin</span>
-                                    </span>
-                                </a>
+                                <a href="{{ url_for('main.edit', post_id=post.id) }}"
+                                   class="btn-sm btn-danger">Admin Edit</a>
                             {% endif %}
                             {% if permalink %}
-                                <a href="{{ url_for('main.post', post_id=post.id) }}">
-                                    <span class="ml-2 btn-sm alert-primary">Permalink</span>
-                                </a>
+                                <a href="{{ url_for('main.post', post_id=post.id) }}"
+                                   class="btn-sm btn-primary">Permalink</a>
                             {% endif %}
                         </div>
                     </div>
                 </div>
             {% endfor %}
             {% if extend %}
-                <small class="d-block text-right mt-3">
+                <small class="d-block text-end mt-3">
                     <a href="{{ link }}">{{ link_text }}</a>
                 </small>
             {% endif %}
-        </div>
-    {% endif %}
+        {% else %}
+            <div class="text-muted pt-3">
+                <h3 class="pb-3 mb-0 text-center">
+                    No posts yet!
+                </h3>
+            </div>
+        {% endif %}
+    </div>
 {% endmacro %}

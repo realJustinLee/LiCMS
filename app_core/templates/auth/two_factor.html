@@ -4,13 +4,17 @@
 
 {% block auth_content %}
     <form method="post">
-        <h1 class="h3 mb-4 font-weight-normal">Tow Factor</h1>
+        <h1 class="h3 mb-4 fw-normal">Tow Factor</h1>
         {{ form.csrf_token }}
-        {{ form.token.label(class="sr-only") }}
-        {{ form.token(class="form-control mb-3", placeholder="Authentication Code", autofocus=true) }}
+
+        <div class="form-floating">
+            {{ form.token(class="form-control mb-3", id="floatingInput", placeholder="Authentication Code", autofocus=true) }}
+            {{ form.token.label(for="floatingInput") }}
+        </div>
+
         {% for message in form.token.errors %}
             <small class="text-danger">{{ message }}</small><br>
         {% endfor %}
-        {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
+        {{ form.submit(class="w-100 btn btn-lg btn-primary") }}
     </form>
 {% endblock %}

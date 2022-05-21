@@ -7,65 +7,79 @@
 
 {% block navbar %}
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="/">
-            <img class="nav-logo" src="{{ url_for('static', filename='img/logo.svg') }}" alt="LiCMS logo">
-            <span class="h3 nav-name font-futura">LiCMS</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('main.posts') }}">Posts</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('main.users') }}">Users</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('main.about') }}">About</a>
-                </li>
-                {% if current_user.can(Permission.MODERATE) %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="true">Moderation</a>
-                        <div class="dropdown-menu shadow" aria-labelledby="dropdown03">
-                            <a class="dropdown-item" href="{{ url_for('main.moderate') }}">Moderate Comments</a>
-                        </div>
-                    </li>
-                {% endif %}
-            </ul>
-            <ul class="navbar-nav mt-2 mt-md-0">
-                {% if current_user.is_authenticated %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="true">
-                            <img class="user-thumbnail rounded shadow m-0 mr-1 mt-n1"
-                                 src="{{ current_user.gravatar(size=128) }}" alt="user avatar small">
-                            <span class="mr-1">{{ current_user.name }}</span>
-                            {% if current_user.is_administrator() %}
-                                <span class="badge badge-pill badge-warning">Admin</span>
-                            {% endif %}
-                            <b class="caret"></b></a>
-                        <div class="dropdown-menu dropdown-menu-right shadow ">
-                            <a class="dropdown-item"
-                               href="{{ url_for('main.user', user_id=current_user.id) }}">Profile</a>
-                            <a class="dropdown-item" href="{{ url_for('auth.change_password') }}">Change Password</a>
-                            <a class="dropdown-item" href="{{ url_for('auth.change_email_request') }}">Change Email</a>
-                            <a class="dropdown-item" href="{{ url_for('auth.change_two_factor') }}">Change 2FA</a>
-                            <a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">Log Out</a>
-                        </div>
-                    </li>
-                {% else %}
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img class="nav-logo" src="{{ url_for('static', filename='img/logo.svg') }}" alt="LiCMS logo">
+                <span class="h3 nav-name font-futura">LiCMS</span>
+            </a>
+            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse" id="navbarCollapse" style="">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li class="nav-item">
-                        <a class="btn btn-outline-light my-2 my-sm-0" href="{{ url_for('auth.login') }}">Log In</a>
+                        <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.posts') }}">Posts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.users') }}">Users</a>
+                    </li>
+                    {% if current_user.can(Permission.MODERATE) %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown"
+                               aria-expanded="true">Moderation</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                <a class="dropdown-item" href="{{ url_for('main.moderate') }}">Moderate Comments</a>
+                            </div>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.about') }}">About</a>
+                    </li>
+                </ul>
+                {% if current_user.is_authenticated %}
+                    <div class="flex-shrink-0 dropdown">
+                        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1"
+                           data-bs-toggle="dropdown" aria-expanded="true">
+                            {% if current_user.is_administrator() %}
+                                <span class="badge rounded-pill alert-primary me-3">Admin</span>
+                            {% endif %}
+                            <img alt="mdo" width="32" height="32" class="rounded-circle"
+                                 src="{{ current_user.gravatar(size=32) }}">
+                            <span class="mx-1">{{ current_user.name }}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-lg-end text-small" aria-labelledby="dropdownUser1"
+                            style="">
+                            <li><a class="dropdown-item" href="{{ url_for('main.user', user_id=current_user.id) }}">
+                                Profile
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('auth.change_password') }}">
+                                Change Password
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('auth.change_email_request') }}">
+                                Change Email
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('auth.change_two_factor') }}">
+                                Change 2FA
+                            </a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">
+                                Log Out
+                            </a></li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <div class="d-flex">
+                        <a class="btn btn-outline-light" href="{{ url_for('auth.login') }}">Log In</a>
+                    </div>
                 {% endif %}
-            </ul>
+            </div>
         </div>
     </nav>
 {% endblock %}

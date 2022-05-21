@@ -11,20 +11,18 @@
 {% endblock %}
 
 {% block page_content %}
-    <div class="jumbotron px-5 pt-5 pb-3 rounded-lg shadow-lg bg-white text-center">
-        <img class="easter-egg-logo" width="128" src="../static/img/logo.svg" alt="LiCMS logo">
-        <div class="text-center text-shadow h1 font-futura">
-            LiCMS
+    <div class="p-4 p-lg-5 mb-4 bg-light rounded-3 text-center">
+        <div class="container-fluid py-5">
+            <img class="easter-egg-logo" width="128" src="../static/img/logo.svg" alt="LiCMS logo">
+            <div class="text-center text-shadow h1 font-futura">
+                LiCMS
+            </div>
+            <div class="fs-4">
+                Made with ❤ by <a href="https://github.com/realJustinLee">Justin Lee</a>!
+            </div>
         </div>
-        <div>
-            Made with ❤ by <a href="https://github.com/realJustinLee">Justin Lee</a>!
-        </div>
-        <div class="text-muted small mt-4">
-            ™ and © 1997 -
-            <script>
-                document.write(new Date().getFullYear())
-            </script>
-            Justin Lee. All Rights Reserved.
+        <div class="text-center text-muted small">
+            {% include 'fragments/_copyright.html' %}
             <a href="https://github.com/realJustinLee/LiCMS/blob/master/LICENSE">License Agreement</a>
         </div>
     </div>

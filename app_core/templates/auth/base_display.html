@@ -6,20 +6,21 @@
 {% endblock %}
 
 {% block page_content %}
-    <div class="form-wtf px-5 py-3 bg-white rounded-lg shadow-lg">
-        <img class="m-2 float-right" src="{{ url_for('static', filename='img/logo.svg') }}" alt="" width="80"
-             height="80">
-        <div class="font-weight-normal my-3">
-            {% block display_title %}
-            {% endblock %}
+    <div class="form-wtf px-5 py-3 bg-light rounded-3 shadow-lg">
+        <div class="d-flex my-3">
+            <div class="col-7 col-md-10 font-weight-normal">
+                {% block display_title %}
+                {% endblock %}
+            </div>
+            <div class="col-5 col-md-2 justify-content-center align-self-center">
+                <img class="cm-2 alert alert-warning shadow-sm" alt="LiCMS Logo" width="128" height="128"
+                     src="{{ url_for('static', filename='img/logo.svg') }}">
+            </div>
         </div>
         {% block display_content %}
         {% endblock %}
-        <div class="my-3 text-muted text-center">&copy; Copyright
-            <script>
-                document.write(new Date().getFullYear())
-            </script>
-            Justin Lee. All rights reserved.
+        <div class="my-3 text-muted text-center">
+            {% include 'fragments/_copyright.html' %}
         </div>
     </div>
 {% endblock %}

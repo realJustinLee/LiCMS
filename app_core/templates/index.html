@@ -3,7 +3,7 @@
 {% import 'macros/_users.html' as m_users with context %}
 
 {% block page_content %}
-    <div class="jumbotron bg-white px-5 rounded-lg shadow-lg">
+    <div class="p-md-5 p-4 mb-4 bg-light rounded-3 shadow-lg">
         <h1>
             Hello,
             {% if current_user.is_authenticated %}
@@ -23,19 +23,6 @@
         </div>
     </div>
 
-    {% if posts %}
-        {{ m_posts.list_widget(post_title, posts, show_tab=true, extend=true, link=url_for('main.posts'), link_text=post_link) }}
-    {% else %}
-        <div class="jumbotron p-5 rounded-lg shadow-lg bg-white">
-            <h1 class="text-muted text-center">No Posts Yet.</h1>
-        </div>
-    {% endif %}
-
-    {% if users %}
-        {{ m_users.list_widget("Trending Authors", users, extend=true, link=url_for('main.users'), link_text='Show All Users') }}
-    {% else %}
-        <div class="jumbotron p-5 rounded-lg shadow-lg bg-white">
-            <h1 class="text-muted text-center">No Trending Users Yet.</h1>
-        </div>
-    {% endif %}
+    {{ m_posts.list_widget(post_title, posts, show_tab=true, extend=true, link=url_for('main.posts'), link_text=post_link) }}
+    {{ m_users.list_widget("Trending Authors", users, extend=true, link=url_for('main.users'), link_text='Show All Users') }}
 {% endblock %}

@@ -6,12 +6,13 @@
 {% endblock %}
 
 {% block page_content %}
-    <div class="jumbotron bg-white rounded-lg shadow-lg container">
+    <div class="p-md-5 p-4 mb-4 bg-light rounded-3 shadow-lg">
         <div class="row">
-            <div class="col-sm-5 mb-4 mb-sm-0">
-                <img class="img-thumbnail float-left" src="{{ user.gravatar(size=512) }}" alt="user avatar">
+            <div class="col-sm-3 mb-4 mb-sm-0 text-center align-self-center">
+                <img class="img-thumbnail float-left" src="{{ user.gravatar(size=256) }}" alt="user avatar"
+                     width="256" height="256">
             </div>
-            <div class="profile col-sm-7">
+            <div class="profile col-sm-9">
                 <h1>{{ user.name }}</h1>
                 {% if user.about_me %}
                     <div class="text-muted alert alert-info">
@@ -19,10 +20,10 @@
                     </div>
                 {% endif %}
                 <hr>
-                <div class="mt-3 mb-3 ml-2 ml-sm-0">
+                <div class="my-3 ms-2 ms-sm-0">
                     {% if user.location %}
                         <div>
-                            Location: <a href="http://maps.google.com/?q={{ user.location }}">{{ user.location }}</a>
+                            Location: <a href="https://maps.google.com/?q={{ user.location }}">{{ user.location }}</a>
                         </div>
                     {% endif %}
                     {% if current_user.is_administrator() %}
@@ -35,7 +36,7 @@
                     </div>
                     <div>
                         Member since {{ moment(user.member_since).format('L') }}.
-                        <span class="badge badge-pill badge-success mb-0 ml-1 mt-n1">
+                        <span class="badge rounded-pill btn-success mb-0 ms-1 mt-n1">
                             {{ moment(user.member_since).fromNow() }}
                         </span>
                     </div>
@@ -43,16 +44,16 @@
                         Last seen {{ moment(user.last_seen).fromNow() }}.
                     </div>
                     <div class="mt-2">
-                        <a class="mr-2 btn-sm alert-info" href="{{ url_for('main.followers', user_id=user.id) }}">Followers:
-                            <span class="badge badge-pill badge-info">{{ user.followers.count() - 1 }}</span></a>
-                        <a class="btn-sm alert-info" href="{{ url_for('main.followed_by', user_id=user.id) }}">Following:
-                            <span class="badge badge-pill badge-info">{{ user.followed.count() - 1 }}</span></a>
+                        <a class="mx-1 btn-sm alert-info" href="{{ url_for('main.followers', user_id=user.id) }}">Followers:
+                            <span class="badge rounded-pill btn-info">{{ user.followers.count() - 1 }}</span></a>
+                        <a class="mx-1 btn-sm alert-info" href="{{ url_for('main.followed_by', user_id=user.id) }}">Following:
+                            <span class="badge rounded-pill btn-info">{{ user.followed.count() - 1 }}</span></a>
                         {% if current_user.is_authenticated and user != current_user and user.is_following(current_user) %}
                             <span class="px-1">|</span>
                             {% if not current_user.is_following(user) %}
-                                <span class="badge badge-pill badge-info">Follows you</span>
+                                <span class="badge rounded-pill btn-primary">Follows you</span>
                             {% else %}
-                                <span class="badge badge-pill badge-primary">Follows each other</span>
+                                <span class="badge rounded-pill btn-primary">Follows each other</span>
                             {% endif %}
                         {% endif %}
                     </div>
@@ -61,24 +62,19 @@
                     {% if current_user.can(Permission.FOLLOW) and user != current_user %}
                         {% if not current_user.is_following(user) %}
                             <a href="{{ url_for('main.follow', user_id=user.id) }}"
-                               class="btn btn-primary mr-0 mr-sm-2 col-12 col-sm-auto mb-2 mb-sm-0">Follow</a>
+                               class="btn btn-primary me-0 me-sm-2 col-12 col-sm-auto mb-2 mb-sm-0">Follow</a>
                         {% else %}
                             <a href="{{ url_for('main.unfollow', user_id=user.id) }}"
-                               class="btn btn-warning mr-0 mr-sm-2 col-12 col-sm-auto mb-2 mb-sm-0">Unfollow</a>
+                               class="btn btn-warning me-0 me-sm-2 col-12 col-sm-auto mb-2 mb-sm-0">Unfollow</a>
                         {% endif %}
                     {% endif %}
                     {% if user == current_user %}
-                        <a class="btn btn-outline-primary mr-0 mr-sm-2 col-12 col-sm-auto mb-2 mb-sm-0"
-                           href="{{ url_for('main.edit_profile') }}">
-                            Edit Profile
-                        </a>
+                        <a href="{{ url_for('main.edit_profile') }}"
+                           class="btn btn-primary me-0 me-sm-2 col-12 col-sm-auto mb-2 mb-sm-0">Edit Profile</a>
                     {% endif %}
                     {% if current_user.is_administrator() %}
-                        <a class="btn btn-outline-danger col-12 col-sm-auto"
-                           href="{{ url_for('main.edit_profile_admin', user_id=user.id) }}">
-                            Edit Profile
-                            <span class="badge badge-pill badge-warning">Admin</span>
-                        </a>
+                        <a href="{{ url_for('main.edit_profile_admin', user_id=user.id) }}"
+                           class="btn btn-danger col-12 col-sm-auto">Admin Edit Profile</a>
                     {% endif %}
                 </div>
             </div>
@@ -88,7 +84,7 @@
     {% if posts %}
         {{ m_posts.list_widget("Posts by " + user.name, posts) }}
     {% else %}
-        <div class="jumbotron p-5 rounded-lg shadow-lg bg-white">
+        <div class="p-4 p-md-5 mb-4 bg-light rounded-3">
             <h1 class="text-muted text-center">No Posts by {{ user.name }} Yet.</h1>
         </div>
     {% endif %}

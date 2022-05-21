@@ -2,36 +2,49 @@
     <div>
         <h1 id="comments" class="mb-3">Comments</h1>
         {% for comment in comments %}
-            <div class="media mb-4 small border-top px-2 pt-2">
-                <img class="d-flex mr-3 rounded" src="{{ comment.author.gravatar(size=36) }}" alt="Comment Gravatar">
-                <div class="media-body">
-                    <h5 class="mt-0">{{ comment.author.name }}</h5>
-                    {% if comment.disabled %}
-                        <div class="text-muted"><i>This comment has been disabled by a moderator.</i></div>
-                    {% endif %}
-                    {% if moderate or not comment.disabled %}
-                        {% if comment.body_html %}
-                            <div>
-                                {{ comment.body_html | safe }}
-                            </div>
-                        {% else %}
-                            <div class="lead">
-                                {{ comment.body }}
-                            </div>
-                        {% endif %}
-                    {% endif %}
-                </div>
-                {% if moderate %}
-                    <div class="ml-3 mt-2">
+            <div class="d-lg-flex text-muted border-bottom py-2 pb-md-1">
+                <div class="d-flex col-lg-9">
+                    <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
+                         src="{{ comment.author.gravatar(size=32) }}" alt="Author Gravatar">
+                    <div class="pb-3 mb-0 small lh-sm">
+                        <a class="d-block text-gray-dark"
+                           href="{{ url_for('main.user', user_id=comment.author.id) }}">
+                            <strong>@{{ comment.author.name }}</strong>
+                        </a>
                         {% if comment.disabled %}
-                            <a class="btn btn-sm alert-primary"
-                               href="{{ url_for("main.moderate_enable", comment_id=comment.id, page=page) }}">Enable</a>
-                        {% else %}
-                            <a class="btn btn-sm alert-danger"
-                               href="{{ url_for("main.moderate_disable", comment_id=comment.id, page=page) }}">Disable</a>
+                            <div class="text-muted"><i>This comment has been disabled by a moderator.</i></div>
+                        {% endif %}
+
+                        {% if moderate or not comment.disabled %}
+                            {% if comment.body_html %}
+                                <div>
+                                    {{ comment.body_html | safe }}
+                                </div>
+                            {% else %}
+                                <div class="lead">
+                                    {{ comment.body }}
+                                </div>
+                            {% endif %}
                         {% endif %}
                     </div>
-                {% endif %}
+                </div>
+
+                <div class="col-lg-3 d-flex flex-lg-column text-lg-end align-content-end">
+                    <small class="d-block text-gray-dark col-4 col-lg-auto">
+                        {{ moment(comment.timestamp).fromNow() }}
+                    </small>
+                    <div class="text-end col-8 col-lg-auto">
+                        {% if moderate %}
+                            {% if comment.disabled %}
+                                <a href="{{ url_for("main.moderate_enable", comment_id=comment.id, page=page) }}"
+                                   class="btn-sm btn-primary">Enable</a>
+                            {% else %}
+                                <a href="{{ url_for("main.moderate_disable", comment_id=comment.id, page=page) }}"
+                                   class="btn-sm btn-danger">Disable</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         {% endfor %}
     </div>

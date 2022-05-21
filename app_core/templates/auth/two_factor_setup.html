@@ -1,9 +1,9 @@
 {% extends "auth/base_display.html" %}
-{% from 'bootstrap/form.html' import render_form %}
+{% from 'bootstrap5/form.html' import render_form %}
 
 {% block head %}
     {{ super() }}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css', _external=True) }}">
+    <link href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block title %}{{ super() }} - 2FA Setup{% endblock %}
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="text-center">
-            <img class="m-1 rounded-lg border border-secondary" id="qrcode" alt="2FA QR Code"
+            <img class="m-1 rounded-3 border border-secondary" id="qrcode" alt="2FA QR Code"
                  width="150" height="150" src="{{ url_for('auth.two_factor_qr_code') }}">
         </div>
         <div class="font-weight-normal">
@@ -45,7 +45,7 @@
             authenticator app candidate on your smartphone.
         </p>
         <div class="px-3 my-2 border border-info">
-            <div class="lead pl-2">
+            <div class="lead pe-2">
                 Google Authenticator:
             </div>
             <div class="text-center">
@@ -59,7 +59,7 @@
             </div>
         </div>
         <div class="px-3 my-2 border border-info">
-            <div class="lead pl-2">
+            <div class="lead pe-2">
                 Microsoft Authenticator:
             </div>
             <div class="text-center">

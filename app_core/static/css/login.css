@@ -1,11 +1,20 @@
 body {
     -ms-flex-align: center !important;
-    align-items: center !important;
     display: -ms-flexbox;
     display: flex;
     padding-top: 40px;
     padding-bottom: 40px;
     background: linear-gradient(15deg, #64bcf4, #c2e59c) no-repeat fixed;
+}
+
+@media only screen and ( min-width: 576px) {
+    body {
+        align-items: center !important;
+    }
+}
+
+.bg-admin {
+    background: linear-gradient(15deg, #e66465, #9198e5) no-repeat fixed;
 }
 
 .easter-egg-logo {
@@ -36,34 +45,6 @@ body {
     }
 }
 
-.form-login .checkbox {
-    font-weight: 400;
-}
-
-.form-login .form-control {
-    position: relative;
-    box-sizing: border-box;
-    height: auto;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.form-login .form-control:focus {
-    z-index: 2;
-}
-
-.form-login input[type="email"] {
-    margin-bottom: -1px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
-.form-login input[type="password"] {
-    margin-bottom: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-}
-
 .notification-area {
 }
 
@@ -82,4 +63,25 @@ body {
         top: 30px;
         right: 30px;
     }
+}
+
+.form-signin {
+    max-width: 450px;
+    padding: 15px;
+}
+
+.form-signin .form-floating:focus-within {
+    z-index: 2;
+}
+
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }

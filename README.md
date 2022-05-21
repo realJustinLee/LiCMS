@@ -11,9 +11,12 @@ Flask.
 > - Docker `20.10.8`
 > - DataBase depending on deployment method (default in `config.py`, cen be edited as you wish)
     >
+
 - Heroku: `mysql`
->   - Docker: `mysql`
->   - Unix: `mysql`
+
+> - Docker: `mysql`
+    >
+- Unix: `mysql`
 >   - Test Env: `sqlite`
 
 ## Tech Reviews
@@ -101,7 +104,7 @@ If you would like to deploy LiCMS via other methods, you could refer to this gui
       > please replace `<your@email.com>` in this file with the email you replaced `<your@email.com>` in `.env-licms`
       with.
 1. Run the following code to deploy the project.
-    ```shell script
+    ```shell
     # install docker-ce for ubuntu
     ./init_ubuntu_dokcer_ce.sh
     reboot
@@ -129,6 +132,24 @@ If you would like to deploy LiCMS via other methods, you could refer to this gui
     ```text
     Username:<token>    
     Password:
+    ```
+
+## DB Migrations !!! Caution !!!
+
+If you wanna maintain your own impl of database, or you've altered the db models, you need to do db migrations or db
+inits.
+
+1. DB init:
+    ```shell
+    flask db init
+    ```
+1. DB upgrade:
+    ```shell
+    flask db upgrade
+    ```
+1. DB migrate:
+    ```shell
+    flask db migrate
     ```
 
 ## Dev Hacks

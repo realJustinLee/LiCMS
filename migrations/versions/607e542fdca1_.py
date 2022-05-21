@@ -1,8 +1,8 @@
-"""init deploy
+"""empty message
 
-Revision ID: e60f4b0edddf
+Revision ID: 607e542fdca1
 Revises: 
-Create Date: 2020-02-15 17:46:38.586059
+Create Date: 2022-05-21 12:30:20.281747
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e60f4b0edddf'
+revision = '607e542fdca1'
 down_revision = None
 branch_labels = None
 depends_on = None

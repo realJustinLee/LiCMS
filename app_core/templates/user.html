@@ -44,12 +44,14 @@
                         Last seen {{ moment(user.last_seen).fromNow() }}.
                     </div>
                     <div class="mt-2">
-                        <a class="mx-1 btn-sm alert-info" href="{{ url_for('main.followers', user_id=user.id) }}">Followers:
-                            <span class="badge rounded-pill btn-info">{{ user.followers.count() - 1 }}</span></a>
-                        <a class="mx-1 btn-sm alert-info" href="{{ url_for('main.followed_by', user_id=user.id) }}">Following:
-                            <span class="badge rounded-pill btn-info">{{ user.followed.count() - 1 }}</span></a>
+                        <a class="mx-1 badge rounded-pill btn-info"
+                           href="{{ url_for('main.followers', user_id=user.id) }}"
+                        >Followers: {{ user.followers.count() - 1 }}</a>
+                        <a class="mx-1 badge rounded-pill btn-info"
+                           href="{{ url_for('main.followed_by', user_id=user.id) }}"
+                        >Following: {{ user.followed.count() - 1 }}</a>
                         {% if current_user.is_authenticated and user != current_user and user.is_following(current_user) %}
-                            <span class="px-1">|</span>
+                            <span class="mx-1">|</span>
                             {% if not current_user.is_following(user) %}
                                 <span class="badge rounded-pill btn-primary">Follows you</span>
                             {% else %}

@@ -6,9 +6,11 @@ from sqlalchemy.exc import IntegrityError
 from app_core import db
 from app_core.models import Gender, User, Post, Comment
 
+lang_list = ['en_US', 'fr_FR', 'ja_JP', 'zh_TW']
+
 
 def users(count=100):
-    fake = Faker(['fr_FR', 'en_US', 'zh_CN'])
+    fake = Faker(lang_list)
     gender_count = Gender.query.count()
     for _ in range(count):
         g = Gender.query.offset(randint(0, gender_count - 1)).first()
@@ -18,7 +20,7 @@ def users(count=100):
                  confirmed=True,
                  location=fake.city(),
                  about_me=fake.text(),
-                 member_since=fake.past_date(),
+                 member_since=fake.past_datetime(),
                  gender=g)
         db.session.add(u)
         try:
@@ -28,13 +30,13 @@ def users(count=100):
 
 
 def posts(count=100):
-    fake = Faker(['fr_FR', 'en_US', 'zh_CN'])
+    fake = Faker(lang_list)
     user_count = User.query.count()
     for _ in range(count):
         u = User.query.offset(randint(0, user_count - 1)).first()
         p = Post(title=fake.text(100),
                  body=fake.text(1000),
-                 timestamp=fake.past_date(),
+                 timestamp=fake.past_datetime(),
                  author=u)
         db.session.add(p)
     db.session.commit()
@@ -52,14 +54,14 @@ def follows(count=100):
 
 
 def comments(count=100):
-    fake = Faker(['fr_FR', 'en_US', 'zh_CN'])
+    fake = Faker(lang_list)
     user_count = User.query.count()
     post_count = Post.query.count()
     for _ in range(count):
         u = User.query.offset(randint(0, user_count - 1)).first()
         p = Post.query.offset(randint(0, post_count - 1)).first()
         c = Comment(body=fake.text(200),
-                    timestamp=fake.past_date(),
+                    timestamp=fake.past_datetime(),
                     author=u,
                     post=p)
         db.session.add(c)

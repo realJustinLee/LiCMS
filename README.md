@@ -9,7 +9,7 @@ Flask.
 
 > - Python `3.9.7`
 > - Docker `20.10.8`
-> - DataBase depending on deployment method (default in `config.py`, cen be edited as you wish)
+> - DataBase depending on deployment method (default in `config.py`, can be edited as you wish)
 > - Heroku: `mysql`
 > - Docker: `mysql`
 > - Unix: `mysql`

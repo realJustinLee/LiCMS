@@ -1,37 +1,24 @@
 #!/usr/bin/env sh
 
-# Update the `apt` package index:
 apt-get update -y && apt-get upgrade -y && apt-get dist-upgrade -y
 
-# Install packages to allow `apt` to use a repository over HTTPS:
 apt-get install \
-  apt-transport-https \
-  ca-certificates \
-  curl \
-  gnupg-agent \
-  software-properties-common -y
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
 
-# Add Docker’s official GPG key:
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-apt-key fingerprint 0EBFCD88
+mkdir -p /etc/apt/keyrings
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
-## Fix the docker feed bug for Ubuntu 20.04(focal)
-#if [ "$(lsb_release -cs)" = "focal" ]; then
-#  codename="eoan"
-#else
-#  codename="$(lsb_release -cs)"
-#fi
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-codename="$(lsb_release -cs)"
-
-add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $codename stable"
-
-# Update the `apt` package index:
 apt-get update -y && apt-get upgrade -y && apt-get dist-upgrade -y
 
-# Install the latest version of Docker Engine - Community and containerd
-apt-get install docker-ce docker-ce-cli containerd.io python3 python3-pip -y
+apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
 
-apt-get install unzip docker-compose -y
+apt-get install python3 python3-pip unzip -y
 
 return

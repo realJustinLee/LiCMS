@@ -1,7 +1,7 @@
 -r common.txt
 coverage==6.4.1
-Faker==13.13.0
+Faker==13.14.0
 PySocks==1.7.1
-selenium==4.2.0
+selenium==4.3.0
 text-unidecode==1.3
 urllib3==1.26.9

@@ -14,17 +14,20 @@
                         <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
                              src="{{ post.author.gravatar(size=32) }}" alt="Author Gravatar"/>
                         <p class="pb-3 mb-0 small lh-sm">
-                            <a class="d-block text-gray-dark"
+                            {% if permalink and post.title %}
+                                <a class="text-decoration-none text-dark fs-5"
+                                   href="{{ url_for('main.post', post_id=post.id) }}">
+                                    <span>{{ post.title }}</span>
+                                </a>
+                            {% endif %}
+                            <a class="d-block text-decoration-none text-muted"
                                href="{{ url_for('main.user', user_id=post.author.id) }}">
                                 <strong>@{{ post.author.name }}</strong>
                             </a>
-                            {% if post.title %}
-                                {{ post.title }}
-                            {% endif %}
                         </p>
                     </div>
                     <div class="col-lg-3 d-flex flex-lg-column text-lg-end align-content-end">
-                        <small class="d-block text-gray-dark col-4 col-lg-auto">
+                        <small class="d-block text-muted col-4 col-lg-auto">
                             {{ moment(post.timestamp).fromNow() }}
                         </small>
                         <div class="text-end col-8 col-lg-auto">
@@ -34,10 +37,6 @@
                             {% elif current_user.is_administrator() %}
                                 <a href="{{ url_for('main.edit', post_id=post.id) }}"
                                    class="btn-sm btn-danger">Admin Edit</a>
-                            {% endif %}
-                            {% if permalink %}
-                                <a href="{{ url_for('main.post', post_id=post.id) }}"
-                                   class="btn-sm btn-primary">Permalink</a>
                             {% endif %}
                         </div>
                     </div>

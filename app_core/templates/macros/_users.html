@@ -11,8 +11,9 @@
                          src="{{ user.gravatar(size=32) }}" alt="Author Gravatar"/>
                     <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                         <div class="d-flex justify-content-between">
-                            <a class="text-gray-dark" href="{{ url_for('main.user', user_id=user.id) }}">
-                                @{{ user.name }}
+                            <a class="text-decoration-none text-dark fs-6"
+                               href="{{ url_for('main.user', user_id=user.id) }}">
+                                <strong>@{{ user.name }}</strong>
                             </a>
                             {% if current_user.is_authenticated and current_user.can(Permission.FOLLOW) and user != current_user %}
                                 {% if not current_user.is_following(user) %}

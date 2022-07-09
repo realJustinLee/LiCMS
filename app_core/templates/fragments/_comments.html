@@ -7,7 +7,7 @@
                     <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
                          src="{{ comment.author.gravatar(size=32) }}" alt="Author Gravatar">
                     <div class="pb-3 mb-0 small lh-sm">
-                        <a class="d-block text-gray-dark"
+                        <a class="d-block text-muted"
                            href="{{ url_for('main.user', user_id=comment.author.id) }}">
                             <strong>@{{ comment.author.name }}</strong>
                         </a>
@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="col-lg-3 d-flex flex-lg-column text-lg-end align-content-end">
-                    <small class="d-block text-gray-dark col-4 col-lg-auto">
+                    <small class="d-block text-muted col-4 col-lg-auto">
                         {{ moment(comment.timestamp).fromNow() }}
                     </small>
                     <div class="text-end col-8 col-lg-auto">

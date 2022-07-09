@@ -175,7 +175,7 @@ def post(post_id):
         page, per_page=current_app.config['LICMS_COMMENTS_PER_PAGE'], error_out=False)
     _comments = pagination.items
     return render_template('post.html', post=_post, form=form, comments=_comments, pagination=pagination,
-                           endpoint='main.post')
+                           endpoint='main.post', page=page, sample=page)
 
 
 @main.route('/edit/<int:post_id>', methods=['GET', 'POST'])
@@ -282,7 +282,12 @@ def moderate_enable(comment_id):
     comment.disabled = False
     db.session.add(comment)
     db.session.commit()
-    return redirect(url_for('main.moderate', page=request.args.get('page', 1, type=int)))
+    in_post = request.args.get('in_post', False, type=lambda v: v.lower() == 'true')
+    page = request.args.get('page', 1, type=int)
+    if in_post:
+        return redirect(url_for('main.post', post_id=comment.post_id, page=page))
+    else:
+        return redirect(url_for('main.moderate', page=page))
 
 
 @main.route('/moderate/disable/<int:comment_id>')
@@ -293,4 +298,9 @@ def moderate_disable(comment_id):
     comment.disabled = True
     db.session.add(comment)
     db.session.commit()
-    return redirect(url_for('main.moderate', page=request.args.get('page', 1, type=int)))
+    in_post = request.args.get('in_post', False, type=lambda v: v.lower() == 'true')
+    page = request.args.get('page', 1, type=int)
+    if in_post:
+        return redirect(url_for('main.post', post_id=comment.post_id, page=page))
+    else:
+        return redirect(url_for('main.moderate', page=page))

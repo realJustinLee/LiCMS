@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% from 'bootstrap5/form.html' import render_form %}
-{% import 'macros/_posts.html' as m_posts with context %}
+{% import 'macros/_comments.html' as m_comments with context %}
 {% import 'macros/_paginition.html' as m_paginition %}
 
 {% block title %}
@@ -10,7 +10,7 @@
 {% block page_content %}
     {% if comments %}
         <div class="p-md-5 pb-md-4 p-4 mb-4 bg-light rounded-3">
-            {% include 'fragments/_comments.html' %}
+            {{ m_comments.list_widget(comments, page) }}
         </div>
         {{ m_paginition.pagination_widget(pagination, endpoint) }}
     {% else %}

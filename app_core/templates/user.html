@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block page_content %}
-    <div class="p-md-5 p-4 mb-4 bg-light rounded-3 shadow-lg">
+    <div class="p-md-5 pb-md-4 p-4 mb-4 bg-light rounded-3 shadow-lg">
         <div class="row">
             <div class="col-sm-3 mb-4 mb-sm-0 text-center align-self-center">
                 <img class="img-thumbnail float-left" src="{{ user.gravatar(size=256) }}" alt="user avatar"
@@ -23,12 +23,14 @@
                 <div class="my-3 ms-2 ms-sm-0">
                     {% if user.location %}
                         <div>
-                            Location: <a href="https://maps.google.com/?q={{ user.location }}">{{ user.location }}</a>
+                            Location: <a class="text-decoration-none"
+                                         href="https://maps.google.com/?q={{ user.location }}">{{ user.location }}</a>
                         </div>
                     {% endif %}
                     {% if current_user.is_administrator() %}
                         <div>
-                            Email: <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+                            Email: <a class="text-decoration-none"
+                                      href="mailto:{{ user.email }}">{{ user.email }}</a>
                         </div>
                     {% endif %}
                     <div>
@@ -44,10 +46,10 @@
                         Last seen {{ moment(user.last_seen).fromNow() }}.
                     </div>
                     <div class="mt-2">
-                        <a class="mx-1 badge rounded-pill btn-info"
+                        <a class="text-decoration-none mx-1 badge rounded-pill btn-info"
                            href="{{ url_for('main.followers', user_id=user.id) }}"
                         >Followers: {{ user.followers.count() - 1 }}</a>
-                        <a class="mx-1 badge rounded-pill btn-info"
+                        <a class="text-decoration-none mx-1 badge rounded-pill btn-info"
                            href="{{ url_for('main.followed_by', user_id=user.id) }}"
                         >Following: {{ user.followed.count() - 1 }}</a>
                         {% if current_user.is_authenticated and user != current_user and user.is_following(current_user) %}

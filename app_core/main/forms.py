@@ -7,7 +7,7 @@ from app_core.models import Gender, Role, User
 
 
 class EditProfileForm(FlaskForm):
-    name = StringField('name', validators=[Length(1, 128)])
+    name = StringField('Name', validators=[Length(1, 128)])
     gender = SelectField('Gender', validators=[DataRequired()], coerce=int)
     location = StringField('Location', validators=[Length(0, 128)])
     about_me = TextAreaField('About me')

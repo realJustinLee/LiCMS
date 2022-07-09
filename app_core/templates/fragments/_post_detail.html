@@ -1,10 +1,10 @@
 <!-- Title -->
 <h1 class="my-4">{{ post.title }}</h1>
 
-<div class="d-flex justify-content-between">
+<div class="d-md-flex justify-content-between">
     <!-- Author -->
-    <div class="d-flex justify-content-between align-items-center">
-        <img class="rounded" width="32" height="32" src="{{ post.author.gravatar(size=32) }}"
+    <div class="d-md-flex justify-content-between align-items-center">
+        <img class="rounded" width="40" height="40" src="{{ post.author.gravatar(size=40) }}"
              alt="Author Gravatar"/>
         <a class="text-decoration-none ps-2 fs-5"
            href="{{ url_for('main.user', user_id=post.author.id) }}">
@@ -13,8 +13,8 @@
     </div>
     <!-- Date/Time -->
     <div class="d-flex justify-content-between align-items-center">
-        <div class="text-muted">Posted on {{ moment(post.timestamp).format("MMMM Do, YYYY") }} </div>
-        <div class="ms-2">
+        <div class="text-muted me-2">Posted on {{ moment(post.timestamp).format("MMMM Do, YYYY") }} </div>
+        <div>
             {% if current_user == post.author %}
                 <a class="text-decoration-none btn-sm btn-primary"
                    href="{{ url_for('main.edit', post_id=post.id) }}">

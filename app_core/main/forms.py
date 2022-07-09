@@ -22,7 +22,7 @@ class EditProfileAdminForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(1, 128), Email()])
     confirmed = BooleanField('Confirmed')
     role = SelectField('Role', coerce=int)
-    name = StringField('Real name', validators=[Length(1, 128)])
+    name = StringField('Name', validators=[Length(1, 128)])
     gender = SelectField('Gender', validators=[DataRequired()], coerce=int)
     location = StringField('Location', validators=[Length(0, 128)])
     about_me = TextAreaField('About me')

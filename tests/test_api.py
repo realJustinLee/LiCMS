@@ -193,12 +193,12 @@ class APITestCase(unittest.TestCase):
         # write a comment
         response = self.client.post('/api/v1/posts/{}/comments/'.format(post.id),
                                     headers=self.get_api_headers('susan@example.com', 'dog'),
-                                    data=json.dumps({'body': 'Good [post](http://example.com)!'}))
+                                    data=json.dumps({'body': 'Good [post](https://example.com)!'}))
         self.assertEqual(response.status_code, 201)
         json_response = json.loads(response.get_data(as_text=True))
         url = response.headers.get('Location')
         self.assertIsNotNone(url)
-        self.assertEqual(json_response['body'], 'Good [post](http://example.com)!')
+        self.assertEqual(json_response['body'], 'Good [post](https://example.com)!')
         self.assertEqual(re.sub('<.*?>', '', json_response['body_html']), 'Good post!')
 
         # get the new comment
@@ -206,7 +206,7 @@ class APITestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         json_response = json.loads(response.get_data(as_text=True))
         self.assertEqual('http://localhost' + json_response['url'], url)
-        self.assertEqual(json_response['body'], 'Good [post](http://example.com)!')
+        self.assertEqual(json_response['body'], 'Good [post](https://example.com)!')
 
         # add another comment
         comment = Comment(body='Thank you!', author=u1, post=post)

@@ -1,4 +1,5 @@
 from flask import jsonify, request, current_app, url_for
+from sqlalchemy import desc
 
 from app_core.api import api
 from app_core.models import User, Post
@@ -14,7 +15,7 @@ def get_user(user_id):
 def get_user_posts(user_id):
     _user = User.query.get_or_404(user_id)
     page = request.args.get('page', 1, type=int)
-    pagination = _user.posts.order_by(Post.timestamp.desc()).paginate(page, per_page=current_app.config[
+    pagination = _user.posts.order_by(desc(Post.timestamp)).paginate(page, per_page=current_app.config[
         'LICMS_POSTS_PER_PAGE'], error_out=False)
     posts = pagination.items
     _prev = None
@@ -35,7 +36,7 @@ def get_user_posts(user_id):
 def get_user_followed_posts(user_id):
     _user = User.query.get_or_404(user_id)
     page = request.args.get('page', 1, type=int)
-    pagination = _user.followed_posts.order_by(Post.timestamp.desc()).paginate(page, per_page=current_app.config[
+    pagination = _user.followed_posts.order_by(desc(Post.timestamp)).paginate(page, per_page=current_app.config[
         'LICMS_POSTS_PER_PAGE'], error_out=False)
     posts = pagination.items
     _prev = None

@@ -1,2 +1,2 @@
 -r prod.txt
-psycopg==3.0.14
+psycopg2-binary==2.9.3

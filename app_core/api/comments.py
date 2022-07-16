@@ -1,4 +1,5 @@
 from flask import jsonify, request, g, url_for, current_app
+from sqlalchemy import asc, desc
 
 from app_core import db
 from app_core.api import api
@@ -9,7 +10,7 @@ from app_core.models import Post, Permission, Comment
 @api.route('/comments/')
 def get_comments():
     page = request.args.get('page', 1, type=int)
-    pagination = Comment.query.order_by(Comment.timestamp.desc()).paginate(
+    pagination = Comment.query.order_by(desc(Comment.timestamp)).paginate(
         page, per_page=current_app.config['LICMS_COMMENTS_PER_PAGE'],
         error_out=False)
     comments = pagination.items
@@ -37,7 +38,7 @@ def get_comment(comment_id):
 def get_post_comments(post_id):
     post = Post.query.get_or_404(post_id)
     page = request.args.get('page', 1, type=int)
-    pagination = post.comments.order_by(Comment.timestamp.asc()).paginate(
+    pagination = post.comments.order_by(asc(Comment.timestamp)).paginate(
         page, per_page=current_app.config['LICMS_COMMENTS_PER_PAGE'],
         error_out=False)
     comments = pagination.items

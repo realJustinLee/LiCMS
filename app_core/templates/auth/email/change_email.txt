@@ -8,7 +8,7 @@ To confirm your new email address, please click on the following link:
 This email is sent at {{ current_time }}.
 You have 10 Minutes to confirm this email address change.
 
-If you have not requested a email address change, simply ignore this message.
+If you have not requested an email address change, simply ignore this message.
 
 Best Regards,
 Justin Lee

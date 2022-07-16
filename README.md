@@ -7,9 +7,10 @@ Flask.
 
 ## Requirements
 
-> - Python `3.9.7`
-> - Docker `20.10.8`
-> - DataBase depending on deployment method (default in `config.py`, can be edited as you wish)
+
+> - Python `3.9.13`
+> - Docker `20.10.16`
+> - DataBase depending on deployment method (default in `config.py`, cen be edited as you wish)
 > - Heroku: `mysql`
 > - Docker: `mysql`
 > - Unix: `mysql`
@@ -23,7 +24,7 @@ Flask.
 - For the back-end, we provide a Flask and Docker-based, automatic deployed and self-sustained solution with
   continuous-integration provided by Jenkins or Travis-CI.
 - For database management, I used SQLAlchemy to simplify the complex SQL queries into object operations, which provided
-  me with an object-oriented interface for all of the CRUD operations.
+  me with an object-oriented interface for all CRUD operations.
 - For continuous integration, I integrated this project with Travis-CI and Jenkins.
 - For auto-deploying and self-sustaining, thanks to docker. I achieved these with docker-compose and a self-implemented
   flask CLI extension.

@@ -1,5 +1,5 @@
-{% macro list_widget(title, users, extend=false, link='#' ,link_text ='') %}
-    <div class="p-5 mb-4 bg-light rounded-3">
+{% macro list_widget(title, users, extend=false, link='#', link_text='') %}
+    <div class="p-md-5 pb-md-4 p-4 mb-4 bg-light rounded-3">
         <div class="d-flex flex-column flex-md-row border-bottom">
             <h1 class="pb-2 mb-0">{{ title }}</h1>
         </div>
@@ -7,20 +7,25 @@
         {% if users %}
             {% for user in users %}
                 <div class="d-flex text-muted pt-3">
-                    <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
-                         src="{{ user.gravatar(size=32) }}" alt="Author Gravatar"/>
+                    <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="40" height="40"
+                         src="{{ user.gravatar(size=40) }}" alt="Author Gravatar"/>
                     <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
-                        <div class="d-flex justify-content-between">
-                            <a class="text-gray-dark" href="{{ url_for('main.user', user_id=user.id) }}">
-                                @{{ user.name }}
+                        <div class="pb-1 d-flex justify-content-between">
+                            <a class="text-decoration-none text-dark fs-6"
+                               href="{{ url_for('main.user', user_id=user.id) }}">
+                                <strong>@{{ user.name }}</strong>
                             </a>
                             {% if current_user.is_authenticated and current_user.can(Permission.FOLLOW) and user != current_user %}
                                 {% if not current_user.is_following(user) %}
-                                    <a href="{{ url_for('main.follow', user_id=user.id) }}"
-                                       class="btn-sm btn-primary">Follow</a>
+                                    <a class="text-decoration-none btn-sm btn-primary"
+                                       href="{{ url_for('main.follow', user_id=user.id) }}">
+                                        <span>Follow</span>
+                                    </a>
                                 {% else %}
-                                    <a href="{{ url_for('main.unfollow', user_id=user.id) }}"
-                                       class="btn-sm btn-warning">Unfollow</a>
+                                    <a class="text-decoration-none btn-sm btn-warning"
+                                       href="{{ url_for('main.unfollow', user_id=user.id) }}">
+                                        <span>Unfollow</span>
+                                    </a>
                                 {% endif %}
                             {% endif %}
                         </div>
@@ -46,7 +51,7 @@
             {% endfor %}
             {% if extend %}
                 <small class="d-block text-end mt-3">
-                    <a href="{{ link }}">{{ link_text }}</a>
+                    <a class="text-decoration-none" href="{{ link }}">{{ link_text }}</a>
                 </small>
             {% endif %}
         {% else %}

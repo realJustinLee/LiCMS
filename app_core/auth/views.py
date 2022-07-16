@@ -45,7 +45,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data.lower()).first()
         if user is not None and user.verify_password(form.password.data):
-            # Do NOT put user_id into the session, in case you wanna log the user in.
+            # Do NOT put user_id into the session, in case you want to log the user in.
             session['email'] = user.email
             _next = request.args.get('next')
             return redirect(url_for('auth.two_factor', next=_next, remember=form.remember_me.data))

@@ -7,7 +7,6 @@ Flask.
 
 ## Requirements
 
-
 > - Python `3.9.13`
 > - Docker `20.10.16`
 > - DataBase depending on deployment method (default in `config.py`, cen be edited as you wish)

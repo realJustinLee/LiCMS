@@ -3,7 +3,7 @@ set -e
 
 domains=(licms.example.com)           # Specify domains here or use the -d argument
 data_path="$HOME/data/certbot"        # Specify data path here or use the --data-path argument
-email="<your@email.com>"                # Specify email here or use the --email argument
+email="<your@email.com>"              # Specify email here or use the --email argument
 staging=0                             # Set to 1 here or use the --staging argument
 rsa_key_size=4096
 
@@ -15,8 +15,8 @@ print_help() {
   echo "Options:"
   echo "-h, --help:          Print this help."
   echo "-d, --domain DOMAIN: Request certificates for the given DOMAIN. Can be used multiple times (e.g. -d example.com -d www.example.com)."
-  echo "-f, --file PATH:     If given, use specified docker-compose configuration file."
-  echo "-m, --email EMAIL:   If given, use EMAIL to registert Let's Encrypt account"
+  echo "-f, --file PATH:     If given, use specified docker compose configuration file."
+  echo "-m, --email EMAIL:   If given, use EMAIL to register Let's Encrypt account"
   echo "--staging:           Use Let's Encrypt in Staging Mode"
   echo "--data-path:         Set path for storing certificate data"
 }
@@ -93,21 +93,21 @@ fi
 echo "### Creating dummy certificate for $domains ..."
 path="/etc/letsencrypt/live/all"
 mkdir -p "$data_path/conf/live/all"
-docker-compose ${compose_file_arg} run --rm --entrypoint "\
+docker compose ${compose_file_arg} run --rm --entrypoint "\
   openssl req -x509 -nodes -newkey rsa -days 1 \
     -keyout '$path/privkey.pem' \
     -out '$path/fullchain.pem' \
     -subj '/CN=localhost'" certbot
 echo
 
-# Start docker-compose
-echo "### Starting docker-compose ..."
-docker-compose ${compose_file_arg} up --force-recreate --no-deps -d
+# Start docker compose
+echo "### Starting docker compose ..."
+docker compose ${compose_file_arg} up --force-recreate --no-deps -d
 echo
 
 # Delete dummy certificate
 echo "### Deleting dummy certificate for $domains ..."
-docker-compose ${compose_file_arg} run --rm --entrypoint "\
+docker compose ${compose_file_arg} run --rm --entrypoint "\
   rm -Rf /etc/letsencrypt/live/all && \
   rm -Rf /etc/letsencrypt/archive/all && \
   rm -Rf /etc/letsencrypt/renewal/all.conf" certbot
@@ -129,7 +129,7 @@ esac
 # Enable staging mode if requested
 if [ $staging != "0" ]; then staging_arg="--staging"; fi
 
-docker-compose ${compose_file_arg} run --rm --entrypoint "\
+docker compose ${compose_file_arg} run --rm --entrypoint "\
   certbot certonly --webroot -w /var/www/certbot \
     ${staging_arg} \
     ${email_arg} \
@@ -142,4 +142,4 @@ echo
 
 # Reload nginx
 echo "### Reloading nginx ..."
-docker-compose ${compose_file_arg} exec nginx nginx -s reload
+docker compose ${compose_file_arg} exec nginx nginx -s reload

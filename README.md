@@ -25,7 +25,7 @@ Flask.
 - For database management, I used SQLAlchemy to simplify the complex SQL queries into object operations, which provided
   me with an object-oriented interface for all CRUD operations.
 - For continuous integration, I integrated this project with Travis-CI and Jenkins.
-- For auto-deploying and self-sustaining, thanks to docker. I achieved these with docker-compose and a self-implemented
+- For auto-deploying and self-sustaining, thanks to docker. I achieved these with docker compose and a self-implemented
   flask CLI extension.
 - For Tow Step Verification or 2FA, it's implemented via the `TOTP` (Time-based One-time Password) algorithm.
 - For unexpected errors, LiCMS will email the `LICMS_ADMIN` configured in `.env-licms`.

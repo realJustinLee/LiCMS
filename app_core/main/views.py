@@ -54,7 +54,7 @@ def index():
 @main.route('/user', methods=['GET', 'POST'])
 def users():
     page = request.args.get('page', 1, type=int)
-    pagination = User.query.order_by(desc(User.member_since)).paginate(page, per_page=current_app.config[
+    pagination = User.query.order_by(desc(User.member_since)).paginate(page=page, per_page=current_app.config[
         'LICMS_USERS_PER_PAGE'], error_out=False)
     _users = pagination.items
     return render_template('users.html', title='All authors', users=_users, pagination=pagination,
@@ -151,7 +151,7 @@ def posts():
         title = 'All Posts'
         query = Post.query
     pagination = query.order_by(desc(Post.timestamp)).paginate(
-        page, per_page=current_app.config['LICMS_POSTS_PER_PAGE'], error_out=False)
+        page=page, per_page=current_app.config['LICMS_POSTS_PER_PAGE'], error_out=False)
     _posts = pagination.items
     return render_template('posts.html', title=title, form=form, show_followed=_show_followed, posts=_posts,
                            pagination=pagination, endpoint='main.posts')
@@ -172,7 +172,7 @@ def post(post_id):
     if page == -1:
         page = ((_post.comments.count() - 1) // current_app.config['LICMS_COMMENTS_PER_PAGE']) + 1
     pagination = _post.comments.order_by(asc(Comment.timestamp)).paginate(
-        page, per_page=current_app.config['LICMS_COMMENTS_PER_PAGE'], error_out=False)
+        page=page, per_page=current_app.config['LICMS_COMMENTS_PER_PAGE'], error_out=False)
     _comments = pagination.items
     return render_template('post.html', post=_post, form=form, comments=_comments, pagination=pagination,
                            endpoint='main.post', page=page, sample=page)
@@ -236,7 +236,7 @@ def followers(user_id):
         flash('Invalid user.', 'alert-danger')
         return redirect(url_for('main.index'))
     page = request.args.get('page', 1, type=int)
-    pagination = _user.followers.order_by(desc(Follow.timestamp)).paginate(page, per_page=current_app.config[
+    pagination = _user.followers.order_by(desc(Follow.timestamp)).paginate(page=page, per_page=current_app.config[
         'LICMS_USERS_PER_PAGE'], error_out=False)
     _followers = [item.follower for item in pagination.items if item.follower != _user]
     return render_template('users.html', title="Followers of " + _user.name, users=_followers, pagination=pagination,
@@ -250,7 +250,7 @@ def followed_by(user_id):
         flash('Invalid user.', 'alert-danger')
         return redirect(url_for('main.index'))
     page = request.args.get('page', 1, type=int)
-    pagination = _user.followed.order_by(desc(Follow.timestamp)).paginate(page, per_page=current_app.config[
+    pagination = _user.followed.order_by(desc(Follow.timestamp)).paginate(page=page, per_page=current_app.config[
         'LICMS_USERS_PER_PAGE'], error_out=False)
     _followed = [item.followed for item in pagination.items if item.followed != _user]
     return render_template('users.html', title="Users followed by " + _user.name, users=_followed,
@@ -267,7 +267,7 @@ def about():
 @permission_required(Permission.MODERATE)
 def moderate():
     page = request.args.get('page', 1, type=int)
-    pagination = Comment.query.order_by(desc(Comment.timestamp)).paginate(page, per_page=current_app.config[
+    pagination = Comment.query.order_by(desc(Comment.timestamp)).paginate(page=page, per_page=current_app.config[
         'LICMS_COMMENTS_PER_PAGE'], error_out=False)
     comments = pagination.items
     return render_template('moderate.html', comments=comments, pagination=pagination, endpoint='main.moderate',

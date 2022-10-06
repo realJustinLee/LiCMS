@@ -10,7 +10,7 @@ from app_core.models import Post, Permission
 @api.route('/posts/')
 def get_posts():
     page = request.args.get('page', 1, type=int)
-    pagination = Post.query.paginate(page, per_page=current_app.config['LICMS_POSTS_PER_PAGE'], error_out=False)
+    pagination = Post.query.paginate(page=page, per_page=current_app.config['LICMS_POSTS_PER_PAGE'], error_out=False)
     posts = pagination.items
     _prev = None
     if pagination.has_prev:

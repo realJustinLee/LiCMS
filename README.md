@@ -7,7 +7,7 @@ Flask.
 
 ## Requirements
 
-> - Python `3.10.6`
+> - Python `3.10.7`
 > - Docker `20.10.17`
 > - DataBase depending on deployment method (default in `config.py`, can be edited as you wish)
 > - Heroku: `mysql`

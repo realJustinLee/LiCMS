@@ -63,36 +63,38 @@ If you would like to deploy LiCMS via other methods, you could refer to this gui
    git clone https://github.com/realJustinLee/LiCMS.git
    ```
 1. First thing first, you should compose a dot-env file named `.env-licms`.
-   > The template is in the following code block:
-   > ```text
-   > DB_USERNAME=<db_username>
-   > DB_PASSWORD=<db_password>
-   > DB_HOST=<db_host>
-   > DB_PORT=<db_port>
-   > DB_DATABASE=<db_database>
-   > SECRET_KEY=<a_super_strong_key>
-   > LICMS_ADMIN=<your@email.com>
-   > LICMS_POSTS_PER_PAGE=20
-   > LICMS_USERS_PER_PAGE=50
-   > LICMS_COMMENTS_PER_PAGE=30
-   > LICMS_SLOW_DB_QUERY_TIME=0.5
-   > MAIL_SERVER=smtp.googlemail.com
-   > MAIL_PORT=587
-   > MAIL_USE_TLS=true
-   > MAIL_USERNAME=<your_separate_gmail_account>
-   > MAIL_PASSWORD=<your_separate_gmail_application_password>
-   > FLASK_APP=app.py
-   > FLASK_CONFIG=docker
-   > PREFERRED_URL_SCHEME=https
-   > ```
+   ```shell
+   cat>.env-licms<<EOF
+   DB_USERNAME=<db_username>
+   DB_PASSWORD=<db_password>
+   DB_HOST=<db_host>
+   DB_PORT=<db_port>
+   DB_DATABASE=<db_database>
+   SECRET_KEY=<a_super_strong_key>
+   LICMS_ADMIN=<your@email.com>
+   LICMS_POSTS_PER_PAGE=20
+   LICMS_USERS_PER_PAGE=50
+   LICMS_COMMENTS_PER_PAGE=30
+   LICMS_SLOW_DB_QUERY_TIME=0.5
+   MAIL_SERVER=smtp.googlemail.com
+   MAIL_PORT=587
+   MAIL_USE_TLS=true
+   MAIL_USERNAME=<your_separate_gmail_account>
+   MAIL_PASSWORD=<your_separate_gmail_application_password>
+   FLASK_APP=app.py
+   FLASK_CONFIG=docker
+   PREFERRED_URL_SCHEME=https
+   EOF
+   ```
 1. Then you will need to compose another dot-env file named `.env-mysql`.
-   > The template is in the following code block:
-   > ```text
-   > MYSQL_RANDOM_ROOT_PASSWORD=yes
-   > MYSQL_DATABASE=<db_database>
-   > MYSQL_USER=<db_username>
-   > MYSQL_PASSWORD=<db_password>
-   > ```
+   ```shell
+   cat>.env-mysql<<EOF
+   MYSQL_RANDOM_ROOT_PASSWORD=yes
+   MYSQL_DATABASE=<db_database>
+   MYSQL_USER=<db_username>
+   MYSQL_PASSWORD=<db_password>     
+   EOF
+   ```
 1. After words, replace all the `licms.example.com` with your own host like `some-host.someone.com`. In the Following
    file:
     - `.conf/nginx/app.conf`

@@ -7,7 +7,7 @@ Flask.
 
 ## Requirements
 
-> - Python `3.10.7`
+> - Python `3.10.8`
 > - Docker `20.10.17`
 > - DataBase depending on deployment method (default in `config.py`, can be edited as you wish)
 > - Heroku: `mysql`
@@ -53,10 +53,10 @@ Flask.
 
 If you would like to deploy LiCMS via other methods, you could refer to this guide
 
-> *All Contents in the `<>` should math in each file*
-> > Example:  
-> > If you replaced `<db_host>` with `example.com` in `.env-licms`, you should replace `<db_host>` with `example.com`
-> > every where.
+*All Contents in the `<>` should math in each file*
+> Example:  
+> If you replaced `<db_host>` with `example.com` in `.env-licms`, you should replace `<db_host>` with `example.com`
+> everywhere.
 
 1. First thing first, clone this project.
    ```shell script

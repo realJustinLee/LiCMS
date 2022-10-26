@@ -48,4 +48,4 @@ webencodings==0.5.1
 Werkzeug==2.2.2
 wsproto==1.2.0
 WTForms==3.0.1
-zipp==3.9.0
+zipp==3.10.0

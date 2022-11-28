@@ -38,7 +38,7 @@
                     </div>
                     <div>
                         Member since {{ moment(user.member_since).format('L') }}.
-                        <span class="badge rounded-pill btn-success mb-0 ms-1 mt-n1">
+                        <span class="badge rounded-pill text-bg-success mb-0 ms-1 mt-n1">
                             {{ moment(user.member_since).fromNow() }}
                         </span>
                     </div>
@@ -46,18 +46,18 @@
                         Last seen {{ moment(user.last_seen).fromNow() }}.
                     </div>
                     <div class="mt-2">
-                        <a class="text-decoration-none mx-1 badge rounded-pill btn-info"
+                        <a class="text-decoration-none mx-1 badge rounded-pill text-bg-info"
                            href="{{ url_for('main.followers', user_id=user.id) }}"
                         >Followers: {{ user.followers.count() - 1 }}</a>
-                        <a class="text-decoration-none mx-1 badge rounded-pill btn-info"
+                        <a class="text-decoration-none mx-1 badge rounded-pill text-bg-info"
                            href="{{ url_for('main.followed_by', user_id=user.id) }}"
                         >Following: {{ user.followed.count() - 1 }}</a>
                         {% if current_user.is_authenticated and user != current_user and user.is_following(current_user) %}
                             <span class="mx-1">|</span>
                             {% if not current_user.is_following(user) %}
-                                <span class="badge rounded-pill btn-primary">Follows you</span>
+                                <span class="badge rounded-pill text-bg-primary">Follows you</span>
                             {% else %}
-                                <span class="badge rounded-pill btn-primary">Follows each other</span>
+                                <span class="badge rounded-pill text-bg-primary">Follows each other</span>
                             {% endif %}
                         {% endif %}
                     </div>

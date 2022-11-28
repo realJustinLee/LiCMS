@@ -46,7 +46,7 @@
                         <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1"
                            data-bs-toggle="dropdown" aria-expanded="true">
                             {% if current_user.is_administrator() %}
-                                <span class="badge rounded-pill alert-primary me-3">Admin</span>
+                                <span class="badge rounded-pill text-bg-primary me-3">Admin</span>
                             {% endif %}
                             <img alt="mdo" width="40" height="40" class="rounded-circle"
                                  src="{{ current_user.gravatar(size=40) }}">

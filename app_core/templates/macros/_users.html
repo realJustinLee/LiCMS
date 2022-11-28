@@ -30,19 +30,19 @@
                             {% endif %}
                         </div>
                         <div class="d-block">
-                            <span class="mb-1 badge rounded-pill alert-warning">{{ user.gender.name }}</span>
-                            <span class="mb-1 badge rounded-pill alert-primary">posts: {{ user.posts.count() }}</span>
-                            <span class="mb-1 badge rounded-pill alert-info">followers: {{ user.followers.count() - 1 }}</span>
-                            <span class="mb-1 badge rounded-pill alert-info">followed: {{ user.followed.count() - 1 }}</span>
-                            <span class="mb-1 badge rounded-pill alert-success">member since: {{ moment(user.member_since).fromNow() }}</span>
+                            <span class="mb-1 badge rounded-pill text-bg-warning">{{ user.gender.name }}</span>
+                            <span class="mb-1 badge rounded-pill text-bg-primary">posts: {{ user.posts.count() }}</span>
+                            <span class="mb-1 badge rounded-pill text-bg-info">followers: {{ user.followers.count() - 1 }}</span>
+                            <span class="mb-1 badge rounded-pill text-bg-info">followed: {{ user.followed.count() - 1 }}</span>
+                            <span class="mb-1 badge rounded-pill text-bg-success">member since: {{ moment(user.member_since).fromNow() }}</span>
                         </div>
                         {% if current_user.is_authenticated %}
                             <div>
                                 {% if current_user.is_followed_by(user) %}
-                                    <span class="mb-1 badge rounded-pill alert-info">follows you since: {{ moment(user.member_since).fromNow() }}</span>
+                                    <span class="mb-1 badge rounded-pill text-bg-info">follows you since: {{ moment(user.member_since).fromNow() }}</span>
                                 {% endif %}
                                 {% if current_user.is_following(user) %}
-                                    <span class="mb-1 badge rounded-pill alert-primary">followed by you since: {{ moment(user.member_since).fromNow() }}</span>
+                                    <span class="mb-1 badge rounded-pill text-bg-primary">followed by you since: {{ moment(user.member_since).fromNow() }}</span>
                                 {% endif %}
                             </div>
                         {% endif %}

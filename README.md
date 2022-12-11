@@ -188,8 +188,8 @@ The Screenshot
 
 - [ ] Paste bin for Academic use.
 - [ ] OAuth Sign In (Sign In with twitter/facebook/google/apple).
-- [x] About page.
-- [x] Migrate to Bootstrap5
+- [ ] Support for Physical Security Keys.
+- [ ] User banning/blocking, post banning etc.
 
 # Made with ❤ by [Justin Lee](https://github.com/realJustinLee)!
 

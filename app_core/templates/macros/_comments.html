@@ -3,7 +3,7 @@
         <div>
             <h1 id="comments" class="mb-3">Comments</h1>
             {% for comment in comments %}
-                <div class="d-lg-flex border-bottom py-2 pb-md-1">
+                <div class="d-lg-flex border-top py-2 pb-md-1">
                     <div class="d-flex col-lg-9">
                         <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="40" height="40"
                              src="{{ comment.author.gravatar(size=40) }}" alt="Author Gravatar">

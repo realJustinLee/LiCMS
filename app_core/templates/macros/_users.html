@@ -6,10 +6,10 @@
 
         {% if users %}
             {% for user in users %}
-                <div class="d-flex text-muted pt-3">
+                <div class="d-flex text-muted border-top pt-3">
                     <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="40" height="40"
                          src="{{ user.gravatar(size=40) }}" alt="Author Gravatar"/>
-                    <div class="pb-3 mb-0 small lh-sm border-top w-100">
+                    <div class="pb-3 mb-0 small lh-sm w-100">
                         <div class="pb-1 d-flex justify-content-between">
                             <a class="text-decoration-none text-dark fs-6"
                                href="{{ url_for('main.user', user_id=user.id) }}">
@@ -51,7 +51,7 @@
             {% endfor %}
             {% if extend %}
                 <small class="d-block text-end mt-3">
-                    <a class="text-decoration-none" href="{{ link }}">{{ link_text }}</a>
+                    <a href="{{ link }}">{{ link_text }}</a>
                 </small>
             {% endif %}
         {% else %}

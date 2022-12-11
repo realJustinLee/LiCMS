@@ -1,6 +1,6 @@
 {% macro list_widget(title, posts, show_tab=false, extend=false, link='#', link_text='', permalink=true) %}
     <div class="p-md-5 pb-md-4 p-4 mb-4 bg-light rounded-3 shadow-lg">
-        <div class="d-flex flex-column flex-md-row border-bottom">
+        <div class="d-flex flex-column flex-md-row">
             <h1 class="pb-2 mb-0 col-md-9">{{ title }}</h1>
             {% if show_tab %}
                 {% include 'fragments/_post_tab.html' %}
@@ -9,7 +9,7 @@
 
         {% if posts %}
             {% for post in posts %}
-                <div class="d-lg-flex text-muted border-bottom py-2 pb-lg-1">
+                <div class="d-lg-flex text-muted border-top py-2 pb-lg-1">
                     <div class="d-flex col-lg-9">
                         <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="40" height="40"
                              src="{{ post.author.gravatar(size=40) }}" alt="Author Gravatar"/>

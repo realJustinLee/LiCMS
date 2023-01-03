@@ -1,6 +1,6 @@
 -r common.txt
-coverage==6.5.0
-exceptiongroup==1.0.4
+coverage==7.0.2
+exceptiongroup==1.1.0
 Faker==15.3.4
 PySocks==1.7.1
 selenium==4.7.2

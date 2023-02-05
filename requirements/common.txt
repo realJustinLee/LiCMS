@@ -14,10 +14,10 @@ Flask==2.2.2
 Flask-HTTPAuth==4.7.0
 Flask-Login==0.6.2
 Flask-Mail==0.9.1
-Flask-Migrate==4.0.3
+Flask-Migrate==4.0.4
 Flask-Moment==1.0.5
 Flask-PageDown==0.4.0
-Flask-SQLAlchemy==3.0.2
+Flask-SQLAlchemy==3.0.3
 Flask-WTF==1.1.1
 h11==0.14.0
 idna==3.4
@@ -43,7 +43,7 @@ python-editor==1.0.4
 six==1.16.0
 sniffio==1.3.0
 sortedcontainers==2.4.0
-SQLAlchemy==2.0.0
+SQLAlchemy==2.0.1
 typing_extensions==4.4.0
 webencodings==0.5.1
 Werkzeug==2.2.2

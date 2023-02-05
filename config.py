@@ -36,13 +36,13 @@ class DevelopmentConfig(Config):
         'host': os.environ.get('DEV_DB_HOST'),
         'port': os.environ.get('DEV_DB_PORT'),
         'database': os.environ.get('DEV_DB_DATABASE', 'licms')}
-    SQLALCHEMY_DATABASE_URI = str(URL(
+    SQLALCHEMY_DATABASE_URI = URL.create(
         'mysql+pymysql',
         username=credentials['username'],
         password=credentials['password'],
         host=credentials['host'],
         port=credentials['port'],
-        database=credentials['database']))
+        database=credentials['database'])
 
 
 class TestingConfig(Config):
@@ -62,13 +62,13 @@ class ProductionConfig(Config):
         'host': os.environ.get('DB_HOST'),
         'port': os.environ.get('DB_PORT'),
         'database': os.environ.get('DB_DATABASE', 'licms')}
-    SQLALCHEMY_DATABASE_URI = str(URL(
+    SQLALCHEMY_DATABASE_URI = URL.create(
         'mysql+pymysql',
         username=credentials['username'],
         password=credentials['password'],
         host=credentials['host'],
         port=credentials['port'],
-        database=credentials['database']))
+        database=credentials['database'])
 
     @classmethod
     def init_app(cls, app):

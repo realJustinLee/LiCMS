@@ -1,7 +1,7 @@
 -r common.txt
 coverage==7.1.0
 exceptiongroup==1.1.0
-Faker==16.6.1
+Faker==16.8.1
 PySocks==1.7.1
 selenium==4.8.0
 text-unidecode==1.3

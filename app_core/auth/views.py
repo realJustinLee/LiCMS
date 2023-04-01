@@ -93,7 +93,7 @@ def register():
             email=form.email.data.lower(),
             name=form.name.data,
             password=form.password.data,
-            gender=Gender.query.get(form.gender.data)
+            gender=db.session.get(Gender, form.gender.data)
         )
         token = user.generate_confirmation_token()
         send_email(user.email, 'Confirm Your Account', 'auth/email/confirm', user=user, token=token,

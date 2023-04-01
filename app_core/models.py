@@ -204,7 +204,7 @@ class User(UserMixin, db.Model):
             data = jwt.decode(token, current_app.config['SECRET_KEY'], leeway=leeway, algorithms=["HS256"])
         except:
             return False
-        user = User.query.get(data.get('reset'))
+        user = db.session.get(User, data.get('reset'))
         if user is None:
             return False
         user.password = new_password
@@ -316,7 +316,7 @@ class User(UserMixin, db.Model):
             data = jwt.decode(token, current_app.config['SECRET_KEY'], leeway=leeway, algorithms=["HS256"])
         except:
             return None
-        return User.query.get(data['user_id'])
+        return db.session.get(User, data['user_id'])
 
     def __repr__(self):
         return '<User %r>' % self.name
@@ -335,7 +335,7 @@ login_manager.anonymous_user = AnonymousUser
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get((int(user_id)))
+    return db.session.get(User, int(user_id))
 
 
 class Post(db.Model):

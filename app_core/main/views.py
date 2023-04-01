@@ -92,7 +92,7 @@ def edit_profile():
 @login_required
 @admin_required
 def edit_profile_admin(user_id):
-    _user = User.query.get_or_404(user_id)
+    _user = db.get_or_404(User, user_id)
     form = EditProfileAdminForm(user=_user)
     if form.validate_on_submit():
         _user.email = form.email.data
@@ -159,7 +159,7 @@ def posts():
 
 @main.route('/post/<int:post_id>', methods=['GET', 'POST'])
 def post(post_id):
-    _post = Post.query.get_or_404(post_id)
+    _post = db.get_or_404(Post, post_id)
     form = CommentForm()
     if form.validate_on_submit():
         comment = Comment(body=form.body.data, post=_post, author=current_user._get_current_object())
@@ -181,7 +181,7 @@ def post(post_id):
 @main.route('/edit/<int:post_id>', methods=['GET', 'POST'])
 @login_required
 def edit(post_id):
-    _post = Post.query.get_or_404(post_id)
+    _post = db.get_or_404(Post, post_id)
     if current_user != _post.author and not current_user.is_administrator():
         abort(403)
     form = PostForm()
@@ -278,7 +278,7 @@ def moderate():
 @login_required
 @permission_required(Permission.MODERATE)
 def moderate_enable(comment_id):
-    comment = Comment.query.get_or_404(comment_id)
+    comment = db.get_or_404(Comment, comment_id)
     comment.disabled = False
     db.session.add(comment)
     db.session.commit()
@@ -294,7 +294,7 @@ def moderate_enable(comment_id):
 @login_required
 @permission_required(Permission.MODERATE)
 def moderate_disable(comment_id):
-    comment = Comment.query.get_or_404(comment_id)
+    comment = db.get_or_404(Comment, comment_id)
     comment.disabled = True
     db.session.add(comment)
     db.session.commit()

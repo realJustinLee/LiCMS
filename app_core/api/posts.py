@@ -28,7 +28,7 @@ def get_posts():
 
 @api.route('/posts/<int:post_id>')
 def get_post(post_id):
-    _post = Post.query.get_or_404(post_id)
+    _post = db.get_or_404(Post, post_id)
     return jsonify(_post.to_json())
 
 
@@ -45,7 +45,7 @@ def new_post():
 @api.route('/posts/<int:post_id>', methods=['PUT'])
 @permission_required(Permission.WRITE)
 def edit_post(post_id):
-    _post = Post.query.get_or_404(post_id)
+    _post = db.get_or_404(Post, post_id)
     if g.current_user != _post.author and not g.current_user.can(Permission.ADMIN):
         return forbidden('Insufficient permissions')
     _post.title = request.json.get('title', _post.body)

@@ -4,7 +4,9 @@ import unittest
 
 import onetimepass
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
 
 from app_core import create_app, db, fake
 from app_core.models import Role, User, Gender
@@ -20,8 +22,7 @@ class SeleniumTestCase(unittest.TestCase):
         options.add_argument('headless')
 
         try:
-            driver_path = '/path/to/chromedriver'
-            cls.client = webdriver.Chrome(driver_path, options=options)
+            cls.client = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
         except:
             pass
 
@@ -52,8 +53,8 @@ class SeleniumTestCase(unittest.TestCase):
             db.session.add(admin)
             db.session.commit()
 
-            # start the Flask server in a thread
-            cls.server_thread = threading.Thread(target=cls.app.run, kwargs={'debug': False})
+            # start the Flask server in a thread, set port to 5001 to avoid macOS system services
+            cls.server_thread = threading.Thread(target=cls.app.run, kwargs={'debug': False, 'port': 5001})
             cls.server_thread.start()
 
             # give the server a second to ensure it is up
@@ -87,7 +88,7 @@ class SeleniumTestCase(unittest.TestCase):
         self.assertTrue('Stranger!' in self.client.page_source)
 
         # navigate to login page
-        self.client.find_element_by_link_text('Log In').click()
+        self.client.find_element('link text', 'Log In').click()
         self.assertIn('Please login', self.client.page_source)
 
         # login

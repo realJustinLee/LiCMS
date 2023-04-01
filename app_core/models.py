@@ -145,7 +145,7 @@ class User(UserMixin, db.Model):
         if self.role is None:
             if self.email == current_app.config['LICMS_ADMIN'].lower():
                 self.role = Role.query.filter_by(name='Administrator').first()
-            if self.role is None:
+            else:
                 self.role = Role.query.filter_by(default=True).first()
         if self.email is not None and self.avatar_hash is None:
             self.avatar_hash = self.gravatar_hash()

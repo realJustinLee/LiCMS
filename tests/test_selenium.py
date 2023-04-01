@@ -13,7 +13,10 @@ from app_core.models import Role, User, Gender
 
 
 class SeleniumTestCase(unittest.TestCase):
+    app = None
+    app_context = None
     client = None
+    server_thread = None
 
     @classmethod
     def setUpClass(cls):

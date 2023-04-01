@@ -2,7 +2,7 @@ from datetime import datetime
 
 from flask import render_template, redirect, url_for, flash, request, current_app, abort, make_response
 from flask_login import login_required, current_user
-from flask_sqlalchemy import get_debug_queries
+from flask_sqlalchemy import record_queries
 from sqlalchemy import asc, desc, func
 
 from app_core import db
@@ -14,7 +14,7 @@ from app_core.models import User, Role, Permission, Post, Gender, Follow, Commen
 
 @main.after_app_request
 def after_request(response):
-    for query in get_debug_queries():
+    for query in record_queries.get_recorded_queries():
         if query.duration >= current_app.config['LICMS_SLOW_DB_QUERY_TIME']:
             current_app.logger.warning(
                 'Slow query: %s\nParameters: %s\nDuration: %fs\nContext: %s\n'

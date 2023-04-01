@@ -16,10 +16,10 @@ def get_comments():
     comments = pagination.items
     _prev = None
     if pagination.has_prev:
-        _prev = url_for('api.get_comments', page=page - 1)
+        _prev = url_for('api.get_comments', page=page - 1, _external=True)
     _next = None
     if pagination.has_next:
-        _next = url_for('api.get_comments', page=page + 1)
+        _next = url_for('api.get_comments', page=page + 1, _external=True)
     return jsonify({
         'comments': [comment.to_json() for comment in comments],
         'prev': _prev,
@@ -44,10 +44,10 @@ def get_post_comments(post_id):
     comments = pagination.items
     _prev = None
     if pagination.has_prev:
-        _prev = url_for('api.get_post_comments', post_id=post_id, page=page - 1)
+        _prev = url_for('api.get_post_comments', post_id=post_id, page=page - 1, _external=True)
     _next = None
     if pagination.has_next:
-        _next = url_for('api.get_post_comments', post_id=post_id, page=page + 1)
+        _next = url_for('api.get_post_comments', post_id=post_id, page=page + 1, _external=True)
     return jsonify({
         'comments': [comment.to_json() for comment in comments],
         'prev': _prev,
@@ -65,4 +65,5 @@ def new_post_comment(post_id):
     comment.post = post
     db.session.add(comment)
     db.session.commit()
-    return jsonify(comment.to_json()), 201, {'Location': url_for('api.get_comment', comment_id=comment.id)}
+    return jsonify(comment.to_json()), 201, {
+        'Location': url_for('api.get_comment', comment_id=comment.id, _external=True)}

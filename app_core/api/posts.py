@@ -14,10 +14,10 @@ def get_posts():
     posts = pagination.items
     _prev = None
     if pagination.has_prev:
-        _prev = url_for('api.get_posts', page=page - 1)
+        _prev = url_for('api.get_posts', page=page - 1, _external=True)
     _next = None
     if pagination.has_next:
-        _next = url_for('api.get_posts', page=page + 1)
+        _next = url_for('api.get_posts', page=page + 1, _external=True)
     return jsonify({
         'posts': [_post.to_json() for _post in posts],
         'prev': _prev,
@@ -39,7 +39,7 @@ def new_post():
     _post.author = g.current_user
     db.session.add(_post)
     db.session.commit()
-    return jsonify(_post.to_json()), 201, {'Location': url_for('api.get_post', post_id=_post.id)}
+    return jsonify(_post.to_json()), 201, {'Location': url_for('api.get_post', post_id=_post.id, _external=True)}
 
 
 @api.route('/posts/<int:post_id>', methods=['PUT'])

@@ -17,7 +17,8 @@ RUN venv/bin/pip install -U pip
 RUN venv/bin/pip install wheel
 RUN venv/bin/pip install -r requirements/docker.txt
 # This may cause uncertainty
-# RUN python dep_updater.py
+# RUN chmod 0755 dep_updater.sh
+# RUN ./dep_updater.sh
 
 COPY app_core app_core
 COPY migrations migrations

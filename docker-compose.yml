@@ -38,12 +38,12 @@ services:
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
   mysql_db:
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    env_file:
-      - .env-mysql
-    image: mariadb
+    image: mariadb:latest
     ports:
       - "6033:3306"
     restart: always
+    env_file:
+      - .env-mysql
     volumes:
       - ~/data/mysql:/var/lib/mysql
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci

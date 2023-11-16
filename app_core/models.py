@@ -42,11 +42,14 @@ class Gender(db.Model):
 
 
 class Permission:
-    FOLLOW = 1
-    COMMENT = 2
-    WRITE = 4
-    MODERATE = 8
-    ADMIN = 16
+    FOLLOW = pow(2, 0)
+    COMMENT = pow(2, 1)
+    WRITE = pow(2, 2)
+    MODERATE = pow(2, 3)
+    ADMIN = pow(2, 4)
+    FILE_READ = pow(2, 5)
+    FILE_WRITE = pow(2, 6)
+    FILE_ADMIN = pow(2, 7)
 
 
 class Role(db.Model):
@@ -65,12 +68,15 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            'User': [Permission.FOLLOW, Permission.COMMENT, Permission.WRITE],
+            'User': [Permission.FOLLOW, Permission.COMMENT,
+                     Permission.WRITE, Permission.FILE_READ],
             'Moderator': [Permission.FOLLOW, Permission.COMMENT,
-                          Permission.WRITE, Permission.MODERATE],
+                          Permission.WRITE, Permission.MODERATE,
+                          Permission.FILE_READ, Permission.FILE_WRITE],
             'Administrator': [Permission.FOLLOW, Permission.COMMENT,
                               Permission.WRITE, Permission.MODERATE,
-                              Permission.ADMIN],
+                              Permission.ADMIN, Permission.FILE_READ,
+                              Permission.FILE_WRITE, Permission.FILE_ADMIN],
         }
         default_role = 'User'
         for r in roles:
@@ -417,3 +423,10 @@ class Comment(db.Model):
 
 
 db.event.listen(Comment.body, 'set', Comment.on_changed_body)
+
+
+class File(db.Model):
+    __tablename__ = 'files'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)

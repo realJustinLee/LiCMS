@@ -6,7 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from app_core import db
 from app_core.models import Gender, User, Post, Comment
 
-lang_list = ['en_US', 'fr_FR', 'ja_JP', 'zh_TW']
+lang_list = ['en_US', 'fr_FR', 'zh_CN']
 
 
 def users(count=100):

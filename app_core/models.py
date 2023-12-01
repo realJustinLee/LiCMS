@@ -121,7 +121,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(128))
     email = db.Column(db.String(128), unique=True, index=True)
     avatar_hash = db.Column(db.String(32))
-    password_hash = db.Column(db.String(128))
+    password_hash = db.Column(db.String(256))
     otp_secret = db.Column(db.String(16))
     confirmed = db.Column(db.Boolean, default=False)
     location = db.Column(db.String(128))

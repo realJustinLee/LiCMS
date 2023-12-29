@@ -17,9 +17,9 @@ def after_request(response):
     for query in record_queries.get_recorded_queries():
         if query.duration >= current_app.config['LICMS_SLOW_DB_QUERY_TIME']:
             current_app.logger.warning(
-                'Slow query: %s\nParameters: %s\nDuration: %fs\nContext: %s\n'
+                'Slow query: %s\nParameters: %s\nDuration: %fs\nLocation: %s\n'
                 % (query.statement, query.parameters, query.duration,
-                   query.context))
+                   query.location))
     return response
 
 

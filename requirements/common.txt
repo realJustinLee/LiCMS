@@ -1,4 +1,4 @@
-alembic==1.13.0
+alembic==1.13.1
 bleach==6.1.0
 blinker==1.7.0
 Bootstrap-Flask==2.3.3
@@ -7,7 +7,7 @@ dnspython==2.4.2
 email-validator==2.1.0.post1
 Flask==3.0.0
 Flask-HTTPAuth==4.8.0
-Flask-Login @ git+https://github.com/maxcountryman/flask-login.git@7f50827fcb3d59cdbae4cd62b7c1e3bf64c60530
+Flask-Login==0.6.3
 Flask-Mail==0.9.1
 Flask-Migrate==4.0.5
 Flask-Moment==1.0.5
@@ -28,7 +28,7 @@ PyQRCode==1.2.1
 python-dateutil==2.8.2
 python-dotenv==1.0.0
 six==1.16.0
-SQLAlchemy==2.0.23
+SQLAlchemy==2.0.24
 typing_extensions==4.9.0
 webencodings==0.5.1
 Werkzeug==3.0.1

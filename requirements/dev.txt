@@ -3,9 +3,9 @@ async-generator==1.10
 attrs==23.2.0
 certifi==2024.2.2
 charset-normalizer==3.3.2
-coverage==7.4.3
+coverage==7.4.4
 exceptiongroup==1.2.0
-Faker==23.3.0
+Faker==24.2.0
 h11==0.14.0
 outcome==1.3.0.post0
 PySocks==1.7.1
@@ -14,7 +14,7 @@ selenium==4.18.1
 sniffio==1.3.1
 sortedcontainers==2.4.0
 tqdm==4.66.2
-trio==0.24.0
+trio==0.25.0
 trio-websocket==0.11.1
 urllib3==2.2.1
 webdriver-manager==4.0.1

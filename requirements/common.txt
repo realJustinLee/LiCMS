@@ -1,6 +1,6 @@
 alembic==1.13.1
 bleach==6.1.0
-blinker==1.7.0
+blinker==1.8.1
 Bootstrap-Flask==2.4.0
 click==8.1.7
 dnspython==2.6.1

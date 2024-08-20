@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from flask import render_template, redirect, url_for, flash, request, current_app, abort, make_response
 from flask_login import login_required, current_user
@@ -47,7 +47,7 @@ def index():
     _users = db.session.query(User).join(
         post_count_sub, User.id == post_count_sub.c.author_id).order_by(
         desc(post_count_sub.c.post_count)).limit(8).all()
-    return render_template('index.html', current_time=datetime.utcnow(), show_followed=_show_followed, posts=_posts,
+    return render_template('index.html', current_time=datetime.now(timezone.utc), show_followed=_show_followed, posts=_posts,
                            post_title=post_title, post_link=post_link, users=_users, endpoint='main.index')
 
 

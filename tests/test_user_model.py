@@ -1,6 +1,6 @@
 import time
 import unittest
-from datetime import datetime
+from datetime import datetime, timezone
 
 from app_core import create_app, db
 from app_core.models import User, AnonymousUser, Role, Permission, Follow, Gender
@@ -178,9 +178,9 @@ class UserModelTestCase(unittest.TestCase):
         db.session.add(u)
         db.session.commit()
         self.assertTrue(
-            (datetime.utcnow() - u.member_since).total_seconds() < 3)
+            (datetime.now(timezone.utc) - u.member_since).total_seconds() < 3)
         self.assertTrue(
-            (datetime.utcnow() - u.last_seen).total_seconds() < 3)
+            (datetime.now(timezone.utc) - u.last_seen).total_seconds() < 3)
 
     def test_ping(self):
         u = User(password='cat')
@@ -212,11 +212,11 @@ class UserModelTestCase(unittest.TestCase):
         db.session.commit()
         self.assertFalse(u1.is_following(u2))
         self.assertFalse(u1.is_followed_by(u2))
-        timestamp_before = datetime.utcnow()
+        timestamp_before = datetime.now(timezone.utc)
         u1.follow(u2)
         db.session.add(u1)
         db.session.commit()
-        timestamp_after = datetime.utcnow()
+        timestamp_after = datetime.now(timezone.utc)
         self.assertTrue(u1.is_following(u2))
         self.assertFalse(u1.is_followed_by(u2))
         self.assertTrue(u2.is_followed_by(u1))

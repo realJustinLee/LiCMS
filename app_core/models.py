@@ -112,7 +112,7 @@ class Follow(db.Model):
     __tablename__ = 'follows'
     follower_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))
 
 
 class User(UserMixin, db.Model):
@@ -126,8 +126,8 @@ class User(UserMixin, db.Model):
     confirmed = db.Column(db.Boolean, default=False)
     location = db.Column(db.String(128))
     about_me = db.Column(db.Text)
-    member_since = db.Column(db.DateTime, default=datetime.utcnow)
-    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    member_since = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    last_seen = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     gender_id = db.Column(db.Integer, db.ForeignKey('genders.id'))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
@@ -261,7 +261,7 @@ class User(UserMixin, db.Model):
         return self.can(Permission.ADMIN)
 
     def ping(self):
-        self.last_seen = datetime.utcnow()
+        self.last_seen = datetime.now(timezone.utc)
         db.session.add(self)
 
     def gravatar_hash(self):
@@ -350,7 +350,7 @@ class Post(db.Model):
     title = db.Column(db.Text)
     body = db.Column(db.Text)
     body_html = db.Column(db.Text)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.now(timezone.utc))
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     comments = db.relationship('Comment', backref='post', lazy='dynamic')
 
@@ -395,7 +395,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.Text)
     body_html = db.Column(db.Text)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.now(timezone.utc))
     disabled = db.Column(db.Boolean)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
@@ -436,4 +436,4 @@ class File(db.Model):
     __tablename__ = 'files'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.now(timezone.utc))

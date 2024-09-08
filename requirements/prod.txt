@@ -4,4 +4,4 @@ gevent==24.2.1
 greenlet==3.0.3
 gunicorn==23.0.0
 zope.event==5.0
-zope.interface==7.0.1
+zope.interface==7.0.3

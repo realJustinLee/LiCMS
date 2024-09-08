@@ -22,7 +22,8 @@ class APITestCase(unittest.TestCase):
         db.drop_all()
         self.app_context.pop()
 
-    def get_api_headers(self, username, password):
+    @staticmethod
+    def get_api_headers(username, password):
         return {
             'Authorization': 'Basic ' + b64encode(
                 (username + ':' + password).encode('utf-8')).decode('utf-8'),

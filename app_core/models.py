@@ -356,14 +356,11 @@ class Post(db.Model):
 
     @staticmethod
     def on_changed_body(target, value, old_value, initiator):
-        markdown_extensions = ['abbr', 'admonition', 'attr_list', 'codehilite', 'def_list', 'extra', 'fenced_code',
-                               'footnotes', 'legacy_attrs', 'legacy_em', 'md_in_html', 'meta', 'nl2br', 'sane_lists',
-                               'smarty', 'tables', 'toc', 'wikilinks']
         allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
                         'h1', 'h2', 'h3', 'p']
-        target.body_html = bleach.linkify(
-            bleach.clean(markdown(value, extensions=markdown_extensions, output_format='html'), tags=allowed_tags,
-                         strip=True))
+        target.body_html = bleach.linkify(bleach.clean(
+            markdown(value, extensions=current_app.config['LICMS_MARKDOWN_EXTENSIONS'], output_format='html'),
+            tags=allowed_tags, strip=True))
 
     def to_json(self):
         json_post = {
@@ -382,7 +379,9 @@ class Post(db.Model):
     def from_json(json_post):
         title = json_post.get('title')
         body = json_post.get('body')
-        if body is None or body == '' or title is None or title == '':
+        if title is None or title == '':
+            raise ValidationError('post does not have a title')
+        if body is None or body == '':
             raise ValidationError('post does not have a body')
         return Post(title=title, body=body)
 
@@ -402,13 +401,10 @@ class Comment(db.Model):
 
     @staticmethod
     def on_changed_body(target, value, old_value, initiator):
-        markdown_extensions = ['abbr', 'admonition', 'attr_list', 'codehilite', 'def_list', 'extra', 'fenced_code',
-                               'footnotes', 'legacy_attrs', 'legacy_em', 'md_in_html', 'meta', 'nl2br', 'sane_lists',
-                               'smarty', 'tables', 'toc', 'wikilinks']
         allowed_tags = ['a', 'abbr', 'acronym', 'b', 'code', 'em', 'i', 'strong']
-        target.body_html = bleach.linkify(
-            bleach.clean(markdown(value, extensions=markdown_extensions, output_format='html'), tags=allowed_tags,
-                         strip=True))
+        target.body_html = bleach.linkify(bleach.clean(
+            markdown(value, extensions=current_app.config['LICMS_MARKDOWN_EXTENSIONS'], output_format='html'),
+            tags=allowed_tags, strip=True))
 
     def to_json(self):
         json_comment = {

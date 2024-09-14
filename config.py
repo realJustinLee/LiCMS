@@ -10,6 +10,9 @@ class Config:
     LICMS_USERS_PER_PAGE = int(os.environ.get('LICMS_USERS_PER_PAGE', 50))
     LICMS_COMMENTS_PER_PAGE = int(os.environ.get('LICMS_COMMENTS_PER_PAGE', 30))
     LICMS_SLOW_DB_QUERY_TIME = float(os.environ.get('LICMS_SLOW_DB_QUERY_TIME', 0.5))
+    LICMS_MARKDOWN_EXTENSIONS = ['abbr', 'admonition', 'attr_list', 'codehilite', 'def_list', 'extra', 'fenced_code',
+                                 'footnotes', 'legacy_attrs', 'legacy_em', 'md_in_html', 'meta', 'nl2br', 'sane_lists',
+                                 'smarty', 'tables', 'toc', 'wikilinks']
     MAIL_SERVER = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
     MAIL_PORT = int(os.environ.get('MAIL_PORT', 587))
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS', 'true').lower() in ['true', 'on', '1']

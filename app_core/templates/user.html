@@ -37,9 +37,9 @@
                         Gender: {{ user.gender.name }}
                     </div>
                     <div>
-                        Member since {{ moment(user.member_since).format('L') }}.
+                        Member since {{ moment(user.member_since).fromNow() }}.
                         <span class="badge rounded-pill text-bg-success mb-0 ms-1 mt-n1">
-                            {{ moment(user.member_since).fromNow() }}
+                            {{ moment(user.member_since).format('L') }}
                         </span>
                     </div>
                     <div>

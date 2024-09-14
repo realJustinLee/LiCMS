@@ -30,12 +30,12 @@
                             {% endif %}
                         </div>
                         <div class="d-block">
-                            <span class="mb-1 badge rounded-pill text-bg-warning">{{ user.gender.name }}</span>
-                            <span class="mb-1 badge rounded-pill text-bg-primary">posts: {{ user.posts.count() }}</span>
-                            <span class="mb-1 badge rounded-pill text-bg-primary">comments: {{ user.comments.count() }}</span>
-                            <span class="mb-1 badge rounded-pill text-bg-info">followers: {{ user.followers.count() - 1 }}</span>
-                            <span class="mb-1 badge rounded-pill text-bg-info">followed: {{ user.followed.count() - 1 }}</span>
-                            <span class="mb-1 badge rounded-pill text-bg-success">member since: {{ moment(user.member_since).fromNow() }}</span>
+                            <span class="mb-1 badge rounded-pill text-bg-warning">Gender: {{ user.gender.name }}</span>
+                            <span class="mb-1 badge rounded-pill text-bg-primary">Posts: {{ user.posts.count() }}</span>
+                            <span class="mb-1 badge rounded-pill text-bg-primary">Comments: {{ user.comments.count() }}</span>
+                            <span class="mb-1 badge rounded-pill text-bg-info">Followers: {{ user.followers.count() - 1 }}</span>
+                            <span class="mb-1 badge rounded-pill text-bg-info">Followed: {{ user.followed.count() - 1 }}</span>
+                            <span class="mb-1 badge rounded-pill text-bg-success">Member Since: {{ moment(user.member_since).fromNow() }}</span>
                         </div>
                         {% if current_user.is_authenticated %}
                             <div>

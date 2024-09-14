@@ -32,6 +32,7 @@
                         <div class="d-block">
                             <span class="mb-1 badge rounded-pill text-bg-warning">{{ user.gender.name }}</span>
                             <span class="mb-1 badge rounded-pill text-bg-primary">posts: {{ user.posts.count() }}</span>
+                            <span class="mb-1 badge rounded-pill text-bg-primary">comments: {{ user.comments.count() }}</span>
                             <span class="mb-1 badge rounded-pill text-bg-info">followers: {{ user.followers.count() - 1 }}</span>
                             <span class="mb-1 badge rounded-pill text-bg-info">followed: {{ user.followed.count() - 1 }}</span>
                             <span class="mb-1 badge rounded-pill text-bg-success">member since: {{ moment(user.member_since).fromNow() }}</span>

@@ -16,9 +16,9 @@ Flask-Moment==1.0.6
 Flask-PageDown==0.4.0
 Flask-SQLAlchemy==3.1.1
 Flask-WTF==1.2.1
-idna==3.8
-importlib_metadata==8.4.0
-importlib_resources==6.4.4
+idna==3.9
+importlib_metadata==8.5.0
+importlib_resources==6.4.5
 inflect==7.4.0
 itsdangerous==2.2.0
 jaraco.context==6.0.1
@@ -32,7 +32,7 @@ more-itertools==10.5.0
 onetimepass==1.0.1
 ordered-set==4.1.0
 packaging==24.1
-platformdirs==4.3.1
+platformdirs==4.3.3
 PyJWT==2.9.0
 PyMySQL==1.1.1
 PyQRCode==1.2.1
@@ -48,4 +48,4 @@ webencodings==0.5.1
 Werkzeug==3.0.4
 wheel==0.44.0
 WTForms==3.1.2
-zipp==3.20.1
+zipp==3.20.2

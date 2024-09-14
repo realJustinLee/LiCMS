@@ -47,9 +47,6 @@ class Permission:
     WRITE = pow(2, 2)
     MODERATE = pow(2, 3)
     ADMIN = pow(2, 4)
-    FILE_READ = pow(2, 5)
-    FILE_WRITE = pow(2, 6)
-    FILE_ADMIN = pow(2, 7)
 
 
 class Role(db.Model):
@@ -69,14 +66,12 @@ class Role(db.Model):
     def insert_roles():
         roles = {
             'User': [Permission.FOLLOW, Permission.COMMENT,
-                     Permission.WRITE, Permission.FILE_READ],
+                     Permission.WRITE],
             'Moderator': [Permission.FOLLOW, Permission.COMMENT,
-                          Permission.WRITE, Permission.MODERATE,
-                          Permission.FILE_READ, Permission.FILE_WRITE],
+                          Permission.WRITE, Permission.MODERATE],
             'Administrator': [Permission.FOLLOW, Permission.COMMENT,
                               Permission.WRITE, Permission.MODERATE,
-                              Permission.ADMIN, Permission.FILE_READ,
-                              Permission.FILE_WRITE, Permission.FILE_ADMIN],
+                              Permission.ADMIN]
         }
         default_role = 'User'
         for r in roles:
@@ -300,7 +295,7 @@ class User(UserMixin, db.Model):
         return Post.query.join(Follow, Follow.followed_id == Post.author_id).filter(Follow.follower_id == self.id)
 
     def to_json(self):
-        json_user = {
+        return {
             'url': url_for('api.get_user', user_id=self.id),
             'name': self.name,
             'member_since': self.member_since,
@@ -310,7 +305,6 @@ class User(UserMixin, db.Model):
             'followed_posts_url': url_for('api.get_user_followed_posts', user_id=self.id),
             'post_count': self.posts.count()
         }
-        return json_user
 
     def generate_auth_token(self, expiration=600):
         payload = {'user_id': self.id, 'exp': datetime.now(timezone.utc) + timedelta(seconds=expiration)}
@@ -363,7 +357,7 @@ class Post(db.Model):
             tags=allowed_tags, strip=True))
 
     def to_json(self):
-        json_post = {
+        return {
             'url': url_for('api.get_post', post_id=self.id),
             'title': self.title,
             'body': self.body,
@@ -373,14 +367,13 @@ class Post(db.Model):
             'comments_url': url_for('api.get_post_comments', post_id=self.id),
             'comment_count': self.comments.count()
         }
-        return json_post
 
     @staticmethod
     def from_json(json_post):
         title = json_post.get('title')
-        body = json_post.get('body')
         if title is None or title == '':
             raise ValidationError('post does not have a title')
+        body = json_post.get('body')
         if body is None or body == '':
             raise ValidationError('post does not have a body')
         return Post(title=title, body=body)
@@ -407,15 +400,17 @@ class Comment(db.Model):
             tags=allowed_tags, strip=True))
 
     def to_json(self):
-        json_comment = {
-            'url': url_for('api.get_comment', comment_id=self.id),
-            'post_url': url_for('api.get_post', post_id=self.post_id),
-            'body': self.body,
-            'body_html': self.body_html,
-            'timestamp': self.timestamp,
-            'author_url': url_for('api.get_user', user_id=self.author_id),
-        }
-        return json_comment
+        if self.disabled:
+            return {}
+        else:
+            return {
+                'url': url_for('api.get_comment', comment_id=self.id),
+                'post_url': url_for('api.get_post', post_id=self.post_id),
+                'body': self.body,
+                'body_html': self.body_html,
+                'timestamp': self.timestamp,
+                'author_url': url_for('api.get_user', user_id=self.author_id),
+            }
 
     @staticmethod
     def from_json(json_comment):
@@ -434,27 +429,31 @@ class Paste(db.Model):
     title = db.Column(db.Text)
     body = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now(timezone.utc))
+    expiry = db.Column(db.DateTime)
+    disabled = db.Column(db.Boolean)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def to_json(self):
-        json_paste = {
-            # 'url': url_for('api.get_paste', paste_id=self.id),
-            'title': self.name,
-            'body': self.body,
-            'timestamp': self.timestamp,
-            'author_url': url_for('api.get_user', user_id=self.author_id),
-        }
-        return json_paste
+        if self.disabled or datetime.now(timezone.utc) >= self.expiry:
+            return {}
+        else:
+            return {
+                # 'url': url_for('api.get_paste', paste_id=self.id),
+                'title': self.name,
+                'body': self.body,
+                'timestamp': self.timestamp,
+                'expiry': self.expiry,
+                'author_url': url_for('api.get_user', user_id=self.author_id),
+            }
 
     @staticmethod
     def from_json(json_paste):
         title = json_paste.get('title')
         body = json_paste.get('body')
-        if title is None or title == '':
-            raise ValidationError('paste does not have a title')
+        expiry = json_paste.get('expiry')
         if body is None or body == '':
             raise ValidationError('paste does not have a body')
-        return Paste(title=title, body=body)
+        return Paste(title=title, body=body, expiry=expiry)
 
 
 class File(db.Model):
@@ -463,24 +462,27 @@ class File(db.Model):
     name = db.Column(db.Text)
     file_hash = db.Column(db.String(32))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now(timezone.utc))
+    disabled = db.Column(db.Boolean)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def to_json(self):
-        json_file = {
-            # 'url': url_for('api.get_file', file_id=self.id),
-            'name': self.name,
-            'file_hash': self.file_hash,
-            'timestamp': self.timestamp,
-            'author_url': url_for('api.get_user', user_id=self.author_id),
-        }
-        return json_file
+        if self.disabled:
+            return {}
+        else:
+            return {
+                # 'url': url_for('api.get_file', file_id=self.id),
+                'name': self.name,
+                'file_hash': self.file_hash,
+                'timestamp': self.timestamp,
+                'author_url': url_for('api.get_user', user_id=self.author_id),
+            }
 
     @staticmethod
     def from_json(json_file):
         name = json_file.get('name')
-        file_hash = json_file.get('file_hash')
         if name is None or name == '':
             raise ValidationError('paste does not have a title')
+        file_hash = json_file.get('file_hash')
         if file_hash is None or file_hash == '' or len(file_hash) > 32:
             raise ValidationError('paste does not have a body')
         return Paste(name=name, file_hash=file_hash)

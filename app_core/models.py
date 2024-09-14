@@ -429,8 +429,59 @@ class Comment(db.Model):
 db.event.listen(Comment.body, 'set', Comment.on_changed_body)
 
 
+class Paste(db.Model):
+    __tablename__ = "pastes"
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text)
+    body = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.now(timezone.utc))
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def to_json(self):
+        json_paste = {
+            # 'url': url_for('api.get_paste', paste_id=self.id),
+            'title': self.name,
+            'body': self.body,
+            'timestamp': self.timestamp,
+            'author_url': url_for('api.get_user', user_id=self.author_id),
+        }
+        return json_paste
+
+    @staticmethod
+    def from_json(json_paste):
+        title = json_paste.get('title')
+        body = json_paste.get('body')
+        if title is None or title == '':
+            raise ValidationError('paste does not have a title')
+        if body is None or body == '':
+            raise ValidationError('paste does not have a body')
+        return Paste(title=title, body=body)
+
+
 class File(db.Model):
     __tablename__ = 'files'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
+    file_hash = db.Column(db.String(32))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now(timezone.utc))
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def to_json(self):
+        json_file = {
+            # 'url': url_for('api.get_file', file_id=self.id),
+            'name': self.name,
+            'file_hash': self.file_hash,
+            'timestamp': self.timestamp,
+            'author_url': url_for('api.get_user', user_id=self.author_id),
+        }
+        return json_file
+
+    @staticmethod
+    def from_json(json_file):
+        name = json_file.get('name')
+        file_hash = json_file.get('file_hash')
+        if name is None or name == '':
+            raise ValidationError('paste does not have a title')
+        if file_hash is None or file_hash == '' or len(file_hash) > 32:
+            raise ValidationError('paste does not have a body')
+        return Paste(name=name, file_hash=file_hash)

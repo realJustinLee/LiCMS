@@ -13,6 +13,7 @@ class Config:
     LICMS_MARKDOWN_EXTENSIONS = ['abbr', 'admonition', 'attr_list', 'codehilite', 'def_list', 'extra', 'fenced_code',
                                  'footnotes', 'legacy_attrs', 'legacy_em', 'md_in_html', 'meta', 'nl2br', 'sane_lists',
                                  'smarty', 'tables', 'toc', 'wikilinks']
+    LICMS_FAKER_LANG_LIST = ['en_US', 'fr_FR', 'zh_CN']
     MAIL_SERVER = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
     MAIL_PORT = int(os.environ.get('MAIL_PORT', 587))
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS', 'true').lower() in ['true', 'on', '1']

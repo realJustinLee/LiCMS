@@ -1,16 +1,15 @@
 from random import randint
 
 from faker import Faker
+from flask import current_app
 from sqlalchemy.exc import IntegrityError
 
 from app_core import db
 from app_core.models import Gender, User, Post, Comment
 
-lang_list = ['en_US', 'fr_FR', 'zh_CN']
-
 
 def users(count=100):
-    fake = Faker(lang_list)
+    fake = Faker(current_app.config['LICMS_FAKER_LANG_LIST'])
     gender_count = Gender.query.count()
     for _ in range(count):
         g = Gender.query.offset(randint(0, gender_count - 1)).first()
@@ -30,7 +29,7 @@ def users(count=100):
 
 
 def posts(count=100):
-    fake = Faker(lang_list)
+    fake = Faker(current_app.config['LICMS_FAKER_LANG_LIST'])
     user_count = User.query.count()
     for _ in range(count):
         u = User.query.offset(randint(0, user_count - 1)).first()
@@ -54,7 +53,7 @@ def follows(count=100):
 
 
 def comments(count=100):
-    fake = Faker(lang_list)
+    fake = Faker(current_app.config['LICMS_FAKER_LANG_LIST'])
     user_count = User.query.count()
     post_count = Post.query.count()
     for _ in range(count):

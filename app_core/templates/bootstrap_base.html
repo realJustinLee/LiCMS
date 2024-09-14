@@ -14,17 +14,16 @@
             <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#009292">
         {% endif %}
 
-        {% block styles %}
-            <!-- Bootstrap CSS -->
-            {{ bootstrap.load_css() }}
-        {% endblock %}
-
         <title>
             {% block title %}
                 LiCMS
             {% endblock %}
         </title>
 
+        {% block styles %}
+            <!-- Bootstrap CSS -->
+            {{ bootstrap.load_css() }}
+        {% endblock %}
         <link rel="shortcut icon" href="{{ url_for('main.favicon') }}" type="image/x-icon">
         <link rel="icon" href="{{ url_for('main.favicon') }}" type="image/x-icon">
     {% endblock %}

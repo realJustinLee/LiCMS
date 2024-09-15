@@ -9,9 +9,11 @@
 <!-- Paste Content -->
 <div class="alert
     {% if paste.disabled %}
+        alert-danger
+    {% elif current_time >= paste.expiry %}
         alert-secondary
     {% else %}
-        alert-success
+        alert-info
     {% endif %}
     my-2" role="alert">
     <pre class="mb-0 code">{{ paste.body }}</pre>

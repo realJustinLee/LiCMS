@@ -332,7 +332,7 @@ def paste(paste_id):
             abort(403)
         if _paste.expiry and datetime.now() >= _paste.expiry:
             abort(404)
-    return render_template('paste.html', paste=_paste)
+    return render_template('paste.html', paste=_paste, current_time=datetime.now())
 
 
 @main.route('/paste/edit/<int:paste_id>', methods=['GET', 'POST'])

@@ -1,11 +1,12 @@
-from random import randint
+from random import randint, random
 
 from faker import Faker
 from flask import current_app
 from sqlalchemy.exc import IntegrityError
+from wtforms.validators import disabled
 
 from app_core import db
-from app_core.models import Gender, User, Post, Comment
+from app_core.models import Gender, User, Post, Comment, Paste
 
 
 def users(count=100):
@@ -64,4 +65,19 @@ def comments(count=100):
                     author=u,
                     post=p)
         db.session.add(c)
+    db.session.commit()
+
+
+def pastes(count=100):
+    fake = Faker(current_app.config['LICMS_FAKER_LANG_LIST'])
+    user_count = User.query.count()
+    for _ in range(count):
+        u = User.query.offset(randint(0, user_count - 1)).first()
+        p = Paste(body=fake.text(200),
+                  title=fake.text(100) if random() < 0.5 else None,
+                  timestamp=fake.past_datetime(),
+                  expiry=fake.date_time() if random() < 0.5 else None,
+                  disabled=random() < 0.5,
+                  author=u)
+        db.session.add(p)
     db.session.commit()

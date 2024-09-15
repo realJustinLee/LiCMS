@@ -327,8 +327,11 @@ def pastes():
 @main.route('/paste/<int:paste_id>', methods=['GET'])
 def paste(paste_id):
     _paste = db.get_or_404(Paste, paste_id)
-    if _paste.disabled or _paste.expiry and datetime.now() >= _paste.expiry and current_user != _paste.author and not current_user.is_administrator():
-        abort(403)
+    if _paste.author != current_user and not current_user.is_administrator():
+        if _paste.disabled:
+            abort(403)
+        if _paste.expiry and datetime.now() >= _paste.expiry:
+            abort(404)
     return render_template('paste.html', paste=_paste)
 
 

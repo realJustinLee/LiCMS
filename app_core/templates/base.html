@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block navbar %}
-    <nav class="navbar navbar-expand-md fixed-top bg-body-secondary">
+    <nav class="navbar navbar-expand-md fixed-top bg-body-tertiary shadow">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
                 <img class="nav-logo" src="{{ url_for('static', filename='img/logo.svg') }}" alt="LiCMS logo">
@@ -83,7 +83,7 @@
                     </div>
                 {% else %}
                     <div class="d-flex">
-                        <a class="btn btn-outline-light" href="{{ url_for('auth.login') }}">Log In</a>
+                        <a class="btn btn-outline-primary" href="{{ url_for('auth.login') }}">Log In</a>
                     </div>
                 {% endif %}
             </div>

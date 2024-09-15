@@ -1,5 +1,5 @@
 {% macro list_widget(title, posts, show_tab=false, extend=false, link='#', link_text='', permalink=true) %}
-    <div class="p-md-5 pb-md-4 p-4 mb-4 bg-body rounded-3 shadow-lg">
+    <div class="p-md-5 pb-md-4 p-4 mb-4 bg-body-tertiary rounded-3 shadow-lg">
         <div class="d-flex flex-column flex-md-row">
             <h1 class="pb-2 mb-0 col-md-10">{{ title }}</h1>
             {% if show_tab %}
@@ -15,7 +15,7 @@
                              src="{{ post.author.gravatar(size=40) }}" alt="Author Gravatar"/>
                         <p class="pb-3 mb-0 small lh-sm">
                             {% if permalink and post.title %}
-                                <a class="text-decoration-none text-body fs-5"
+                                <a class="text-decoration-none text-body-secondary fs-5"
                                    href="{{ url_for('main.post', post_id=post.id) }}">
                                     <span>{{ post.title }}</span>
                                 </a>

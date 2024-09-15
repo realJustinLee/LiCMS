@@ -1,7 +1,7 @@
 from flask_pagedown.fields import PageDownField
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SubmitField, SelectField, BooleanField
-from wtforms.validators import Length, DataRequired, Email, ValidationError
+from wtforms.fields import StringField, TextAreaField, SubmitField, SelectField, BooleanField, DateTimeLocalField
+from wtforms.validators import Length, DataRequired, Email, ValidationError, Optional
 
 from app_core.models import Gender, Role, User
 
@@ -35,8 +35,7 @@ class EditProfileAdminForm(FlaskForm):
         self.user = user
 
     def validate_email(self, field):
-        if field.data != self.user.email and \
-                User.query.filter_by(email=field.data).first():
+        if field.data != self.user.email and User.query.filter_by(email=field.data).first():
             raise ValidationError('Email already registered.')
 
 
@@ -48,4 +47,12 @@ class PostForm(FlaskForm):
 
 class CommentForm(FlaskForm):
     body = PageDownField('Enter your comment', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+
+class PasteForm(FlaskForm):
+    title = StringField('Title here')
+    body = TextAreaField('Just paste', validators=[DataRequired()])
+    expiry = DateTimeLocalField('Expiry date', validators=[Optional()])
+    disabled = BooleanField('Disabled')
     submit = SubmitField('Submit')

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% from 'bootstrap5/form.html' import render_form %}
 {% import 'macros/_comments.html' as m_comments with context %}
-{% import 'macros/_paginition.html' as m_paginition %}
+{% import 'macros/_pagination.html' as m_pagination %}
 
 {% block title %}
     {{ super() }} - Post {{ post.id }}
@@ -20,6 +20,6 @@
             </div>
         {% endif %}
         {{ m_comments.list_widget(comments, page, in_post=true) }}
-        {{ m_paginition.pagination_widget(pagination, endpoint, fragment='#comments', post_id=post.id) }}
+        {{ m_pagination.pagination_widget(pagination, endpoint, fragment='#comments', post_id=post.id) }}
     </div>
 {% endblock %}

@@ -1,0 +1,66 @@
+{% macro list_widget(title, pastes, page=page,user_view=false) %}
+    <div class="p-md-5 pb-md-4 p-4 mb-4 bg-light rounded-3 shadow-lg">
+        <div class="d-flex flex-column flex-md-row">
+            <h1 class="pb-2 mb-0 col-md-9">{{ title }}</h1>
+        </div>
+
+        {% if pastes %}
+            {% for paste in pastes %}
+                <div class="d-lg-flex text-muted border-top py-2 pb-lg-1">
+                    <div class="d-flex col-lg-9">
+                        {% if not user_view %}
+                            <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="40" height="40"
+                                 src="{{ paste.author.gravatar(size=40) }}" alt="Author Gravatar"/>
+                        {% endif %}
+                        <p class="pb-3 mb-0 small lh-sm">
+                            {% if  paste.title %}
+                                <a class="text-decoration-none text-dark fs-5"
+                                   href="{{ url_for('main.paste', paste_id=paste.id) }}">
+                                    <span>{{ paste.title }}</span>
+                                </a>
+                            {% endif %}
+                            <a class="d-block text-decoration-none fs-5"
+                               href="{{ url_for('main.paste', paste_id=paste.id) }}">
+                                <span>{{ url_for('main.paste', paste_id=paste.id, _external=True) }}</span>
+                            </a>
+                            {% if not user_view %}
+                                <a class="d-block text-decoration-none"
+                                   href="{{ url_for('main.user', user_id=paste.author.id) }}">
+                                    <strong>@{{ paste.author.name }}</strong>
+                                </a>
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="col-lg-3 d-flex flex-lg-column text-lg-end align-content-end">
+                        <small class="d-block text-muted col-4 col-lg-auto">
+                            {{ moment(paste.timestamp).fromNow() }}
+                        </small>
+                        <div class="text-end col-8 col-lg-auto">
+                            {% if current_user == paste.author or current_user.is_administrator() %}
+                                <a class="text-decoration-none btn btn-sm btn-primary"
+                                   href="{{ url_for('main.edit_paste', paste_id=paste.id) }}">
+                                    <span>Edit</span>
+                                </a>
+                            {% endif %}
+                            {% if current_user == paste.author or  current_user.can(Permission.MODERATE) %}
+                                {% if paste.disabled %}
+                                    <a href="{{ url_for("main.moderate_enable_paste", paste_id=paste.id, page=page, user_view=user_view) }}"
+                                       class="text-decoration-none btn btn-sm btn-primary">Enable</a>
+                                {% else %}
+                                    <a href="{{ url_for("main.moderate_disable_paste", paste_id=paste.id, page=page, user_view=user_view) }}"
+                                       class="text-decoration-none btn btn-sm btn-danger">Disable</a>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="text-muted pt-3">
+                <h3 class="pb-3 mb-0 text-center">
+                    No pastes yet.
+                </h3>
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}

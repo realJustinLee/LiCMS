@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% from 'bootstrap5/form.html' import render_form %}
-{% import 'macros/_posts.html' as m_posts with context %}
+{% import 'macros/_pastes.html' as m_pastes with context %}
 {% import 'macros/_pagination.html' as m_pagination %}
 
 {% block title %}
@@ -11,7 +11,7 @@
     {% if current_user.can(Permission.WRITE) %}
         <div class="mb-5 card rounded-3 shadow-lg">
             <div class="card-header p-4 p-md-5 h1">
-                What's on your mind?
+                Paste something?
             </div>
             <div class="card-body p-4 p-md-5 lead">
                 {{ render_form(form, button_map={'submit': 'primary'}) }}
@@ -19,17 +19,12 @@
         </div>
     {% endif %}
 
-    {% if posts %}
-        {{ m_posts.list_widget(title, posts, show_tab=true) }}
+    {% if pastes %}
+        {{ m_pastes.list_widget(title, pastes, user_view=true) }}
         {{ m_pagination.pagination_widget(pagination, endpoint) }}
     {% else %}
         <div class="p-md-5 pb-md-4 p-4 mb-4 bg-light rounded-3">
-            <h1 class="text-muted text-center">No Posts Yet.</h1>
+            <h1 class="text-muted text-center">No Pastes Yet.</h1>
         </div>
     {% endif %}
-{% endblock %}
-
-{% block scripts %}
-    {{ super() }}
-    {{ pagedown.include_pagedown() }}
 {% endblock %}

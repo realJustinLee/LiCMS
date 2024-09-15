@@ -127,6 +127,7 @@ class User(UserMixin, db.Model):
     gender_id = db.Column(db.Integer, db.ForeignKey('genders.id'))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
+    pastes = db.relationship('Paste', backref='author', lazy='dynamic')
     followed = db.relationship('Follow',
                                foreign_keys=[Follow.follower_id],
                                backref=db.backref('follower', lazy='joined'),
@@ -434,7 +435,7 @@ class Paste(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def to_json(self):
-        if self.disabled or datetime.now(timezone.utc) >= self.expiry:
+        if self.disabled or self.expiry and datetime.now() >= self.expiry:
             return {}
         else:
             return {

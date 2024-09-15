@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
+from wtforms.fields import StringField, PasswordField, BooleanField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 
 from app_core.models import User, Gender
@@ -15,8 +15,8 @@ class LoginForm(FlaskForm):
 class RegistrationForm(FlaskForm):
     email = StringField('Email address', validators=[DataRequired(), Length(1, 128), Email()])
     name = StringField('Name', validators=[DataRequired(), Length(1, 128)])
-    password = PasswordField('Password', validators=[
-        DataRequired(), EqualTo('password_cfm', message='Passwords must match.')])
+    password = PasswordField('Password',
+                             validators=[DataRequired(), EqualTo('password_cfm', message='Passwords must match.')])
     password_cfm = PasswordField('Confirm password', validators=[DataRequired()])
     gender = SelectField('Gender', validators=[DataRequired()], coerce=int)
     submit = SubmitField('Register')
@@ -43,10 +43,8 @@ class TwoFactorResetForm(FlaskForm):
 
 class ChangePasswordFrom(FlaskForm):
     current_password = PasswordField('Current Password', validators=[DataRequired()])
-    password = PasswordField('New Password', validators=[
-        DataRequired(),
-        EqualTo('password_cfm', message='Passwords must match.')
-    ])
+    password = PasswordField('New Password',
+                             validators=[DataRequired(), EqualTo('password_cfm', message='Passwords must match.')])
     password_cfm = PasswordField('Confirm password', validators=[DataRequired()])
     submit = SubmitField('Update Password')
 
@@ -57,10 +55,8 @@ class PasswordResetRequestForm(FlaskForm):
 
 
 class PasswordResetForm(FlaskForm):
-    password = PasswordField('New Password', validators=[
-        DataRequired(),
-        EqualTo('password_cfm', message='Passwords must match')
-    ])
+    password = PasswordField('New Password',
+                             validators=[DataRequired(), EqualTo('password_cfm', message='Passwords must match')])
     password_cfm = PasswordField('Confirm Password', validators=[DataRequired()])
     submit = SubmitField('Reset Password')
 

@@ -9,6 +9,7 @@ class Config:
     LICMS_POSTS_PER_PAGE = int(os.environ.get('LICMS_POSTS_PER_PAGE', 20))
     LICMS_USERS_PER_PAGE = int(os.environ.get('LICMS_USERS_PER_PAGE', 50))
     LICMS_COMMENTS_PER_PAGE = int(os.environ.get('LICMS_COMMENTS_PER_PAGE', 30))
+    LICMS_PASTES_PER_PAGE = int(os.environ.get('LICMS_PASTES_PER_PAGE', 40))
     LICMS_SLOW_DB_QUERY_TIME = float(os.environ.get('LICMS_SLOW_DB_QUERY_TIME', 0.5))
     LICMS_MARKDOWN_EXTENSIONS = ['abbr', 'admonition', 'attr_list', 'codehilite', 'def_list', 'extra', 'fenced_code',
                                  'footnotes', 'legacy_attrs', 'legacy_em', 'md_in_html', 'meta', 'nl2br', 'sane_lists',

@@ -28,12 +28,19 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('main.users') }}">Users</a>
                     </li>
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('main.pastes') }}">Pastes</a>
+                        </li>
+                    {% endif %}
                     {% if current_user.can(Permission.MODERATE) %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown"
                                aria-expanded="true">Moderation</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown01">
                                 <a class="dropdown-item" href="{{ url_for('main.moderate') }}">Moderate Comments</a>
+                                <a class="dropdown-item" href="{{ url_for('main.moderate_pastes') }}">Moderate
+                                    Pastes</a>
                             </div>
                         </li>
                     {% endif %}

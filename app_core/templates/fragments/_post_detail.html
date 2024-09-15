@@ -1,5 +1,5 @@
 <!-- Title -->
-<h1 class="my-4">{{ post.title }}</h1>
+<h1>{{ post.title }}</h1>
 
 <div class="d-md-flex justify-content-between">
     <!-- Author -->
@@ -13,15 +13,15 @@
     </div>
     <!-- Date/Time -->
     <div class="d-flex justify-content-between align-items-center">
-        <div class="text-muted me-2">Posted on {{ moment(post.timestamp).format("MMMM Do, YYYY") }} </div>
+        <div class="text-muted me-2">Posted on {{ moment(post.timestamp).format("MMMM DD, YYYY") }} </div>
         <div>
             {% if current_user == post.author %}
-                <a class="text-decoration-none btn-sm btn-primary"
+                <a class="text-decoration-none btn btn-sm btn-primary"
                    href="{{ url_for('main.edit', post_id=post.id) }}">
                     <span>Edit</span>
                 </a>
             {% elif current_user.is_administrator() %}
-                <a class="text-decoration-none btn-sm btn-danger"
+                <a class="text-decoration-none btn btn-sm btn-danger"
                    href="{{ url_for('main.edit', post_id=post.id) }}">
                     <span>Admin Edit</span>
                 </a>

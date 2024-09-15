@@ -1,0 +1,14 @@
+{% if current_user.is_administrator() %}
+    <div class="pb-2 my-auto col-md-3">
+        <ul class="nav nav-pills nav-fill rounded-pill border border-primary">
+            <li class="nav-item">
+                <a class="nav-link rounded-pill {% if show_all %}active{% endif %}"
+                   href="{{ url_for('main.show_all_pastes', _next=endpoint) }}">All</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link rounded-pill {% if not show_all %}active{% endif %}"
+                   href="{{ url_for('main.show_self_pastes', _next=endpoint) }}">Self</a>
+            </li>
+        </ul>
+    </div>
+{% endif %}

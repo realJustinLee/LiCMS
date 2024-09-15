@@ -17,12 +17,12 @@
                             </a>
                             {% if current_user.is_authenticated and current_user.can(Permission.FOLLOW) and user != current_user %}
                                 {% if not current_user.is_following(user) %}
-                                    <a class="text-decoration-none btn-sm btn-primary"
+                                    <a class="text-decoration-none btn btn-sm btn-primary"
                                        href="{{ url_for('main.follow', user_id=user.id) }}">
                                         <span>Follow</span>
                                     </a>
                                 {% else %}
-                                    <a class="text-decoration-none btn-sm btn-warning"
+                                    <a class="text-decoration-none btn btn-sm btn-warning"
                                        href="{{ url_for('main.unfollow', user_id=user.id) }}">
                                         <span>Unfollow</span>
                                     </a>

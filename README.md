@@ -7,8 +7,8 @@ Flask.
 
 ## Requirements
 
-> - Python `3.11.2`
-> - Docker `20.10.23`
+> - Python `3.12.6'
+> - Docker `27.2.0`
 > - DataBase depending on deployment method (default in `config.py`, can be edited as you wish)
 > - Heroku: `mysql`
 > - Docker: `mysql`
@@ -74,6 +74,7 @@ If you would like to deploy LiCMS via other methods, you could refer to this gui
    LICMS_ADMIN=<your@email.com>
    LICMS_POSTS_PER_PAGE=20
    LICMS_USERS_PER_PAGE=50
+   LICMS_PASTES_PER_PAGE=40
    LICMS_COMMENTS_PER_PAGE=30
    LICMS_SLOW_DB_QUERY_TIME=0.5
    MAIL_SERVER=smtp.googlemail.com
@@ -186,8 +187,8 @@ The Screenshot
 
 ## TODO
 
-- [ ] Paste bin for Academic use.
-- [ ] OAuth Sign In (Sign In with twitter/facebook/google/apple).
+- [X] Paste bin for Academic use.
+- [ ] OAuth Sign In (Sign In with X/Meta/Google/Apple).
 - [ ] Support for Physical Security Keys.
 - [ ] User banning/blocking, post banning etc.
 

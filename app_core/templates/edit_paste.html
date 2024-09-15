@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block title %}{{ super() }} - Edit Paste{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='css/form-wtf.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block page_content %}
+    <div class="form-wtf mb-5 card rounded-3 shadow-lg">
+        <div class="card-header p-4 p-md-5 h1">
+            Edit The Paste
+        </div>
+        <div class="card-body p-4 p-md-5 lead">
+            {{ render_form(form, button_map={'submit': 'primary'}) }}
+        </div>
+    </div>
+{% endblock %}

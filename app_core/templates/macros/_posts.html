@@ -31,15 +31,10 @@
                             {{ moment(post.timestamp).fromNow() }}
                         </small>
                         <div class="text-end col-8 col-lg-auto">
-                            {% if current_user == post.author %}
-                                <a class="text-decoration-none btn-sm btn-warning"
+                            {% if current_user == post.author or current_user.is_administrator() %}
+                                <a class="text-decoration-none btn btn-sm btn-danger"
                                    href="{{ url_for('main.edit', post_id=post.id) }}">
                                     <span>Edit</span>
-                                </a>
-                            {% elif current_user.is_administrator() %}
-                                <a class="text-decoration-none btn-sm btn-danger"
-                                   href="{{ url_for('main.edit', post_id=post.id) }}">
-                                    <span>Admin Edit</span>
                                 </a>
                             {% endif %}
                         </div>

@@ -1,21 +1,19 @@
 {% extends "base.html" %}
 {% from 'bootstrap5/form.html' import render_form %}
-{% import 'macros/_comments.html' as m_comments with context %}
+{% import 'macros/_pastes.html' as m_pastes with context %}
 {% import 'macros/_pagination.html' as m_pagination %}
 
 {% block title %}
-    {{ super() }} - Comment Moderation
+    {{ super() }} - Paste Moderation
 {% endblock %}
 
 {% block page_content %}
-    {% if comments %}
-        <div class="p-md-5 pb-md-4 p-4 mb-4 bg-light rounded-3">
-            {{ m_comments.list_widget(comments, page) }}
-        </div>
+    {% if pastes %}
+        {{ m_pastes.list_widget(title, pastes, page) }}
         {{ m_pagination.pagination_widget(pagination, endpoint) }}
     {% else %}
         <div class="p-md-5 pb-md-4 p-4 mb-4 bg-light rounded-3">
-            <h1 class="text-muted text-center">No Comments Yet.</h1>
+            <h1 class="text-muted text-center">No Pastes Yet.</h1>
         </div>
     {% endif %}
 {% endblock %}

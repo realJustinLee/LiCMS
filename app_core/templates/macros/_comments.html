@@ -45,10 +45,10 @@
                             {% if current_user.can(Permission.MODERATE) %}
                                 {% if comment.disabled %}
                                     <a href="{{ url_for("main.moderate_enable", comment_id=comment.id, page=page, in_post=in_post) }}"
-                                       class="text-decoration-none btn-sm btn-primary">Enable</a>
+                                       class="text-decoration-none btn btn-sm btn-primary">Enable</a>
                                 {% else %}
                                     <a href="{{ url_for("main.moderate_disable", comment_id=comment.id, page=page, in_post=in_post) }}"
-                                       class="text-decoration-none btn-sm btn-danger">Disable</a>
+                                       class="text-decoration-none btn btn-sm btn-danger">Disable</a>
                                 {% endif %}
                             {% endif %}
                         </div>

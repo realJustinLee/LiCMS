@@ -8,18 +8,16 @@ from sqlalchemy import asc, desc, func
 from app_core import db
 from app_core.decorators import admin_required, permission_required
 from app_core.main import main
-from app_core.main.forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm
-from app_core.models import User, Role, Permission, Post, Gender, Follow, Comment
+from app_core.main.forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm, PasteForm
+from app_core.models import User, Role, Permission, Post, Gender, Follow, Comment, Paste
 
 
 @main.after_app_request
 def after_request(response):
     for query in record_queries.get_recorded_queries():
         if query.duration >= current_app.config['LICMS_SLOW_DB_QUERY_TIME']:
-            current_app.logger.warning(
-                'Slow query: %s\nParameters: %s\nDuration: %fs\nLocation: %s\n'
-                % (query.statement, query.parameters, query.duration,
-                   query.location))
+            current_app.logger.warning('Slow query: %s\nParameters: %s\nDuration: %fs\nLocation: %s\n' % (
+                query.statement, query.parameters, query.duration, query.location))
     return response
 
 
@@ -42,13 +40,13 @@ def index():
         post_link = 'Show All Posts'
         query = Post.query
     _posts = query.order_by(desc(Post.timestamp)).limit(8).all()
-    post_count_sub = Post.query.group_by(Post.author_id).with_entities(Post.author_id, func.count(
-        Post.author_id).label('post_count')).subquery()
-    _users = db.session.query(User).join(
-        post_count_sub, User.id == post_count_sub.c.author_id).order_by(
+    post_count_sub = Post.query.group_by(Post.author_id).with_entities(Post.author_id, func.count(Post.author_id).label(
+        'post_count')).subquery()
+    _users = db.session.query(User).join(post_count_sub, User.id == post_count_sub.c.author_id).order_by(
         desc(post_count_sub.c.post_count)).limit(8).all()
-    return render_template('index.html', current_time=datetime.now(timezone.utc), show_followed=_show_followed, posts=_posts,
-                           post_title=post_title, post_link=post_link, users=_users, endpoint='main.index')
+    return render_template('index.html', current_time=datetime.now(timezone.utc), show_followed=_show_followed,
+                           posts=_posts, post_title=post_title, post_link=post_link, users=_users,
+                           endpoint='main.index')
 
 
 @main.route('/user', methods=['GET', 'POST'])
@@ -57,7 +55,7 @@ def users():
     pagination = User.query.order_by(desc(User.member_since)).paginate(page=page, per_page=current_app.config[
         'LICMS_USERS_PER_PAGE'], error_out=False)
     _users = pagination.items
-    return render_template('users.html', title='All authors', users=_users, pagination=pagination,
+    return render_template('users.html', title="All authors", users=_users, pagination=pagination,
                            endpoint='main.users')
 
 
@@ -68,13 +66,13 @@ def user(user_id):
     return render_template('user.html', user=_user, posts=_posts)
 
 
-@main.route('/edit-profile', methods=['GET', 'POST'])
+@main.route('/user/edit', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
     form = EditProfileForm()
     if form.validate_on_submit():
         current_user.name = form.name.data
-        current_user.gender = Gender.query.get(form.gender.data)
+        current_user.gender = db.get(Gender, form.gender.data)
         current_user.location = form.location.data
         current_user.about_me = form.about_me.data
         db.session.add(current_user._get_current_object())
@@ -88,7 +86,7 @@ def edit_profile():
     return render_template('edit_profile.html', form=form)
 
 
-@main.route('/edit-profile/<int:user_id>', methods=['GET', 'POST'])
+@main.route('/user/<int:user_id>/edit', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def edit_profile_admin(user_id):
@@ -97,9 +95,9 @@ def edit_profile_admin(user_id):
     if form.validate_on_submit():
         _user.email = form.email.data
         _user.confirmed = form.confirmed.data
-        _user.role = Role.query.get(form.role.data)
+        _user.role = db.get(Role, form.role.data)
         _user.name = form.name.data
-        _user.gender = Gender.query.get(form.gender.data)
+        _user.gender = db.get(Gender, form.gender.data)
         _user.location = form.location.data
         _user.about_me = form.about_me.data
         db.session.add(_user)
@@ -140,7 +138,6 @@ def posts():
         db.session.add(_post)
         db.session.commit()
         return redirect(url_for('main.posts'))
-    page = request.args.get('page', 1, type=int)
     _show_followed = False
     if current_user.is_authenticated:
         _show_followed = bool(request.cookies.get('show_followed', ''))
@@ -150,8 +147,10 @@ def posts():
     else:
         title = 'All Posts'
         query = Post.query
-    pagination = query.order_by(desc(Post.timestamp)).paginate(
-        page=page, per_page=current_app.config['LICMS_POSTS_PER_PAGE'], error_out=False)
+    page = request.args.get('page', 1, type=int)
+    pagination = query.order_by(desc(Post.timestamp)).paginate(page=page,
+                                                               per_page=current_app.config['LICMS_POSTS_PER_PAGE'],
+                                                               error_out=False)
     _posts = pagination.items
     return render_template('posts.html', title=title, form=form, show_followed=_show_followed, posts=_posts,
                            pagination=pagination, endpoint='main.posts')
@@ -161,7 +160,7 @@ def posts():
 def post(post_id):
     _post = db.get_or_404(Post, post_id)
     form = CommentForm()
-    if form.validate_on_submit():
+    if current_user.can(Permission.COMMENT) and form.validate_on_submit():
         comment = Comment(body=form.body.data, post=_post, author=current_user._get_current_object())
         db.session.add(comment)
         db.session.commit()
@@ -171,14 +170,14 @@ def post(post_id):
     page = request.args.get('page', 1, type=int)
     if page == -1:
         page = ((_post.comments.count() - 1) // current_app.config['LICMS_COMMENTS_PER_PAGE']) + 1
-    pagination = _post.comments.order_by(asc(Comment.timestamp)).paginate(
-        page=page, per_page=current_app.config['LICMS_COMMENTS_PER_PAGE'], error_out=False)
+    pagination = _post.comments.order_by(asc(Comment.timestamp)).paginate(page=page, per_page=current_app.config[
+        'LICMS_COMMENTS_PER_PAGE'], error_out=False)
     _comments = pagination.items
     return render_template('post.html', post=_post, form=form, comments=_comments, pagination=pagination,
                            endpoint='main.post', page=page, sample=page)
 
 
-@main.route('/edit/<int:post_id>', methods=['GET', 'POST'])
+@main.route('/post/<int:post_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit(post_id):
     _post = db.get_or_404(Post, post_id)
@@ -231,7 +230,7 @@ def unfollow(user_id):
 
 @main.route('/followers/<int:user_id>')
 def followers(user_id):
-    _user = User.query.get(user_id)
+    _user = db.get(User, user_id)
     if _user is None:
         flash('Invalid user.', 'alert-danger')
         return redirect(url_for('main.index'))
@@ -245,7 +244,7 @@ def followers(user_id):
 
 @main.route('/followed_by/<int:user_id>')
 def followed_by(user_id):
-    _user = User.query.get(user_id)
+    _user = db.get(User, user_id)
     if _user is None:
         flash('Invalid user.', 'alert-danger')
         return redirect(url_for('main.index'))
@@ -269,8 +268,8 @@ def moderate():
     page = request.args.get('page', 1, type=int)
     pagination = Comment.query.order_by(desc(Comment.timestamp)).paginate(page=page, per_page=current_app.config[
         'LICMS_COMMENTS_PER_PAGE'], error_out=False)
-    comments = pagination.items
-    return render_template('moderate.html', comments=comments, pagination=pagination, endpoint='main.moderate',
+    _comments = pagination.items
+    return render_template('moderate.html', comments=_comments, pagination=pagination, endpoint='main.moderate',
                            page=page)
 
 
@@ -278,14 +277,14 @@ def moderate():
 @login_required
 @permission_required(Permission.MODERATE)
 def moderate_enable(comment_id):
-    comment = db.get_or_404(Comment, comment_id)
-    comment.disabled = False
-    db.session.add(comment)
+    _comment = db.get_or_404(Comment, comment_id)
+    _comment.disabled = False
+    db.session.add(_comment)
     db.session.commit()
     in_post = request.args.get('in_post', False, type=lambda v: v.lower() == 'true')
     page = request.args.get('page', 1, type=int)
     if in_post:
-        return redirect(url_for('main.post', post_id=comment.post_id, page=page))
+        return redirect(url_for('main.post', post_id=_comment.post_id, page=page))
     else:
         return redirect(url_for('main.moderate', page=page))
 
@@ -294,13 +293,107 @@ def moderate_enable(comment_id):
 @login_required
 @permission_required(Permission.MODERATE)
 def moderate_disable(comment_id):
-    comment = db.get_or_404(Comment, comment_id)
-    comment.disabled = True
-    db.session.add(comment)
+    _comment = db.get_or_404(Comment, comment_id)
+    _comment.disabled = True
+    db.session.add(_comment)
     db.session.commit()
     in_post = request.args.get('in_post', False, type=lambda v: v.lower() == 'true')
     page = request.args.get('page', 1, type=int)
     if in_post:
-        return redirect(url_for('main.post', post_id=comment.post_id, page=page))
+        return redirect(url_for('main.post', post_id=_comment.post_id, page=page))
     else:
         return redirect(url_for('main.moderate', page=page))
+
+
+@main.route('/paste', methods=['GET', 'POST'])
+@login_required
+def pastes():
+    form = PasteForm()
+    if current_user.can(Permission.WRITE) and form.validate_on_submit():
+        _paste = Paste(title=form.title.data, body=form.body.data, expiry=form.expiry.data, disabled=form.disabled.data,
+                       author=current_user._get_current_object())
+        db.session.add(_paste)
+        db.session.commit()
+        flash('The paste has been posted.', 'alert-success')
+        return redirect(url_for('main.paste', paste_id=_paste.id))
+    page = request.args.get('page', 1, type=int)
+    pagination = current_user.pastes.order_by(desc(Paste.timestamp)).paginate(page=page, per_page=current_app.config[
+        'LICMS_PASTES_PER_PAGE'], error_out=False)
+    _pastes = pagination.items
+    return render_template('pastes.html', title="My Pastes", form=form, pastes=_pastes, pagination=pagination,
+                           endpoint='main.pastes')
+
+
+@main.route('/paste/<int:paste_id>', methods=['GET'])
+def paste(paste_id):
+    _paste = db.get_or_404(Paste, paste_id)
+    if _paste.disabled or _paste.expiry and datetime.now() >= _paste.expiry and current_user != _paste.author and not current_user.is_administrator():
+        abort(403)
+    return render_template('paste.html', paste=_paste)
+
+
+@main.route('/paste/edit/<int:paste_id>', methods=['GET', 'POST'])
+@login_required
+def edit_paste(paste_id):
+    _paste = db.get_or_404(Paste, paste_id)
+    if current_user != _paste.author and not current_user.is_administrator():
+        abort(403)
+    form = PasteForm()
+    if form.validate_on_submit():
+        _paste.title = form.title.data
+        _paste.body = form.body.data
+        _paste.expiry = form.expiry.data
+        _paste.disabled = form.disabled.data
+        db.session.add(_paste)
+        db.session.commit()
+        flash('The paste has been updated.', 'alert-success')
+        return redirect(url_for('main.paste', paste_id=_paste.id))
+    form.title.data = _paste.title
+    form.body.data = _paste.body
+    form.expiry.data = _paste.expiry
+    form.disabled.data = _paste.disabled
+    return render_template('edit_paste.html', form=form)
+
+
+@main.route('/paste/moderate')
+@login_required
+@permission_required(Permission.MODERATE)
+def moderate_pastes():
+    page = request.args.get('page', 1, type=int)
+    pagination = Paste.query.order_by(desc(Paste.timestamp)).paginate(page=page, per_page=current_app.config[
+        'LICMS_PASTES_PER_PAGE'], error_out=False)
+    _pastes = pagination.items
+    return render_template('moderate_pastes.html', title="All Pastes", pastes=_pastes, pagination=pagination,
+                           endpoint='main.moderate_pastes', page=page)
+
+
+@main.route('/paste/moderate/enable/<int:paste_id>')
+@login_required
+@permission_required(Permission.MODERATE)
+def moderate_enable_paste(paste_id):
+    _paste = db.get_or_404(Paste, paste_id)
+    _paste.disabled = False
+    db.session.add(_paste)
+    db.session.commit()
+    user_view = request.args.get('user_view', False, type=lambda v: v.lower() == 'true')
+    page = request.args.get('page', 1, type=int)
+    if user_view:
+        return redirect(url_for('main.pastes', user_id=_paste.author_id, page=page))
+    else:
+        return redirect(url_for('main.moderate_pastes', page=page))
+
+
+@main.route('/paste/moderate/disable/<int:paste_id>')
+@login_required
+@permission_required(Permission.MODERATE)
+def moderate_disable_paste(paste_id):
+    _paste = db.get_or_404(Paste, paste_id)
+    _paste.disabled = True
+    db.session.add(_paste)
+    db.session.commit()
+    user_view = request.args.get('user_view', False, type=lambda v: v.lower() == 'true')
+    page = request.args.get('page', 1, type=int)
+    if user_view:
+        return redirect(url_for('main.pastes', user_id=_paste.author_id, page=page))
+    else:
+        return redirect(url_for('main.moderate_pastes', page=page))

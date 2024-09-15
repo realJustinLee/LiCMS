@@ -6,7 +6,7 @@
                 <div class="d-lg-flex border-top py-2 pb-md-1">
                     <div class="d-flex col-lg-9">
                         <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="40" height="40"
-                             src="{{ comment.author.gravatar(size=40) }}" alt="Author Gravatar">
+                             src="{{ comment.author.gravatar(size=80) }}" alt="Author Gravatar">
                         <div class="pb-3 mb-0 small lh-sm">
                             <a class="d-block text-decoration-none text-body-secondary"
                                href="{{ url_for('main.user', user_id=comment.author.id) }}">

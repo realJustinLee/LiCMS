@@ -1,5 +1,5 @@
 {% macro list_widget(title, pastes, page=page,user_view=false) %}
-    <div class="p-md-5 pb-md-4 p-4 mb-4 bg-light rounded-3 shadow-lg">
+    <div class="p-md-5 pb-md-4 p-4 mb-4 bg-body rounded-3 shadow-lg">
         <div class="d-flex flex-column flex-md-row">
             <h1 class="pb-2 mb-0 col-md-9">{{ title }}</h1>
         </div>
@@ -14,7 +14,7 @@
                         {% endif %}
                         <p class="pb-3 mb-0 small lh-sm">
                             {% if  paste.title %}
-                                <a class="text-decoration-none text-dark fs-5"
+                                <a class="text-decoration-none text-body fs-5"
                                    href="{{ url_for('main.paste', paste_id=paste.id) }}">
                                     <span>{{ paste.title }}</span>
                                 </a>

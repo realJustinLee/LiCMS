@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block navbar %}
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <nav class="navbar navbar-expand-md fixed-top bg-body-secondary">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
                 <img class="nav-logo" src="{{ url_for('static', filename='img/logo.svg') }}" alt="LiCMS logo">
@@ -50,7 +50,7 @@
                 </ul>
                 {% if current_user.is_authenticated %}
                     <div class="flex-shrink-0 dropdown">
-                        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1"
+                        <a href="#" class="d-block text-decoration-none text-body-secondary dropdown-toggle" id="dropdownUser1"
                            data-bs-toggle="dropdown" aria-expanded="true">
                             {% if current_user.is_administrator() %}
                                 <span class="badge rounded-pill text-bg-primary me-3">Admin</span>

@@ -9,12 +9,12 @@
 
 {% block page_content %}
     {% if comments %}
-        <div class="p-md-5 pb-md-4 p-4 mb-4 bg-light rounded-3">
+        <div class="p-md-5 pb-md-4 p-4 mb-4 bg-body rounded-3">
             {{ m_comments.list_widget(comments, page) }}
         </div>
         {{ m_pagination.pagination_widget(pagination, endpoint) }}
     {% else %}
-        <div class="p-md-5 pb-md-4 p-4 mb-4 bg-light rounded-3">
+        <div class="p-md-5 pb-md-4 p-4 mb-4 bg-body rounded-3">
             <h1 class="text-muted text-center">No Comments Yet.</h1>
         </div>
     {% endif %}

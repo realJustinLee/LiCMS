@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block page_content %}
-    <div class="p-md-5 pb-md-4 p-4 mb-4 bg-light rounded-3 shadow-lg">
+    <div class="p-md-5 pb-md-4 p-4 mb-4 bg-body rounded-3 shadow-lg">
         <div class="row">
             <div class="col-sm-3 mb-4 mb-sm-0 text-center align-self-center">
                 <img class="img-thumbnail float-left" src="{{ user.gravatar(size=256) }}" alt="user avatar"
@@ -88,7 +88,7 @@
     {% if posts %}
         {{ m_posts.list_widget("Posts by " + user.name, posts) }}
     {% else %}
-        <div class="p-4 p-md-5 mb-4 bg-light rounded-3">
+        <div class="p-4 p-md-5 mb-4 bg-body rounded-3">
             <h1 class="text-muted text-center">No Posts by {{ user.name }} Yet.</h1>
         </div>
     {% endif %}

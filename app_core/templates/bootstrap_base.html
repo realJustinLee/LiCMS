@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="h-100">
+<html lang="en" class="h-100" data-bs-theme="light">
 <head>
     {% block head %}
         <!-- Required meta tags -->
@@ -26,9 +26,11 @@
         {% endblock %}
         <link rel="shortcut icon" href="{{ url_for('main.favicon') }}" type="image/x-icon">
         <link rel="icon" href="{{ url_for('main.favicon') }}" type="image/x-icon">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/color-modes.css', _external=True) }}">
     {% endblock %}
 </head>
 <body class="d-flex h-100 {% if current_user.is_administrator() %}bg-admin{% endif %}">
+{% include 'fragments/_theme_switcher.html' %}
 {% block navbar %}
 {% endblock %}
 
@@ -45,7 +47,8 @@
                             {% else %}
                                 {{ category }}
                             {% endif %}" role="alert">
-                            <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <button type="button" class="btn btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
                             {{ message }}
                         </div>
                     {% endfor %}
@@ -64,6 +67,7 @@
 {% block scripts %}
     <!-- Optional JavaScript -->
     {{ bootstrap.load_js() }}
+    <script src="{{ url_for('static', filename='js/color-modes.js', _external=True) }}"></script>
 {% endblock %}
 </body>
 </html>

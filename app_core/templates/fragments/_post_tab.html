@@ -1,12 +1,12 @@
 {% if current_user.is_authenticated %}
-    <div class="pb-2 my-auto col-md-3">
-        <ul class="nav nav-pills nav-fill rounded-pill border border-primary">
+    <div class="pb-2 my-auto col-md-2">
+        <ul class="nav nav-pills nav-fill gap-2 p-1 small rounded-5 shadow border">
             <li class="nav-item">
-                <a class="nav-link rounded-pill {% if not show_followed %}active{% endif %}"
+                <a class="nav-link rounded-5 {% if not show_followed %}active{% endif %}"
                    href="{{ url_for('main.show_all', _next=endpoint) }}">All</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link rounded-pill {% if show_followed %}active{% endif %}"
+                <a class="nav-link rounded-5 {% if show_followed %}active{% endif %}"
                    href="{{ url_for('main.show_followed', _next=endpoint) }}">Followed</a>
             </li>
         </ul>

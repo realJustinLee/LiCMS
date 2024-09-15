@@ -1,5 +1,5 @@
 {% macro list_widget(title, users, extend=false, link='#', link_text='') %}
-    <div class="p-md-5 pb-md-4 p-4 mb-4 bg-light rounded-3">
+    <div class="p-md-5 pb-md-4 p-4 mb-4 bg-body rounded-3">
         <div class="d-flex flex-column flex-md-row">
             <h1 class="pb-2 mb-0">{{ title }}</h1>
         </div>
@@ -11,7 +11,7 @@
                          src="{{ user.gravatar(size=40) }}" alt="Author Gravatar"/>
                     <div class="pb-3 mb-0 small lh-sm w-100">
                         <div class="pb-1 d-flex justify-content-between">
-                            <a class="text-decoration-none text-dark fs-6"
+                            <a class="text-decoration-none text-body fs-6"
                                href="{{ url_for('main.user', user_id=user.id) }}">
                                 <strong>@{{ user.name }}</strong>
                             </a>

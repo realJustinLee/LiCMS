@@ -72,7 +72,7 @@ def edit_profile():
     form = EditProfileForm()
     if form.validate_on_submit():
         current_user.name = form.name.data
-        current_user.gender = db.get(Gender, form.gender.data)
+        current_user.gender = Gender.query.get(form.gender.data)
         current_user.location = form.location.data
         current_user.about_me = form.about_me.data
         db.session.add(current_user._get_current_object())
@@ -95,9 +95,9 @@ def edit_profile_admin(user_id):
     if form.validate_on_submit():
         _user.email = form.email.data
         _user.confirmed = form.confirmed.data
-        _user.role = db.get(Role, form.role.data)
+        _user.role = Role.query.get(form.role.data)
         _user.name = form.name.data
-        _user.gender = db.get(Gender, form.gender.data)
+        _user.gender = Gender.query.get(form.gender.data)
         _user.location = form.location.data
         _user.about_me = form.about_me.data
         db.session.add(_user)
@@ -230,7 +230,7 @@ def unfollow(user_id):
 
 @main.route('/followers/<int:user_id>')
 def followers(user_id):
-    _user = db.get(User, user_id)
+    _user = User.query.get(user_id)
     if _user is None:
         flash('Invalid user.', 'alert-danger')
         return redirect(url_for('main.index'))
@@ -244,7 +244,7 @@ def followers(user_id):
 
 @main.route('/followed_by/<int:user_id>')
 def followed_by(user_id):
-    _user = db.get(User, user_id)
+    _user = User.query.get(user_id)
     if _user is None:
         flash('Invalid user.', 'alert-danger')
         return redirect(url_for('main.index'))

@@ -159,25 +159,25 @@ If you run LiCMS in `development` mode, and you would like to fake some users, p
     ```shell script
     flask shell
     ```
-1. Import `fake` form `app_core`:
+1. Fake some dev data
     ```python
+    # Import fake form app_core:
     from app_core import fake
-    ```
-1. Fake 100 random Users:
-    ```python
+       
+    # Fake 100 random Users:
     fake.users(100)
-    ```
-1. Fake 100 random Posts for random Users:
-    ```python
+   
+    # Fake 100 random Users:
     fake.posts(100)
-    ```
-1. Fake 100 random Comments for random Posts by random Users:
-    ```python
+   
+    # Fake 100 random Comments for random Posts by random Users:
     fake.comments(100)
-    ```
-1. Fake 100 random Follows for random Users followed by random Users:
-    ```python
+   
+    # Fake 100 random Follows for random Users followed by random Users:
     fake.follows(100)
+   
+    # Fake 100 random Pastes by random Users:
+    fake.pastes(100)
     ```
 
 ## Screen Shots

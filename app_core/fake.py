@@ -3,7 +3,6 @@ from random import randint, random
 from faker import Faker
 from flask import current_app
 from sqlalchemy.exc import IntegrityError
-from wtforms.validators import disabled
 
 from app_core import db
 from app_core.models import Gender, User, Post, Comment, Paste

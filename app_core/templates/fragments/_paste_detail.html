@@ -10,7 +10,7 @@
 <div class="alert
     {% if paste.disabled %}
         alert-danger
-    {% elif current_time >= paste.expiry %}
+    {% elif paste.expiry and current_time >= paste.expiry %}
         alert-secondary
     {% else %}
         alert-info

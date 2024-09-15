@@ -1,5 +1,7 @@
 <!-- Title -->
-<h1>{{ paste.title }}</h1>
+{% if paste.title %}
+    <h1>{{ paste.title }}</h1>
+{% endif %}
 
 <!-- Paste Link -->
 <div class="d-md-flex justify-content-between">
@@ -24,11 +26,12 @@
     <div class="d-md-flex justify-content-between align-items-center">
         <div class="text-muted ms-2">Pasted on {{ moment(paste.timestamp).format("MMMM DD, YYYY") }} </div>
     </div>
-    <!-- Expiry -->
     <div class="d-flex justify-content-between align-items-center">
+        <!-- Expiry -->
         {% if paste.expiry %}
             <div class="text-muted me-2">Expires on {{ moment(paste.expiry).format("MMMM DD, YYYY HH:mm") }} </div>
         {% endif %}
+        <!-- Edit Btn -->
         <div>
             {% if current_user == paste.author or current_user.is_administrator() %}
                 <a class="text-decoration-none btn btn-sm btn-primary"

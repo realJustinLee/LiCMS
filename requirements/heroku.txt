@@ -1,2 +1,2 @@
 -r prod.txt
-psycopg==3.2.1
+psycopg==3.2.2

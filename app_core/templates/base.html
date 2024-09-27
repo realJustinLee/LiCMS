@@ -28,11 +28,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('main.users') }}">Users</a>
                     </li>
-                    {% if current_user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('main.pastes') }}">Pastes</a>
-                        </li>
-                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.pastes') }}">Pastes</a>
+                    </li>
                     {% if current_user.can(Permission.MODERATE) %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown"
@@ -50,8 +48,8 @@
                 </ul>
                 {% if current_user.is_authenticated %}
                     <div class="flex-shrink-0 dropdown">
-                        <a href="#" class="d-block text-decoration-none text-body-secondary dropdown-toggle" id="dropdownUser1"
-                           data-bs-toggle="dropdown" aria-expanded="true">
+                        <a href="#" class="d-block text-decoration-none text-body-secondary dropdown-toggle"
+                           id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="true">
                             {% if current_user.is_administrator() %}
                                 <span class="badge rounded-pill text-bg-primary me-3">Admin</span>
                             {% endif %}

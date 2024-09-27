@@ -134,7 +134,7 @@ def show_followed(_next):
 def posts():
     form = PostForm()
     if current_user.can(Permission.WRITE) and form.validate_on_submit():
-        _post = Post(title=form.title.data, body=form.body.data, author=current_user._get_current_object())
+        _post = Post(title=form.title.data, body=form.body.data, author=current_user)
         db.session.add(_post)
         db.session.commit()
         return redirect(url_for('main.posts'))
@@ -161,7 +161,7 @@ def post(post_id):
     _post = db.get_or_404(Post, post_id)
     form = CommentForm()
     if current_user.can(Permission.COMMENT) and form.validate_on_submit():
-        comment = Comment(body=form.body.data, post=_post, author=current_user._get_current_object())
+        comment = Comment(body=form.body.data, post=_post, author=current_user)
         db.session.add(comment)
         db.session.commit()
         flash("Your comment has been published!", 'alert-success')
@@ -311,7 +311,7 @@ def pastes():
     form = PasteForm()
     if current_user.can(Permission.WRITE) and form.validate_on_submit():
         _paste = Paste(title=form.title.data, body=form.body.data, expiry=form.expiry.data, disabled=form.disabled.data,
-                       author=current_user._get_current_object())
+                       author=current_user)
         db.session.add(_paste)
         db.session.commit()
         flash('The paste has been posted.', 'alert-success')

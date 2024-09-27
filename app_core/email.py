@@ -12,6 +12,7 @@ def send_async_email(app, msg):
 
 
 def send_email(to, subject, template, **kwargs):
+    # !VITAL! DO NOT remove _get_current_object()
     app = current_app._get_current_object()
     msg = Message(
         app.config['MAIL_SUBJECT_PREFIX'] + ' ' + subject,

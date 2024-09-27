@@ -102,7 +102,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         # Redirect to the two-factor auth page, passing username in session
-        # Do NOT put user_id into the session, in case you wanna log the user in.
+        # Do NOT put user_id into the session, unless you wanna log the user in.
         session['email'] = user.email
         return redirect(url_for('auth.two_factor_setup'))
     return render_template('auth/register.html', form=form)
@@ -153,7 +153,8 @@ def two_factor_qr_code():
 @login_required
 def change_two_factor():
     current_user.generate_otp_secret()
-    db.session.add(current_user._get_current_object())
+    db.session.add(current_user)
+    db.session.commit()
     session['email'] = current_user.email
     return redirect(url_for('auth.two_factor_setup'))
 

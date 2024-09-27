@@ -75,7 +75,7 @@ def edit_profile():
         current_user.gender = Gender.query.get(form.gender.data)
         current_user.location = form.location.data
         current_user.about_me = form.about_me.data
-        db.session.add(current_user._get_current_object())
+        db.session.add(current_user)
         db.session.commit()
         flash('Your profile has been updated.', 'alert-success')
         return redirect(url_for('main.user', user_id=current_user.id))

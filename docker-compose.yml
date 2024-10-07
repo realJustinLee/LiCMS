@@ -24,7 +24,6 @@ services:
       - .conf/nginx:/etc/nginx/conf.d
       - ~/data/certbot/conf:/etc/letsencrypt
       - ~/data/certbot/www:/var/www/certbot
-      - ~/static_www/:/var/www
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
   certbot:

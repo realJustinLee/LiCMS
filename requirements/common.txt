@@ -1,4 +1,4 @@
-alembic==1.14.
+alembic==1.14.0
 autocommand==2.2.2
 backports.tarfile==1.2.0
 bleach==6.2.0

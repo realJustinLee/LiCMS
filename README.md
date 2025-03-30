@@ -8,7 +8,7 @@ Flask.
 ## Requirements
 
 > - Python `3.13.2'
-> - Docker `27.5.1`
+> - Docker `28.0.1`
 > - DataBase depending on deployment method (default in `config.py`, can be edited as you wish)
 > - Heroku: `mysql`
 > - Docker: `mysql`
@@ -29,8 +29,8 @@ Flask.
   flask CLI extension.
 - For Tow Step Verification or 2FA, it's implemented via the `TOTP` (Time-based One-time Password) algorithm.
 - For unexpected errors, LiCMS will email the `LICMS_ADMIN` configured in `.env-licms`.
-- For enhanced performance, we enabled `gunicorn` multi-threading, it takes (`2 * physical_cpus + 1`) CPUs by
-  default, (`hyper-thread` is assumed to be enabled).
+- For enhanced performance and let python use multiple CPUs, we enabled `gunicorn` WSGI HTTP server for multiprocessing, 
+  it takes (`2 * physical_cpus + 1`) CPUs by default, (`hyper-thread` is assumed to be enabled).
 
 ## Platform Compatibility (Front-end)
 

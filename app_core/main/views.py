@@ -26,6 +26,11 @@ def favicon():
     return redirect(url_for('static', filename='favicon.ico', _external=True))
 
 
+@main.route('/xianglin')
+def xianglin():
+    return render_template('hidden_letter/letter_to_xianglin.html')
+
+
 @main.route('/', methods=['GET', 'POST'])
 def index():
     _show_followed = False

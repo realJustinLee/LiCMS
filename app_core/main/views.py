@@ -27,6 +27,7 @@ def favicon():
 
 
 @main.route('/xianglin')
+@login_required
 def xianglin():
     return render_template('hidden_letter/letter_to_xianglin.html')
 

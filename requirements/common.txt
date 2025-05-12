@@ -4,7 +4,7 @@ backports.tarfile==1.2.0
 bleach==6.2.0
 blinker==1.9.0
 Bootstrap-Flask==2.5.0
-click==8.1.8
+click==8.2.0
 dnspython==2.7.0
 email_validator==2.2.0
 Flask==3.1.0

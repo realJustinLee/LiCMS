@@ -1,7 +1,8 @@
 -r common.txt
 flask-talisman==1.1.0
-gevent==25.4.2
+gevent==25.5.1
 greenlet==3.2.2
 gunicorn==23.0.0
+setuptools==80.7.1
 zope.event==5.0
 zope.interface==7.2

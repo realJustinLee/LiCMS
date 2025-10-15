@@ -1,4 +1,4 @@
-alembic==1.16.5
+alembic==1.17.0
 autocommand==2.2.2
 backports.tarfile==1.2.0
 bleach==6.2.0
@@ -16,7 +16,7 @@ Flask-Moment==1.0.6
 Flask-PageDown==0.4.0
 Flask-SQLAlchemy==3.1.1
 Flask-WTF==1.2.2
-idna==3.10
+idna==3.11
 importlib_metadata==8.7.0
 importlib_resources==6.5.2
 inflect==7.5.0
@@ -41,7 +41,7 @@ python-dateutil==2.9.0.post0
 python-dotenv==1.1.1
 setuptools==80.9.0
 six==1.17.0
-SQLAlchemy==2.0.43
+SQLAlchemy==2.0.44
 tomli==2.3.0
 typeguard==4.4.4
 typing_extensions==4.15.0

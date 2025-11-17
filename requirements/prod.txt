@@ -3,5 +3,5 @@ flask-talisman==1.1.0
 gevent==25.9.1
 greenlet==3.2.4
 gunicorn==23.0.0
-zope.event==6.0
-zope.interface==8.0.1
+zope.event==6.1
+zope.interface==8.1.1

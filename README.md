@@ -93,7 +93,7 @@ If you would like to deploy LiCMS via other methods, you could refer to this gui
    MYSQL_RANDOM_ROOT_PASSWORD=yes
    MYSQL_DATABASE=<db_database>
    MYSQL_USER=<db_username>
-   MYSQL_PASSWORD=<db_password>     
+   MYSQL_PASSWORD=<db_password>
    EOF
    ```
 1. After words, replace all the `licms.example.com` with your own host like `some-host.someone.com`. In the Following
@@ -116,7 +116,7 @@ If you would like to deploy LiCMS via other methods, you could refer to this gui
 
 1. POST `https://your.host/api/v1/tokens/` with HTTP Basic Auth:
     ```text
-    Username:<email>    
+    Username:<email>
     Password:<password>
     ```
 1. It will return a JSON body with `token` and `expiration` like this:
@@ -129,7 +129,7 @@ If you would like to deploy LiCMS via other methods, you could refer to this gui
 1. Before the token expires, you could visit other apis with HTTP Basic Auth via the token you requested.
    > The token takes the place of `Username` and leave `Password` empty.
     ```text
-    Username:<token>    
+    Username:<token>
     Password:
     ```
 

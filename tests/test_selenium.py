@@ -99,6 +99,8 @@ class SeleniumTestCase(unittest.TestCase):
             send_keys('john@example.com')
         self.client.find_element(by=By.NAME, value='password').send_keys('cat')
         self.client.find_element(by=By.NAME, value='submit').click()
+        # Wait for page to load
+        time.sleep(1)
         self.assertTrue('Two Factor' in self.client.page_source)
 
         # 2FA
@@ -106,4 +108,6 @@ class SeleniumTestCase(unittest.TestCase):
         totp = onetimepass.get_totp(user.otp_secret)
         self.client.find_element(by=By.NAME, value='token').send_keys(totp)
         self.client.find_element(by=By.NAME, value='submit').click()
+        # Wait for page to load
+        time.sleep(1)
         self.assertTrue('john' in self.client.page_source)

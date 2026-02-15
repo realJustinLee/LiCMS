@@ -17,7 +17,6 @@ sortedcontainers==2.4.0
 trio==0.33.0
 trio-typing==0.10.0
 trio-websocket==0.12.2
-trio-typing==0.10.0
 types-certifi==2021.10.8.3
 types-urllib3==1.26.25.14
 urllib3==2.6.3

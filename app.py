@@ -30,11 +30,11 @@ def make_shell_context():
 
 
 @app.cli.command()
-@click.option('--coverage/--no-coverage', default=False, help='Run tests under code coverage.')
+@click.option('--code_coverage/--no-code_coverage', default=False, help='Run tests under code coverage.')
 @click.argument('test_names', nargs=-1)
-def test(_coverage, test_names):
+def test(code_coverage, test_names):
     """Run the unit tests."""
-    if _coverage and not os.environ.get('FLASK_COVERAGE'):
+    if code_coverage and not os.environ.get('FLASK_COVERAGE'):
         import subprocess
         os.environ['FLASK_COVERAGE'] = '1'
         sys.exit(subprocess.call(sys.argv))

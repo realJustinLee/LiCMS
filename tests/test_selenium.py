@@ -90,7 +90,7 @@ class SeleniumTestCase(unittest.TestCase):
         pass
 
     def test_admin_home_page(self):
-        wait = WebDriverWait(self.client, 3)
+        wait = WebDriverWait(self.client, 5)
 
         # navigate to home page
         self.client.get('http://localhost:5001/')

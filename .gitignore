@@ -110,4 +110,4 @@ venv.bak/
 .env-licms
 .env-mysql
 .dev_env
-tmp
+test_result

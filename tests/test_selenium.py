@@ -6,7 +6,9 @@ import onetimepass
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
+from werkzeug.serving import make_server
 
 from app_core import create_app, db, fake
 from app_core.models import Role, User, Gender
@@ -57,7 +59,8 @@ class SeleniumTestCase(unittest.TestCase):
             db.session.commit()
 
             # start the Flask server in a thread, set port to 5001 to avoid macOS system services
-            cls.server_thread = threading.Thread(target=cls.app.run, kwargs={'debug': False, 'port': 5001})
+            cls.server = make_server("127.0.0.1", 5001, cls.app, threaded=True)
+            cls.server_thread = threading.Thread(target=cls.server.serve_forever)
             cls.server_thread.start()
 
             # give the server a second to ensure it is up
@@ -69,6 +72,7 @@ class SeleniumTestCase(unittest.TestCase):
             # stop the flask server and the browser
             cls.client.get('http://localhost:5001/do/shutdown')
             cls.client.quit()
+            cls.server.shutdown()
             cls.server_thread.join()
 
             # destroy database
@@ -86,6 +90,8 @@ class SeleniumTestCase(unittest.TestCase):
         pass
 
     def test_admin_home_page(self):
+        wait = WebDriverWait(self.client, 3)
+
         # navigate to home page
         self.client.get('http://localhost:5001/')
         self.assertTrue('Stranger!' in self.client.page_source)
@@ -99,15 +105,11 @@ class SeleniumTestCase(unittest.TestCase):
             send_keys('john@example.com')
         self.client.find_element(by=By.NAME, value='password').send_keys('cat')
         self.client.find_element(by=By.NAME, value='submit').click()
-        # Wait for page to load
-        time.sleep(1)
-        self.assertTrue('Two Factor' in self.client.page_source)
+        wait.until(lambda d: "Two Factor" in d.page_source)
 
         # 2FA
         user = User.query.filter_by(email='john@example.com').first()
         totp = onetimepass.get_totp(user.otp_secret)
         self.client.find_element(by=By.NAME, value='token').send_keys(totp)
         self.client.find_element(by=By.NAME, value='submit').click()
-        # Wait for page to load
-        time.sleep(1)
-        self.assertTrue('john' in self.client.page_source)
+        wait.until(lambda d: "john" in d.page_source)

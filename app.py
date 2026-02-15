@@ -30,7 +30,7 @@ def make_shell_context():
 
 
 @app.cli.command()
-@click.option('--code_coverage/--no-code_coverage', default=False, help='Run tests under code coverage.')
+@click.option('--code-coverage/--no-code-coverage', default=False, help='Run tests under code coverage.')
 @click.argument('test_names', nargs=-1)
 def test(code_coverage, test_names):
     """Run the unit tests."""

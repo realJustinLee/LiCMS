@@ -23,6 +23,7 @@ def before_request():
                 and request.blueprint != 'auth' \
                 and request.endpoint != 'static':
             return redirect(url_for('auth.unconfirmed'))
+    return None
 
 
 @auth.route('/unconfirmed')

@@ -178,9 +178,9 @@ class UserModelTestCase(unittest.TestCase):
         db.session.add(u)
         db.session.commit()
         self.assertTrue(
-            (datetime.now(timezone.utc) - u.member_since).total_seconds() < 3)
+            (datetime.now(timezone.utc).replace(tzinfo=None) - u.member_since).total_seconds() < 3)
         self.assertTrue(
-            (datetime.now(timezone.utc) - u.last_seen).total_seconds() < 3)
+            (datetime.now(timezone.utc).replace(tzinfo=None) - u.last_seen).total_seconds() < 3)
 
     def test_ping(self):
         u = User(password='cat')
@@ -189,7 +189,7 @@ class UserModelTestCase(unittest.TestCase):
         time.sleep(2)
         last_seen_before = u.last_seen
         u.ping()
-        self.assertTrue(u.last_seen > last_seen_before)
+        self.assertTrue(u.last_seen.replace(tzinfo=None) > last_seen_before.replace(tzinfo=None))
 
     def test_gravatar(self):
         u = User(email='john@example.com', password='cat')
@@ -212,11 +212,11 @@ class UserModelTestCase(unittest.TestCase):
         db.session.commit()
         self.assertFalse(u1.is_following(u2))
         self.assertFalse(u1.is_followed_by(u2))
-        timestamp_before = datetime.now(timezone.utc)
+        timestamp_before = datetime.now(timezone.utc).replace(tzinfo=None)
         u1.follow(u2)
         db.session.add(u1)
         db.session.commit()
-        timestamp_after = datetime.now(timezone.utc)
+        timestamp_after = datetime.now(timezone.utc).replace(tzinfo=None)
         self.assertTrue(u1.is_following(u2))
         self.assertFalse(u1.is_followed_by(u2))
         self.assertTrue(u2.is_followed_by(u1))

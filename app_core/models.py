@@ -107,7 +107,7 @@ class Follow(db.Model):
     __tablename__ = 'follows'
     follower_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    timestamp = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc).replace(tzinfo=None))
 
 
 class User(UserMixin, db.Model):
@@ -121,8 +121,8 @@ class User(UserMixin, db.Model):
     confirmed = db.Column(db.Boolean, default=False)
     location = db.Column(db.String(128))
     about_me = db.Column(db.Text)
-    member_since = db.Column(db.DateTime, default=datetime.now(timezone.utc))
-    last_seen = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    member_since = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc).replace(tzinfo=None))
+    last_seen = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc).replace(tzinfo=None))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     gender_id = db.Column(db.Integer, db.ForeignKey('genders.id'))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
@@ -345,7 +345,7 @@ class Post(db.Model):
     title = db.Column(db.Text)
     body = db.Column(db.Text)
     body_html = db.Column(db.Text)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.now(timezone.utc))
+    timestamp = db.Column(db.DateTime, index=True, default=lambda: datetime.now(timezone.utc).replace(tzinfo=None))
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     comments = db.relationship('Comment', backref='post', lazy='dynamic')
 
@@ -388,7 +388,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.Text)
     body_html = db.Column(db.Text)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.now(timezone.utc))
+    timestamp = db.Column(db.DateTime, index=True, default=lambda: datetime.now(timezone.utc).replace(tzinfo=None))
     disabled = db.Column(db.Boolean)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
@@ -429,7 +429,7 @@ class Paste(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text)
     body = db.Column(db.Text)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.now(timezone.utc))
+    timestamp = db.Column(db.DateTime, index=True, default=lambda: datetime.now(timezone.utc).replace(tzinfo=None))
     expiry = db.Column(db.DateTime)
     disabled = db.Column(db.Boolean)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -462,7 +462,7 @@ class File(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
     file_hash = db.Column(db.String(32))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.now(timezone.utc))
+    timestamp = db.Column(db.DateTime, index=True, default=lambda: datetime.now(timezone.utc).replace(tzinfo=None))
     disabled = db.Column(db.Boolean)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 

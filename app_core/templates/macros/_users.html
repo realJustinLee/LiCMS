@@ -17,15 +17,15 @@
                             </a>
                             {% if current_user.is_authenticated and current_user.can(Permission.FOLLOW) and user != current_user %}
                                 {% if not current_user.is_following(user) %}
-                                    <a class="text-decoration-none btn btn-sm btn-primary"
-                                       href="{{ url_for('main.follow', user_id=user.id) }}">
-                                        <span>Follow</span>
-                                    </a>
+                                    <form class="d-inline" method="post" action="{{ url_for('main.follow', user_id=user.id) }}">
+                                        {% if csrf_token is defined %}<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">{% endif %}
+                                        <button type="submit" class="btn btn-sm btn-primary">Follow</button>
+                                    </form>
                                 {% else %}
-                                    <a class="text-decoration-none btn btn-sm btn-warning"
-                                       href="{{ url_for('main.unfollow', user_id=user.id) }}">
-                                        <span>Unfollow</span>
-                                    </a>
+                                    <form class="d-inline" method="post" action="{{ url_for('main.unfollow', user_id=user.id) }}">
+                                        {% if csrf_token is defined %}<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">{% endif %}
+                                        <button type="submit" class="btn btn-sm btn-warning">Unfollow</button>
+                                    </form>
                                 {% endif %}
                             {% endif %}
                         </div>

@@ -65,11 +65,17 @@
                 <div class="row px-3">
                     {% if current_user.can(Permission.FOLLOW) and user != current_user %}
                         {% if not current_user.is_following(user) %}
-                            <a href="{{ url_for('main.follow', user_id=user.id) }}"
-                               class="btn btn-primary me-0 me-sm-2 col-12 col-sm-auto mb-2 mb-sm-0">Follow</a>
+                            <form method="post" action="{{ url_for('main.follow', user_id=user.id) }}"
+                                  class="me-0 me-sm-2 col-12 col-sm-auto mb-2 mb-sm-0">
+                                {% if csrf_token is defined %}<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">{% endif %}
+                                <button type="submit" class="btn btn-primary w-100">Follow</button>
+                            </form>
                         {% else %}
-                            <a href="{{ url_for('main.unfollow', user_id=user.id) }}"
-                               class="btn btn-warning me-0 me-sm-2 col-12 col-sm-auto mb-2 mb-sm-0">Unfollow</a>
+                            <form method="post" action="{{ url_for('main.unfollow', user_id=user.id) }}"
+                                  class="me-0 me-sm-2 col-12 col-sm-auto mb-2 mb-sm-0">
+                                {% if csrf_token is defined %}<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">{% endif %}
+                                <button type="submit" class="btn btn-warning w-100">Unfollow</button>
+                            </form>
                         {% endif %}
                     {% endif %}
                     {% if user == current_user %}

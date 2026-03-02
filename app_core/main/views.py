@@ -196,7 +196,7 @@ def edit(post_id):
     return render_template('edit_post.html', form=form)
 
 
-@main.route('/follow/<int:user_id>')
+@main.route('/follow/<int:user_id>', methods=['POST'])
 @login_required
 @permission_required(Permission.FOLLOW)
 def follow(user_id):
@@ -212,7 +212,7 @@ def follow(user_id):
     return redirect(url_for('main.user', user_id=user_id))
 
 
-@main.route('/unfollow/<int:user_id>')
+@main.route('/unfollow/<int:user_id>', methods=['POST'])
 @login_required
 @permission_required(Permission.FOLLOW)
 def unfollow(user_id):

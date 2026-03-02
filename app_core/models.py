@@ -486,4 +486,4 @@ class File(db.Model):
         file_hash = json_file.get('file_hash')
         if file_hash is None or file_hash == '' or len(file_hash) > 32:
             raise ValidationError('paste does not have a body')
-        return Paste(name=name, file_hash=file_hash)
+        return File(name=name, file_hash=file_hash)

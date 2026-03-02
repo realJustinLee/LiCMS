@@ -48,7 +48,7 @@ def edit_post(post_id):
     _post = db.get_or_404(Post, post_id)
     if g.current_user != _post.author and not g.current_user.is_administrator():
         return forbidden('Insufficient permissions')
-    _post.title = request.json.get('title', _post.body)
+    _post.title = request.json.get('title', _post.title)
     _post.body = request.json.get('body', _post.body)
     db.session.add(_post)
     db.session.commit()

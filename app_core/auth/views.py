@@ -174,6 +174,7 @@ def tow_factor_reset_request():
             send_email(user.email, 'Reset Your 2FA', 'auth/email/reset_two_factor', user=user, token=token,
                        current_time=datetime.now(tz.gettz('CST')).strftime("%B %d, %Y %H:%M CST"))
             flash('An email with instructions to reset your 2FA has been sent to you.', 'alert-primary')
+            return redirect(url_for('auth.login'))
         flash('Invalid email or password.', 'alert-danger')
     return render_template('auth/reset_tow_factor.html', form=form)
 

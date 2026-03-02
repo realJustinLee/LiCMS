@@ -253,7 +253,7 @@ def followed_by(user_id):
         'LICMS_USERS_PER_PAGE'], error_out=False)
     _followed = [item.followed for item in pagination.items if item.followed != _user]
     return render_template('users.html', title="Users followed by " + _user.name, users=_followed,
-                           pagination=pagination, endpoint='main.followers', user_id=user_id)
+                           pagination=pagination, endpoint='main.followed_by', user_id=user_id)
 
 
 @main.route('/about')

@@ -440,7 +440,7 @@ class Paste(db.Model):
         else:
             return {
                 # 'url': url_for('api.get_paste', paste_id=self.id),
-                'title': self.name,
+                'title': self.title,
                 'body': self.body,
                 'timestamp': self.timestamp,
                 'expiry': self.expiry,

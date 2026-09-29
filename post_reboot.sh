@@ -1,5 +1,5 @@
-# Invoke app via docker compose
-echo 'Initializing docker compose'
+# Invoke app via Docker Compose
+echo 'Initializing Docker Compose'
 docker compose build --no-cache
 docker compose down
 docker compose pull

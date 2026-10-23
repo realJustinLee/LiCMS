@@ -1,6 +1,6 @@
 # Invoke app via Docker Compose
 echo 'Initializing Docker Compose'
-docker compose build --no-cache
+docker compose build --pull --no-cache
 docker compose down
 docker compose pull
 docker compose up -d >> docker-licms.log

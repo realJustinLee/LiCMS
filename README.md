@@ -7,8 +7,8 @@ Flask.
 
 ## Requirements
 
-> - Python `3.15.0`
-> - Docker `29.8.2`
+> - Python `3.15.2`
+> - Docker `29.9.3`
 > - DataBase depending on deployment method (default in `config.py`, can be edited as you wish)
 > - Heroku: `mysql` (shifting to `postgresql`)
 > - Docker: `mysql`
@@ -105,7 +105,7 @@ If you would like to deploy LiCMS via other methods, you could refer to this gui
 1. Run the following code to deploy the project.
     ```shell
     # install docker-ce for ubuntu
-    ./init_ubuntu_dokcer_ce.sh
+    ./init_debian_dokcer_ce.sh
     reboot
     cd /path/to/LiCMS
     ./init_letsencrypt.sh
